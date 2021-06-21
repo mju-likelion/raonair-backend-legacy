@@ -1,5 +1,5 @@
-# raonair
-## likeLion_ideathon
+# RaonAir
+- likeLion_ideathon
 
 ## 실행법
 - 가상환경 실행
