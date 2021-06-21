@@ -12,7 +12,7 @@ db.sqlite3
 db.sqlite3-journal
 media
 
-myvevn
+actVenv
 my_settings.py
 
 # If your build process includes running collectstatic, then you probably don't need or want to include staticfiles/
