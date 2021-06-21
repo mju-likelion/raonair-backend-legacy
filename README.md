@@ -1,6 +1,6 @@
 # RaonAir(likeLion_ideathon)
 멋쟁이 사자처럼 9기 아이디어톤 라온에어(ActLike)
-asd
+
 ## 실행법
 - 가상환경 실행
 ```
