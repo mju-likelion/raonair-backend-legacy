@@ -6,18 +6,30 @@
 
 - python3
 
-## 실행법
+## How to run server
+
+- 가상환경 생성
+
+```shell
+python -m venv raon_venv  # myvenv는 자신이 원하는 가상환경 이름으로 교체해도 무방
+```
 
 - 가상환경 실행
 
-```
-source actVenv/Scripts/activate # Windows
-source actVenv/bin/activage # macOS
+```shell
+source raon_venv/Scripts/activate  # Windows
+source raon_venv/bin/activate  # macOS
 ```
 
-- 프로젝트 시작
+- 의존 패키지 설치
 
+```shell
+pip install -r requirements.txt
 ```
+
+- 프로젝트 시작 (사용하는 데는 필요없음)
+
+```shell
 django-admin startproject actProjects
 cd actProjects
 ```
