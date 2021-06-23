@@ -1,0 +1,81 @@
+html, body {
+    margin: 0;
+	padding: 0;
+	border: 0;
+}
+hr {
+    width:80%;
+    border: solid 1px rgb(231, 231, 231);
+    margin-bottom: 1.5rem;
+}
+.containner {
+    margin: 0 auto;
+    background-color: rgb(245, 245, 245);
+    top: 0%;
+    width: 1200px;
+    border: solid 1px rgb(204, 204, 204);
+}
+.content {
+    background-color: rgb(255, 255, 255);
+    margin: 1rem;
+    padding: 20px 40px;
+}
+.contentTitle {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.contentInner {
+    padding: 20px 0px;
+    display: flex;
+    justify-content: space-between;
+    position: relative;
+}
+.imgInner {
+    /* width: 250px;
+    height: 350px; */
+}
+.imgInner:hover {
+    cursor: pointer;
+}
+.imgInner:hover > .actImg { transform: scale(1.05); transition: 0.3s; }
+
+.actImg {
+    width: 240px;
+    height: 340px;
+    object-fit: cover;
+    border-radius: 5px;
+    border: solid 1px rgb(231, 231, 231);
+}
+.poster {
+    /* border-radius: 2px; */
+}
+.poster p {
+    font-weight: bold;
+}
+.posterBtn {
+    /* text-align: center; */
+}
+
+/* searchPage.html */
+.filter {
+    display: flex;
+    justify-content: center;
+    padding: 20px 0 0 0;
+}
+.filter label:hover {
+    cursor: pointer;
+    background-color: rgb(238, 238, 238);
+}
+.filterRadio {
+    display: none;
+}
+input[type="radio"][name="filtering"]:checked + .filterLabel {
+    background-color: rgb(0, 96, 221);
+    color: rgb(240, 240, 240);
+}
+.filterLabel {
+    padding: 10px 30px;
+    background-color: rgb(255, 255, 255);
+    font-weight: bold;
+}

@@ -1,1 +1,68 @@
-<h1>검색결과 페이지</h1>
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    {% load static %}
+    <!-- static 파일 load -->
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- 부트스트랩 라이브러리는 써도 되는지 확실치 않아 사용하지 않았습니다 -->
+    <!-- <link rel="stylesheet" href="{% static 'css/initStyle.css' %}"> -->
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <title>RaonAir</title>
+</head>
+
+<body>
+    {% include "navbar.html" %}
+    <div class="containner">
+        <!-- 필터는 라디오 버튼인지 체크박스인지 -->
+        <div class="filter">
+            <input class="filterRadio" type="radio" id="filterAll" name="filtering" value="all" checked><label for="filterAll"class="filterLabel">전체</label>
+            <input class="filterRadio" type="radio" id="filterAct" name="filtering" value="act"><label for="filterAct" class="filterLabel">공연</label>
+            <input class="filterRadio" type="radio" id="filterActer" name="filtering" value="acter"><label for="filterActer" class="filterLabel">배우</label>
+            <input class="filterRadio" type="radio" id="filterTheater" name="filtering" value="theater"><label for="filterTheater" class="filterLabel">극단</label>
+        </div>
+        <hr>
+        <div class="content">
+            <h1>전체</h1>
+            <div class="contentInner">
+                <div class="poster">
+                    <a class="imgInner" href="/"><img class="actImg" src="{% static 'img/home2.jpg' %}" alt="likedAct"></a>
+                    <div class="posterBtn">
+                        <p>제목</p>
+                        <button name="button">자세히</button>
+                        <button name="button">극단 보기</button>
+                    </div>
+                </div>
+                <div class="poster">
+                    <a class="imgInner" href="/"><img class="actImg" src="{% static 'img/home3.jpg' %}" alt="likedAct"></a>
+                    <div class="posterBtn">
+                        <p>제목</p>
+                        <button name="button">자세히</button>
+                        <button name="button">극단 보기</button>
+                    </div>
+                </div>
+                <div class="poster">
+                    <a class="imgInner" href="/"><img class="actImg" src="{% static 'img/home4.jpg' %}" alt="likedAct"></a>
+                    <div class="posterBtn">
+                        <p>제목</p>
+                        <button name="button">자세히</button>
+                        <button name="button">극단 보기</button>
+                    </div>
+                </div>
+                <div class="poster">
+                    <a class="imgInner" href="/"><img class="actImg" src="{% static 'img/home5.jpg' %}" alt="likedAct"></a>
+                    <div class="posterBtn">
+                        <p>제목</p>
+                        <button name="button">자세히</button>
+                        <button name="button">극단 보기</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</body>
+
+</html>

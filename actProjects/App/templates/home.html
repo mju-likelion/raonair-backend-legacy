@@ -2,15 +2,122 @@
 <html lang="en">
 
 <head>
+    {% load static %}
+    <!-- static 파일 load -->
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>home</title>
+    <!-- 부트스트랩 라이브러리는 써도 되는지 확실치 않아 사용하지 않았습니다 -->
+    <!-- <link rel="stylesheet" href="{% static 'css/initStyle.css' %}"> -->
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <title>RaonAir</title>
 </head>
 
 <body>
     {% include "navbar.html" %}
-    <h1>메인페이지입니다</h1>
+    <div class="containner">
+
+        <div class="content">
+            <!-- 이달의 공연을 다른 컨텐츠처럼 여러가지 표시하면 어떨지 -->
+            <h1 align="center">이달의 공연</h1><hr>
+            <div class="contentInner">
+                <div class="poster">
+                    <a><img src="{% static 'img/home1.jpeg' %}"></a>
+                    <div>
+                        <h3>국립극단 SWEAT</h3>
+                        <p>퓰리처상 수상작</p>
+                        <!-- 설명이 너무 길어 가시성이 떨어짐. 생략하면 어떨까 -->
+                        <!-- <p>린 노티지 "SWEAT 스웨트: 땀, 힘겨운 노동" <br>
+                            아무도 주목하지 않는 곳을 비추는 작가, 소외된 이들의 목소리이자 동시대 가장 날카로운 지성 린 노티지의 "SWEAT 스웨트"가 국내 최초로 국립극단 무대에 오른다. 부품처럼 쉽게
+                            교체되는 노동자들의 적나라한 현실을 과거와 현재를 오가는 연극적 묘미로 극대화시킨 수작으로, 작가에게 두 번째 퓰리처상을 선사했다. 지구 반대편 작은 바(Bar)에서 시작된
+                            이야기는 노동자의 좌절과 불안한 시대상이 맞물려 예고 없이 무너지는 일상의 공포를 가장 현실적인 스릴러로 확장시킨다. 마침내 모든 것이 깨지고 흩어지는 순간, 다음을 향한 작은
+                            희망의 단서를 절대 놓치지 말 것.</p> -->
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="content">
+            <div class="contentTitle">
+                <h1>내가 찜한 극단의 공연</h1>&nbsp;<a href="/">더보기</a>
+            </div><hr>
+            <div class="contentInner">
+                <div class="poster">
+                    <a class="imgInner" href="/"><img class="actImg" src="{% static 'img/home2.jpg' %}" alt="likedAct"></a>
+                    <div class="posterBtn">
+                        <p>제목</p>
+                        <button name="button">자세히</button>
+                        <button name="button">극단 보기</button>
+                    </div>
+                </div>
+                <div class="poster">
+                    <a class="imgInner" href="/"><img class="actImg" src="{% static 'img/home3.jpg' %}" alt="likedAct"></a>
+                    <div class="posterBtn">
+                        <p>제목</p>
+                        <button name="button">자세히</button>
+                        <button name="button">극단 보기</button>
+                    </div>
+                </div>
+                <div class="poster">
+                    <a class="imgInner" href="/"><img class="actImg" src="{% static 'img/home4.jpg' %}" alt="likedAct"></a>
+                    <div class="posterBtn">
+                        <p>제목</p>
+                        <button name="button">자세히</button>
+                        <button name="button">극단 보기</button>
+                    </div>
+                </div>
+                <div class="poster">
+                    <a class="imgInner" href="/"><img class="actImg" src="{% static 'img/home5.jpg' %}" alt="likedAct"></a>
+                    <div class="posterBtn">
+                        <p>제목</p>
+                        <button name="button">자세히</button>
+                        <button name="button">극단 보기</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="content">
+            <div class="contentTitle">
+                <h1>테마별 추천 공연</h1>&nbsp;<a href="/">더보기</a>
+            </div><hr>
+            <div class="contentInner">
+                <div class="poster">
+                    <a class="imgInner" href="/"><img class="actImg" src="{% static 'img/home2.jpg' %}" alt="likedAct"></a>
+                    <div class="posterBtn">
+                        <p>제목</p>
+                        <button name="button">자세히</button>
+                        <button name="button">극단 보기</button>
+                    </div>
+                </div>
+                <div class="poster">
+                    <a class="imgInner" href="/"><img class="actImg" src="{% static 'img/home3.jpg' %}" alt="likedAct"></a>
+                    <div class="posterBtn">
+                        <p>제목</p>
+                        <button name="button">자세히</button>
+                        <button name="button">극단 보기</button>
+                    </div>
+                </div>
+                <div class="poster">
+                    <a class="imgInner" href="/"><img class="actImg" src="{% static 'img/home4.jpg' %}" alt="likedAct"></a>
+                    <div class="posterBtn">
+                        <p>제목</p>
+                        <button name="button">자세히</button>
+                        <button name="button">극단 보기</button>
+                    </div>
+                </div>
+                <div class="poster">
+                    <a class="imgInner" href="/"><img class="actImg" src="{% static 'img/home5.jpg' %}" alt="likedAct"></a>
+                    <div class="posterBtn">
+                        <p>제목</p>
+                        <button name="button">자세히</button>
+                        <button name="button">극단 보기</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
 </body>
 
 </html>
