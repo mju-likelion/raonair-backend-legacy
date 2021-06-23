@@ -6,7 +6,7 @@ html, body {
 hr {
     width:80%;
     border: solid 1px rgb(231, 231, 231);
-    margin-bottom: 1.5rem;
+    margin-bottom:s 1.5rem;
 }
 .containner {
     margin: 0 auto;
@@ -31,6 +31,10 @@ hr {
     justify-content: space-between;
     position: relative;
 }
+
+.themePoster{
+    position: static; 
+}
 .imgInner {
     /* width: 250px;
     height: 350px; */
@@ -52,6 +56,27 @@ hr {
 }
 .poster p {
     font-weight: bold;
+}
+.posterTip{
+    position: relative;
+    margin:auto;
+    display: inline-block;
+    color:beige;
+    font-weight: bold;
+}
+.posterTip-text{
+    top: 10px;
+    display: none;
+    position: absolute;
+    border: 1px solid;
+    border-radius: 5px;
+    padding: 5px;
+    font-size: 1em;
+    color: black;
+    background: rgb(254, 255, 246);
+}
+.posterTip:hover .posterTip-text{
+    display:block;
 }
 .posterBtn {
     /* text-align: center; */
