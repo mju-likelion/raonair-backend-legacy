@@ -15,21 +15,24 @@
     {% include "navbar.html" %}
     <div class="containner">
         <div class="filter">
-            <input class="filterRadio" type="radio" id="filterAll" name="filtering" value="all" checked><label
-                for="filterAll" class="filterLabel">전체</label>
-            <input class="filterRadio" type="radio" id="filterAct" name="filtering" value="act"><label for="filterAct"
-                class="filterLabel">공연</label>
-            <input class="filterRadio" type="radio" id="filterActer" name="filtering" value="acter"><label
-                for="filterActer" class="filterLabel">배우</label>
-            <input class="filterRadio" type="radio" id="filterTheater" name="filtering" value="theater"><label
-                for="filterTheater" class="filterLabel">극단</label>
+            <input class="filterRadio" type="radio" id="filterAll" name="filtering" value="all" checked>
+            <label for="filterAll" class="filterLabel" onclick="changeAll()">전체</label>
+            <input class="filterRadio" type="radio" id="filterAct" name="filtering" value="act">
+            <label for="filterAct" class="filterLabel" onclick="changeAct()">공연</label>
+            <input class="filterRadio" type="radio" id="filterActer" name="filtering" value="acter">
+            <label for="filterActer" class="filterLabel" onclick="changeActer()">배우</label>
+            <input class="filterRadio" type="radio" id="filterTheater" name="filtering" value="theater">
+            <label for="filterTheater" class="filterLabel" onclick="changeTheater()">극단</label>
         </div>
         <hr>
         <div class="content">
-            <h1 align="center">전체</h1>
+            <!-- '내용'은 검색어가 들어갈 자리임
+            버튼 클릭 시 바뀌는 부분은 임시로 display로 처리함
+            -->
+            <h1 align="center">'공연'의 검색결과입니다</h1>
             <div>
-                <div class="contentTitle" style="justify-content: start;"><h2>공연</h2>&nbsp;<a href="">더보기</a></div>
-                <div class="actInner">
+                <div class="contentTitle" style="justify-content: start;"><h2>공연</h2>&nbsp;<a onclick="changeAct()">더보기</a></div>
+                <div class="actInner" id="view0">
                     <div class="poster">
                         <a class="imgInner" href="/"><img class="actImg" src="{% static 'img/home2.jpg' %}"
                                 alt="likedAct"></a>
@@ -68,8 +71,8 @@
                     </div>
                 </div><hr style="margin-bottom: 0;">
 
-                <div class="contentTitle" style="justify-content: start;"><h2>배우</h2>&nbsp;<a href="">더보기</a></div>
-                <div class="acterInner">
+                <div class="contentTitle" style="justify-content: start;"><h2>배우</h2>&nbsp;<a onclick="changeActer()">더보기</a></div>
+                <div class="acterInner" id="view1">
                     <div class="poster">
                         <a class="imgInner" href=""><img class="acterImg" src="{% static 'img/acter.png' %}"
                                 alt="likedAct"></a>
@@ -107,8 +110,8 @@
                     </div>
                 </div><hr style="margin-bottom: 0;">
 
-                <div class="contentTitle" style="justify-content: start;"><h2>극단</h2>&nbsp;<a href="">더보기</a></div>
-                <ul class="theaterInner">
+                <div class="contentTitle" style="justify-content: start;"><h2>극단</h2>&nbsp;<a onclick="changeTheater()">더보기</a></div>
+                <ul class="theaterInner" id="view2">
                     <li class="theaterList">
                         <p><a class="imgT" href="/"><img class="theaterImg" src="{% static 'img/home2.jpg' %}" alt="likedAct"></a></p>
                         <p>극단이름</p>
@@ -134,6 +137,7 @@
             </div>
         </div>
     </div>
+    <script type="text/javascript" src="{% static 'js/searchPage.js' %}"></script>
 </body>
 
 </html>
