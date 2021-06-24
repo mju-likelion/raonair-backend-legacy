@@ -3,10 +3,13 @@ html, body {
 	padding: 0;
 	border: 0;
 }
+ol, ul {
+	list-style: none;
+}
 hr {
     width:80%;
     border: solid 1px rgb(231, 231, 231);
-    margin-bottom:s 1.5rem;
+    margin-bottom: 1.5rem;
 }
 .containner {
     margin: 0 auto;
@@ -103,4 +106,45 @@ input[type="radio"][name="filtering"]:checked + .filterLabel {
     padding: 10px 30px;
     background-color: rgb(255, 255, 255);
     font-weight: bold;
+}
+.actInner, .acterInner {
+    padding: 20px 0px;
+    display: flex;
+    justify-content: space-between;
+    position: relative;
+}
+.acterImg {
+    width: 140px;
+    height: 140px;
+    object-fit: cover;
+    border-radius: 50%;
+    /* background-color: red; */
+    border: solid 1px rgb(231, 231, 231);
+}
+.theaterInner {
+    padding: 20px 0px;
+    justify-content: center;
+    display: flex;
+    flex-wrap: wrap;
+    position: relative;
+    text-align: center;
+}
+.theaterList {
+    width: 210px;
+    /* border: solid 1px black; */
+}
+.theaterList p {
+    font-weight: bold;
+    margin-top: 0px;
+}
+.theaterImg {
+    width: 200px;
+    height: 150px;
+    object-fit: cover;
+    border-radius: 5px;
+    border: solid 1px rgb(231, 231, 231);
+}
+.imgT {
+    width: 150px;
+    height: 150px;
 }
