@@ -59,21 +59,25 @@ hr {
 }
 .posterTip{
     position: relative;
+    display: block;
+    /*
+    position: relative;
     margin:auto;
     display: inline-block;
-    color:beige;
     font-weight: bold;
+    */
 }
 .posterTip-text{
-    top: 10px;
+    top: 0px;
     display: none;
     position: absolute;
     border: 1px solid;
     border-radius: 5px;
-    padding: 5px;
+    padding: 15px;
     font-size: 1em;
     color: black;
-    background: rgb(254, 255, 246);
+    background-color: rgb(246, 246, 246);
+    line-height: 1.4em;
 }
 .posterTip:hover .posterTip-text{
     display:block;
