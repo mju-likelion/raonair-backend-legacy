@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html>
+<head>
+    {% load static %}
+    <!-- static 파일 load -->
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- 부트스트랩 라이브러리는 써도 되는지 확실치 않아 사용하지 않았습니다 -->
+    <!-- <link rel="stylesheet" href="{% static 'css/initStyle.css' %}"> -->
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <title>RaonAir</title>
+
+    <style>
+        .wrap {position: absolute;left: 0;bottom: 40px;width: 288px;height: 132px;margin-left: -144px;text-align: left;overflow: hidden;font-size: 12px;font-family: 'Malgun Gothic', dotum, '돋움', sans-serif;line-height: 1.5;}
+        .wrap * {padding: 0;margin: 0;}
+        .wrap .info {width: 286px;height: 120px;border-radius: 5px;border-bottom: 2px solid #ccc;border-right: 1px solid #ccc;overflow: hidden;background: #fff;}
+        .wrap .info:nth-child(1) {border: 0;box-shadow: 0px 1px 2px #888;}
+        .info .title {padding: 5px 0 0 10px;height: 30px;background: #eee;border-bottom: 1px solid #ddd;font-size: 18px;font-weight: bold;}
+        .info .close {position: absolute;top: 10px;right: 10px;color: #888;width: 17px;height: 17px;background: url('https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/overlay_close.png');}
+        .info .close:hover {cursor: pointer;}
+        .info .body {position: relative;overflow: hidden;}
+        .info .desc {position: relative;margin: 13px 0 0 90px;height: 75px;}
+        .desc .ellipsis {overflow: hidden;text-overflow: ellipsis;white-space: nowrap;}
+        .desc .jibun {font-size: 11px;color: #888;margin-top: -2px;}
+        .info .img {position: absolute;top: 6px;left: 5px;width: 73px;height: 71px;border: 1px solid #ddd;color: #888;overflow: hidden;}
+        .info:after {content: '';position: absolute;margin-left: -12px;left: 50%;bottom: 0;width: 22px;height: 12px;background: url('https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/vertex_white.png')}
+        .info .link {color: #5085BB;}
+
+        .name{
+            width: 500px;
+            height : 60px;
+            border-radius : 10px;
+            background-color : rgb(243, 241, 241);
+            border: 6px solid #fff;
+            box-shadow: 0 0 16px rgb(221,221,221);
+            text-align: center;
+
+        }
+        .box{
+            width: 800px;
+            height : 700px;
+            border-radius : 10px;
+            border : 3px solid rgb(194, 191, 191);
+        }
+        .reviewbox{
+            width : 750px;
+            height : 200px;
+            background-color : rgb(243, 241, 241);
+            border-radius : 10px;
+            margin-top: 25px;
+            margin-left: 20px;
+            display : grid;
+            grid-template-columns: 1fr 1fr;
+        }
+        #grid{
+            display : grid;
+            grid-template-columns: 330px 120px 350px;
+        }
+    
+        h4{
+            font-weight: lighter;
+        }
+        .place{
+            width: 800px;
+            height :35px;
+            border-radius : 10px;
+            border : 3px solid rgb(194, 191, 191);
+            text-align: center;
+            padding-top: 10px;
+        }
+        .circle{
+            display : grid;
+            grid-template-columns: 1fr 1fr ;
+            width : 125px;
+            height : 125px;
+            border-radius : 50%;
+            background-color : rgb(243, 241, 241);
+            border: 6px solid #fff;
+            box-shadow: 0 0 16px rgb(221,221,221);
+            margin : 10px;
+        }
+        tr{
+            text-align: center;
+        }
+        .star{
+            margin : 20px;
+        }
+        .right{
+            text-align: right;
+            margin-right: 30px;
+        }
+        h3{
+            padding-top : 25px;
+        }
+
+    </style>
+</head>
+
+
+<!-- ----------------------------------------------------------------------- -->
+
+
+    <body>
+        <div id="center">
+            <h1>공연정보</h1>
+            <div class="name">
+                <h2>&lt;작품명(콰이어트플레이스)&gt;</h2>
+            </div>
+            <div id="grid">
+                <div class="포스터">
+                    <img src="vhtmxj.jpg" width=300px; height: 400px;>
+                </div>
+
+                <div class="소개">
+                    <h3>공연기간</h3>
+                    <h3>공연시간</h3>
+                    <h3>가격</h3>
+                    <h3>작품소개</h3>
+                </div>
+
+                <div class="정보">
+                    <h3>2021.06.01-2021.06.31</h3>
+                    <h3>10000원</h3>
+                    <h3>130분</h3>
+                    <h4>실체를 알 수 없는 괴생명체의 공격으로 일상의 모든 것이 사라진 세상, 아이들 대신 죽음을 선택한 아빠의 희생 이후 살아남은 가족들은 위험에 노출된다. 갓 태어난 막내를 포함한 아이들과 함께 소리 없는 사투를 이어가던 엄마 ‘에블린’은 살아남기 위해 새로운 은신처를 찾아 집 밖을 나서지만, 텅 빈 고요함으로 가득한 바깥은 더 큰 위험이 도사리고 있는데...</h4>
+                </div>
+            </div>
+
+
+
+<!-- ----------------------------------------------------------------------- -->       
+            <h3>극단 및 배우 소개</h3>
+
+            <div id="intro">
+
+              <!-- {% for blog in blogs.all%}
+              <tr>
+                <td style = "cursor:pointer;" onClick = " location.href='{%url 'detail' blog.id%}' ">{{blog.title}}</td>
+                <td style = "cursor:pointer;" onClick = " location.href='{%url 'detail' blog.id%}' ">{{blog.artist}}</td>
+                <td style = "cursor:pointer;" onClick = " location.href='{%url 'detail' blog.id%}' ">{{blog.pub_date}}</td>           
+              </tr>
+              {%endfor%} -->
+
+                <table>
+                    <tr>
+                        <td><span class="circle"> </td>
+                        <td><span class="circle"> </td>
+                        <td><span class="circle"> </td>
+                        <td><span class="circle"> </td>
+                        <td><span class="circle"> </td>
+                    </tr>
+                    <tr>
+                        <td>이름</td>
+                        <td>이름</td>
+                        <td>이름</td>
+                        <td>이름</td>
+                        <td>이름</td>
+                    </tr>
+                    <tr>
+                        <td>배역</td>
+                        <td>배역</td>
+                        <td>배역</td>
+                        <td>배역</td>
+                        <td>배역</td>
+                    </tr>
+                </table>
+            </div>
+
+<!-- ----------------------------------------------------------------------- -->
+
+            <h3>공연장소</h3>
+            <div class="place">
+                서울특별시 서초구 서초동 남부순환로 2406
+            </div>
+            <h4>찾아오시는 길</h4>
+            <div id="map" style="width:800px;height:450px;"></div>
+
+            <script type="text/javascript" src="https://dapi.kakao.com/v2/maps/sdk.js?appkey=a54c726b5ce36fe62c59417ce4dd636b"></script>
+            <script>
+                var mapContainer = document.getElementById('map'), // 지도의 중심좌표
+                    mapOption = { 
+                        center: new kakao.maps.LatLng(37.4789929, 127.0116218), // 지도의 중심좌표
+                        level: 3 // 지도의 확대 레벨
+                    }; 
+
+                var map = new kakao.maps.Map(mapContainer, mapOption); // 지도를 생성합니다
+
+                // 지도에 마커를 표시합니다 
+                var marker = new kakao.maps.Marker({
+                    map: map, 
+                    position: new kakao.maps.LatLng(37.4789929, 127.0116218)
+                });
+
+                // 커스텀 오버레이에 표시할 컨텐츠 입니다
+                // 커스텀 오버레이는 아래와 같이 사용자가 자유롭게 컨텐츠를 구성하고 이벤트를 제어할 수 있기 때문에
+                // 별도의 이벤트 메소드를 제공하지 않습니다 
+                var content = '<div class="wrap">' + 
+                            '    <div class="info">' + 
+                            '        <div class="title">' + 
+                            '            예술의 전당' + 
+                            '            <div class="close" onclick="closeOverlay()" title="닫기"></div>' + 
+                            '        </div>' + 
+                            '        <div class="body">' + 
+                            '            <div class="img">' +
+                            '                <img src="https://www.google.com/maps/uv?pb=!1s0x357ca11a4018d209%3A0xdf93b7c7ab38a690!3m1!7e115!4shttps%3A%2F%2Flh5.googleusercontent.com%2Fp%2FAF1QipMmLh1zagKasxfFOziCc5O7GnxVlWl5sraZ9mus%3Dw191-h144-k-no!5z7JiI7Iig7J2Y7KCE64u5IC0gR29vZ2xlIOqygOyDiQ!15sCgIgAQ&imagekey=!1e10!2sAF1QipMmLh1zagKasxfFOziCc5O7GnxVlWl5sraZ9mus&hl=ko&sa=X&ved=2ahUKEwiJg6mNr6nxAhWMK5QKHTENAcgQoiowLHoECFAQAw" width="73" height="70">' +
+                            '           </div>' + 
+                            '            <div class="desc">' + 
+                            '                <div class="ellipsis">서울특별시 서초구 서초동 남부순환로 2406</div>' + 
+                            '                <div class="jibun ellipsis">F2H6+HJ 서울특별시</div>' + 
+                            '                <div><a href="https://www.sac.or.kr/site/main/home" target="_blank" class="link">홈페이지</a></div>' + 
+                            '            </div>' + 
+                            '        </div>' + 
+                            '    </div>' +    
+                            '</div>';
+
+                // 마커 위에 커스텀오버레이를 표시합니다
+                // 마커를 중심으로 커스텀 오버레이를 표시하기위해 CSS를 이용해 위치를 설정했습니다
+                var overlay = new kakao.maps.CustomOverlay({
+                    content: content,
+                    map: map,
+                    position: marker.getPosition()       
+                });
+
+                // 마커를 클릭했을 때 커스텀 오버레이를 표시합니다
+                kakao.maps.event.addListener(marker, 'click', function() {
+                    overlay.setMap(map);
+                });
+
+                // 커스텀 오버레이를 닫기 위해 호출되는 함수입니다 
+                function closeOverlay() {
+                    overlay.setMap(null);     
+                }
+            </script>
+            <br>
+
+ <!-- ----------------------------------------------------------------------- -->
+            <h3>관람후기</h3>
+
+            <div class="box">
+                <div class="reviewbox">
+                    <span class="star">
+                        &starf;  &starf; &starf;  &starf;  &starf;
+                    </span>
+                    <span class="right">
+                        <h4>관객닉네임 ㅣ 2021.06.21</h4>
+                    </span>
+                </div>
+                <div class="reviewbox">
+                    <span class="star">
+                        &starf;  &starf; &starf;  &starf; &star;
+                    </span>
+                    <span class="right">
+                        <h4>관객닉네임 ㅣ 2021.06.21</h4>
+                    </span>                    
+                </div>
+                <div class="reviewbox">
+                    <span class="star">
+                        &starf;  &starf; &starf;  &star; &star;
+                    </span>
+                    <span class="right">
+                        <h4>관객닉네임 ㅣ 2021.06.21</h4>
+                    </span>            
+                </div>
+            </div>
+            <br>
+        </div>
+    </body>
+</html>
