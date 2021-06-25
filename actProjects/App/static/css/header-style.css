@@ -1,0 +1,77 @@
+#header {
+    height: 10vh;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-self: center;
+}
+
+a {
+    text-decoration: none;
+    color: black;
+}
+
+    /*id = header__authentication*/
+#header__authentication {
+    width: 100%;
+    display: flex;
+    justify-content: flex-end;
+}
+
+.auth {
+    margin-right: 0.5vw;
+}
+
+/*id = header__search-play*/
+#header__search-play {
+    display: flex;
+    justify-content: center;
+}
+
+    /*id = search-play__search-menus*/
+#search-play__logo {
+    width: 15vw;
+    margin-right: 10vw;
+
+    /*임시 영역 표시용*/
+    background-color: lightgrey;
+}
+
+    /*id = search-play__search-method*/
+#search-play__search-method {
+    width: 60vw;
+    display: flex;
+    justify-content: space-around;
+    /*임시 영역 표시용*/
+    background-color: lightgrey;
+}
+
+#search-method__search-pane, #search-method__menus {
+    align-self: center;
+}
+        /*id = search-method__menus*/
+#search-method__menus {
+    margin-right: 2vw;
+
+    /*임시 영역 표시*/
+}
+
+.menu {
+    margin-right: 0.5vw;
+    font-size: 1.3em;
+}
+
+        /*id = search-method__search-pane*/
+
+#search-pane__input {
+    width: 20vw;
+    height: 5vh;
+    font-size: 1.5em;
+}
+
+#search-pane__btn {
+    align-self: center;
+    height: 6vh;
+    width: 4vw;
+    font-size: 1em;
+}

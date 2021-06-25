@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    {% load static %}
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static 'css/header-style.css' %}">
+    <link rel="stylesheet" href="{% static 'css/search-play-with-options-style.css' %}">
+    <title>Document</title>
+</head>
+<body>
+    {% include "header.html" %}
+    <main id="main">
+        <article id="main__search-options">
+            <h4 id="options__title">검색 options</h4>
+            <form action="#" id="search-options__input">
+                <section id="input__date-from" class="option-inputs">
+                    <label for="date-from__input">언제부터</label>
+                    <input type="date" name ="date_from" value="" id="date-from__input" min="2000-01-01" max="">
+                </section>
+                <section id="input__date-to" class="option-inputs">
+                    <label for="date-to__input">언제까지</label>
+                    <input type="date" name ="date_to" value="" id="date-to__input" min="2000-01-01" max="">
+                </section>
+                <section id="input__location">
+                    <span>지역</span>
+                    <div id="location__options">
+                        <label for="location__seoul"><input type="checkbox" value="서울" name="location" class="location_name" id="location__seoul">서울</label>
+                        <label for="location__busan"><input type="checkbox" value="부산" name="location" class="location_name" id="location__busan">부산</label>
+                        <label for="location__daegu"><input type="checkbox" value="대구" name="location" class="location_name" id="location__daegu">대구</label>
+                        <label for="location__incheon"><input type="checkbox" value="인천" name="location" class="location_name" id="location__incheon">인천</label>
+                        <label for="location__gwangju"><input type="checkbox" value="광주" name="location" class="location_name" id="location__gwangju">광주</label>
+                        <label for="location__daejeon"><input type="checkbox" value="대전" name="location" class="location_name" id="location__daejeon">대전</label>
+                        <label for="location__ulsan"><input type="checkbox" value="울산" name="location" class="location_name" id="location__ulsan">울산</label>
+                        <label for="location__sejong"><input type="checkbox" value="세종" name="location" class="location_name" id="location__sejong">세종</label>
+                        <label for="location__gyeonggi"><input type="checkbox" value="경기" name="location" class="location_name" id="location__gyeonggi">경기</label>
+                        <label for="location__gangwon"><input type="checkbox" value="강원" name="location" class="location_name" id="location__gangwon">강원도</label>
+                        <label for="location__chung-cheong-bukdo"><input type="checkbox" value="충청북도" name="location" class="location_name" id="location__chung-cheong-bukdo">충청북도</label>
+                        <label for="location__chung-cheong-namdo"><input type="checkbox" value="충청남도" name="location" class="location_name" id="location__chung-cheong-namdo">충청남도</label>
+                        <label for="location__jeolabuk-do"><input type="checkbox" value="전라북도" name="location" class="location_name" id="location__jeolabuk-do">전라북도</label>
+                        <label for="location__jeolanam-do"><input type="checkbox" value="전라남도" name="location" class="location_name" id="location__jeolanam-do">전라남도</label>
+                        <label for="location__gyeongsangbuk-do"><input type="checkbox" value="경상북도" name="location" class="location_name" id="location__gyeongsangbuk-do">경상북도</label>
+                        <label for="location__gyeongsangnam-do"><input type="checkbox" value="경상남도" name="location" class="location_name" id="location__gyeongsangnam-do">경상남도</label>
+                        <label for="location__jeju"><input type="checkbox" value="제주" name="location" class="location_name" id="location__jeju">제주</label>
+                    </div>
+
+                </section>
+                <section id="input__genre">
+                    <span>장르</span>
+                    <div id="genre__options">
+                        <label for="genre__opera"><input type="checkbox" value="오페라" name="genre" class="genre_type" id="genre__opera">오페라</label>
+                        <label for="genre__classical-drama"><input type="checkbox" value="고전극" name="genre" class="genre_type" id="genre__classical-drama">고전극</label>
+                        <label for="genre__silent-drama"><input type="checkbox" value="무언극" name="genre" class="genre_type" id="genre__silent-drama">무언극</label>
+                        <label for="genre__musical"><input type="checkbox" value="뮤지컬" name="genre" class="genre_type" id="genre__musical">뮤지컬</label>
+                        <label for="genre__ballet"><input type="checkbox" value="빌레" name="genre" class="genre_type" id="genre__ballet">발레</label>
+                        <label for="genre__revenge-tragedy"><input type="checkbox" value="복수비극" name="genre" class="genre_type" id="genre__revenge-tragedy">복수비극</label>
+                        <label for="genre__irrational-drama"><input type="checkbox" value="부조리극" name="genre" class="genre_type" id="genre__irrational-drama">부조리극</label>
+                        <label for="genre__period-drama"><input type="checkbox" value="시대극" name="genre" class="genre_type" id="genre__period-drama">시대극</label>
+                        <label for="genre__puppet-show"><input type="checkbox" value="인형극" name="genre" class="genre_type" id="genre__puppet-show">인형극</label>
+                        <label for="genre__play"><input type="checkbox" value="희곡" name="genre" class="genre_type" id="genre__play">희곡</label>
+                        <label for="genre__comedy"><input type="checkbox" value="코미디" name="genre" class="genre_type" id="genre__comedy">코미디</label>
+                        <label for="genre__commenia-delarte"><input type="checkbox" value="콤메니아델라르트" name="genre" class="genre_type" id="genre__commenia-delarte">콤메니아델라르트</label>
+                    </div>
+                </section>
+                <section id="input__keyword-submit">
+                    <label for="keyword-submit__keyword">키워드</label>
+                    <input type="text" placeholder="keyword" name="keyword" id="keyword-submit__keyword">
+                    <button type="submit" id="input__submit-btn">검색</button>
+                </section>
+            </form>
+        </article>
+        <section id="main__plays">
+            <div class="plays"></div>
+            <div class="plays"></div>
+            <div class="plays"></div>
+            <div class="plays"></div>
+            <div class="plays"></div>
+            <div class="plays"></div>
+            <div class="plays"></div>
+            <div class="plays"></div>
+            <div class="plays"></div>
+            <div class="plays"></div>
+            <div class="plays"></div>
+            <div class="plays"></div>
+            <div class="plays"></div>
+            <div class="plays"></div>
+            <div class="plays"></div>
+            <div class="plays"></div>
+            <div class="plays"></div>
+            <div class="plays"></div>
+            <div class="plays"></div>
+            <div class="plays"></div>
+            <div class="plays"></div>
+            <div class="plays"></div>
+        </section>
+    </main>
+    <script src="{% static 'js/search-play-with-options-cli.js' %}"></script>
+</body>
+</html>

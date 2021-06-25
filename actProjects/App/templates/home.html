@@ -9,11 +9,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <!-- 부트스트랩 라이브러리는 써도 되는지 확실치 않아 사용하지 않았습니다 -->
     <!-- <link rel="stylesheet" href="{% static 'css/initStyle.css' %}"> -->
+    <link rel="stylesheet" href="{% static 'css/header-style.css' %}">
     <link rel="stylesheet" href="{% static 'css/style.css' %}">
     <title>RaonAir</title>
 </head>
 
 <body>
+    {% include "header.html" %}
     {% include "navbar.html" %}
     <div class="containner">
 
