@@ -54,30 +54,37 @@ hr {
 .poster {
     /* border-radius: 2px; */
 }
+.posterMonth{ overflow: hidden; border-radius: 5px; }
+
+.posterMonth img{
+    transform:scale(1);
+    -webkit-transform:scale(1);
+    transition: all 0.5s ease-in-out;
+}
+.posterMonth:hover img {
+    transform:scale(1.04);
+    -webkit-transform:scale(1.04);
+}
 .poster p {
     font-weight: bold;
 }
 .posterTip{
     position: relative;
     display: block;
-    /*
-    position: relative;
-    margin:auto;
-    display: inline-block;
-    font-weight: bold;
-    */
 }
 .posterTip-text{
+    border-radius: 5px;
+    text-align: center;
     top: 0px;
     display: none;
     position: absolute;
     border: 1px solid;
-    border-radius: 5px;
-    padding: 15px;
+    padding: 20px;
     font-size: 1em;
-    color: black;
-    background-color: rgb(246, 246, 246);
+    color: rgb(241, 241, 241);
+    background-color: rgba(0, 0, 0, 0.685);
     line-height: 1.4em;
+    bottom: 0px;
 }
 .posterTip:hover .posterTip-text{
     display:block;
