@@ -13,7 +13,7 @@
 }
 
 #main__search-options {
-    width: 80vw;
+    width: 85vw;
     height: 20vh;
     margin-top: 4vh;
     padding-bottom: 2vh;
@@ -51,19 +51,20 @@
 
     /*main__plays*/
 #main__plays {
-    width: 80vw;
+    width: 85vw;
     height: auto;
     /*margin-top: 3vh;*/
     display: flex;
-    justify-content: space-evenly;
+    /* justify-content: start; */
     align-content: space-evenly;
     flex-wrap: wrap;
 }
 
 .plays {
-    height: 30vh;
-    width: 15vw;
+    height: 300px;
+    width: 250px;
     margin-top: 3vh;
+    margin-right: 3vw;
     background-color: darkgray;
 }
 

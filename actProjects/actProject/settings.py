@@ -15,6 +15,15 @@ ALLOWED_HOSTS = []
 
 # Application definition
 
+#######################################
+#개발용, cache를 dummy cache로 설정, dummy cache는 아무것도 하지 않는다
+CACHES = {
+    'default': {
+        'BACKEND': 'django.core.cache.backends.dummy.DummyCache',
+    }
+}
+#######################################
+
 INSTALLED_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',
