@@ -5,10 +5,10 @@ const clickTheater = document.getElementById('filterTheater');
 
 const view = [];
 for(let i = 0; i < 3; i++) {
-    view[i] = document.getElementById('view' + i);
+    view.push(document.getElementById('view' + i));
 }
 
-const title = document.getElementsByClassName('contentTitle');
+const title = document.getElementsByClassName('contentText');
 const hr = document.getElementsByTagName('hr');
 
 function changeAll() {
