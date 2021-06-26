@@ -15,6 +15,9 @@ hr {
     margin: 1rem;
     padding: 20px 40px;
 }
+.content h1 {
+    text-align: center;
+}
 .contentTitle {
     display: flex;
     align-items: center;
