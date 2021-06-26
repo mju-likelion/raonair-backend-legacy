@@ -1,4 +1,6 @@
 from django.shortcuts import render
+import base64
+import os
 
 # Create your views here.
 def home(request) :
@@ -9,4 +11,11 @@ def searchPage(request) :
 
 
 def search_play_with_options(request) :
-    return render(request, 'search-play-with-options.html')
+    # with open(os.path.join(os.getcwd(), 'App/static/img/*'), 'rb') as img_file:
+    #     img_data = base64.b64encode(img_file.read()).decode('utf-8')
+    # print(img_data)
+    # print(os.path.join(os.getcwd(), 'App/static/img'))
+    images_name = os.listdir(os.path.join(os.getcwd(), 'App/static/img'))
+    print(images_name)
+    # print(os.listdir(os.path.join(os.getcwd(), 'App/static/img')))
+    return render(request, 'search-play-with-options.html', {'images_name': images_name})
