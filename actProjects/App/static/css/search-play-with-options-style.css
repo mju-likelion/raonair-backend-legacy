@@ -13,14 +13,17 @@
 }
 
 #main__search-options {
-    width: 85vw;
-    height: 20vh;
+    width: 84vw;
+    height: 17vh;
     margin-top: 7vh;
     padding-bottom: 2vh;
     display: flex;
     flex-direction: column;
     align-self: center;
-    background-color: lightgrey;
+    padding: 1em;
+    background-clip: content-box;
+    box-shadow: inset 0 0 0 0.5em lightgrey;
+    /* background-color: lightgrey; */
 }
         /*search-options__input*/
 #search-options__input {
