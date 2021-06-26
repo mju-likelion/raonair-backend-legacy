@@ -11,30 +11,18 @@
     <link rel="stylesheet" href="{% static 'css/style.css' %}">
     <title>RaonAir</title>
 
+
+    <link rel="stylesheet" href="{% static 'css/kakaomap.css' %}">
     <style>
-        .wrap {position: absolute;left: 0;bottom: 40px;width: 288px;height: 132px;margin-left: -144px;text-align: left;overflow: hidden;font-size: 12px;font-family: 'Malgun Gothic', dotum, '돋움', sans-serif;line-height: 1.5;}
-        .wrap * {padding: 0;margin: 0;}
-        .wrap .info {width: 286px;height: 120px;border-radius: 5px;border-bottom: 2px solid #ccc;border-right: 1px solid #ccc;overflow: hidden;background: #fff;}
-        .wrap .info:nth-child(1) {border: 0;box-shadow: 0px 1px 2px #888;}
-        .info .title {padding: 5px 0 0 10px;height: 30px;background: #eee;border-bottom: 1px solid #ddd;font-size: 18px;font-weight: bold;}
-        .info .close {position: absolute;top: 10px;right: 10px;color: #888;width: 17px;height: 17px;background: url('https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/overlay_close.png');}
-        .info .close:hover {cursor: pointer;}
-        .info .body {position: relative;overflow: hidden;}
-        .info .desc {position: relative;margin: 13px 0 0 90px;height: 75px;}
-        .desc .ellipsis {overflow: hidden;text-overflow: ellipsis;white-space: nowrap;}
-        .desc .jibun {font-size: 11px;color: #888;margin-top: -2px;}
-        .info .img {position: absolute;top: 6px;left: 5px;width: 73px;height: 71px;border: 1px solid #ddd;color: #888;overflow: hidden;}
-        .info:after {content: '';position: absolute;margin-left: -12px;left: 50%;bottom: 0;width: 22px;height: 12px;background: url('https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/vertex_white.png')}
-        .info .link {color: #5085BB;}
 
         .name{
             width: 500px;
-            height : 60px;
             border-radius : 10px;
             background-color : rgb(243, 241, 241);
             border: 6px solid #fff;
             box-shadow: 0 0 16px rgb(221,221,221);
             text-align: center;
+            margin-bottom: 30px;
 
         }
         .box{
@@ -93,6 +81,15 @@
         h3{
             padding-top : 25px;
         }
+        #center{
+            display : flex;
+            align-items: center;
+            flex-direction: column;
+        }
+        .name2{
+            margin: 0px;
+            padding: 10px;
+        }
 
     </style>
 </head>
@@ -105,11 +102,11 @@
         <div id="center">
             <h1>공연정보</h1>
             <div class="name">
-                <h2>&lt;작품명(콰이어트플레이스)&gt;</h2>
+                <h2 class="name2">빈센트 리버</h2>
             </div>
             <div id="grid">
                 <div class="포스터">
-                    <img src="vhtmxj.jpg" width=300px; height: 400px;>
+                    <img src="{% static 'img/month2.jpg' %}" width=300px; height: 400px;>
                 </div>
 
                 <div class="소개">
@@ -123,7 +120,8 @@
                     <h3>2021.06.01-2021.06.31</h3>
                     <h3>10000원</h3>
                     <h3>130분</h3>
-                    <h4>실체를 알 수 없는 괴생명체의 공격으로 일상의 모든 것이 사라진 세상, 아이들 대신 죽음을 선택한 아빠의 희생 이후 살아남은 가족들은 위험에 노출된다. 갓 태어난 막내를 포함한 아이들과 함께 소리 없는 사투를 이어가던 엄마 ‘에블린’은 살아남기 위해 새로운 은신처를 찾아 집 밖을 나서지만, 텅 빈 고요함으로 가득한 바깥은 더 큰 위험이 도사리고 있는데...</h4>
+                    <h4>하루아침에 아들이 처참하게 살해당한다. 동성애자라는 이유에서다. 가상의 이야기지만, 우리 사회가 마주하는 현실도 크게 다르지 않은 요즘이다. 차별과 혐오에 대한 담론이 계속되는 오늘날, 성소수자 문제에 뿌리까지 접근하는 연극 ‘빈센트 리버’가 막을 올린다. 드라마, 연극 등 다방면에서 관록의 연기를 보여주고 있는 배우 서이숙은 아들을 잃고 절망하는 ‘아니타’ 역을 맡아 작품의 메시지를 전한다. “지금 내가 발 딛고 살아가는 세상의 일을 작품으로 말하고, 연기로 표현하고 싶다”는 그녀의 이야기를 들어봤다.
+                    </h4>
                 </div>
             </div>
 
@@ -151,6 +149,7 @@
                         <td><span class="circle"> </td>
                     </tr>
                     <tr>
+                        
                         <td>이름</td>
                         <td>이름</td>
                         <td>이름</td>

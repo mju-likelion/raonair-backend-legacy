@@ -6,3 +6,9 @@ def home(request) :
 
 def searchPage(request) :
     return render(request, 'searchPage.html')
+
+def detailpage(request) :
+    return render(request, 'detailpage.html')
+
+       
+    
