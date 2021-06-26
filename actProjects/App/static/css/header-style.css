@@ -26,15 +26,20 @@ a {
 #header__search-play {
     display: flex;
     justify-content: center;
+    margin-top: 1vh;
+    
 }
 
     /*id = search-play__search-menus*/
 #search-play__logo {
     width: 15vw;
+    height: 7vh;
     margin-right: 10vw;
-
+    padding: 1em;
+    box-shadow: 10px 5px 5px lightgrey;
+    border: 2px solid lightgrey;
     /*임시 영역 표시용*/
-    background-color: lightgrey;
+    /* background-color: lightgrey; */
 }
 
     /*id = search-play__search-method*/
@@ -42,8 +47,13 @@ a {
     width: 60vw;
     display: flex;
     justify-content: space-around;
+    padding: 1em;
     /*임시 영역 표시용*/
-    background-color: lightgrey;
+    /* background-color: lightgrey; */
+    /* background-clip: content-box; */
+    /* box-shadow: inset 0 0 0 0.5em lightgrey; */
+    box-shadow: 10px 5px 5px lightgrey;
+    border: 2px solid lightgrey;
 }
 
 #search-method__search-pane, #search-method__menus {
