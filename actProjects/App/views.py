@@ -11,11 +11,6 @@ def searchPage(request) :
 
 
 def search_play_with_options(request) :
-    # with open(os.path.join(os.getcwd(), 'App/static/img/*'), 'rb') as img_file:
-    #     img_data = base64.b64encode(img_file.read()).decode('utf-8')
-    # print(img_data)
-    # print(os.path.join(os.getcwd(), 'App/static/img'))
+    #이미 파일들의 이름을 읽어 온다.
     images_name = os.listdir(os.path.join(os.getcwd(), 'App/static/img'))
-    print(images_name)
-    # print(os.listdir(os.path.join(os.getcwd(), 'App/static/img')))
     return render(request, 'search-play-with-options.html', {'images_name': images_name})
