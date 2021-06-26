@@ -72,31 +72,9 @@
         <section id="main__plays">
             {% for image_name in images_name %}
             <div class="plays">
-                <img src="{% static 'img/' %}{{image_name}}" alt="plays poster image">
+                <img src="{% static 'img/' %}{{image_name}}" alt="plays poster image" class="plays-image">
             </div> 
             {% endfor %}
-            <!-- <div class="plays"></div>
-            <div class="plays"></div>
-            <div class="plays"></div>
-            <div class="plays"></div>
-            <div class="plays"></div>
-            <div class="plays"></div>
-            <div class="plays"></div>
-            <div class="plays"></div>
-            <div class="plays"></div>
-            <div class="plays"></div>
-            <div class="plays"></div>
-            <div class="plays"></div>
-            <div class="plays"></div>
-            <div class="plays"></div>
-            <div class="plays"></div>
-            <div class="plays"></div>
-            <div class="plays"></div>
-            <div class="plays"></div>
-            <div class="plays"></div>
-            <div class="plays"></div>
-            <div class="plays"></div>
-            <div class="plays"></div> -->
         </section>
     </main>
     <script src="{% static 'js/search-play-with-options-cli.js' %}"></script>
