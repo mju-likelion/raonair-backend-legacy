@@ -1,5 +1,5 @@
 #header {
-    height: 10vh;
+    height: 8%;
     width: 100%;
     display: flex;
     flex-direction: column;
@@ -19,32 +19,28 @@ a {
 }
 
 .auth {
-    margin-right: 0.5vw;
+    margin-right: 5px;
 }
 
 /*id = header__search-play*/
 #header__search-play {
     display: flex;
     justify-content: center;
-    margin-top: 1vh;
+    margin-top: 15px;
     
 }
 
     /*id = search-play__search-menus*/
 #search-play__logo {
-    /* width: 15vw;
-    height: 7vh; */
-    margin-right: 10vw;
-    padding: 1em;
+    margin-right: 80px;
+    padding: 18px;
     box-shadow: 10px 5px 5px lightgrey;
     border: 2px solid lightgrey;
-    /*임시 영역 표시용*/
-    /* background-color: lightgrey; */
 }
 
 #search-play__logo {
-    height: 8vh;
-    width: 13vw;
+    height: 80px;
+    width: 180px;
 }
 
 #logo__page-name, #logo__logo{
@@ -53,14 +49,10 @@ a {
 
     /*id = search-play__search-method*/
 #search-play__search-method {
-    width: 60vw;
+    width: 1000px;
     display: flex;
     justify-content: space-around;
-    padding: 1em;
-    /*임시 영역 표시용*/
-    /* background-color: lightgrey; */
-    /* background-clip: content-box; */
-    /* box-shadow: inset 0 0 0 0.5em lightgrey; */
+    padding: 18px;
     box-shadow: 10px 5px 5px lightgrey;
     border: 2px solid lightgrey;
 }
@@ -70,27 +62,25 @@ a {
 }
         /*id = search-method__menus*/
 #search-method__menus {
-    margin-right: 2vw;
-
-    /*임시 영역 표시*/
+    margin-right: 15px;
 }
 
 .menu {
-    margin-right: 0.5vw;
+    margin-right: 8px;
     font-size: 1.3em;
 }
 
         /*id = search-method__search-pane*/
 
 #search-pane__input {
-    width: 20vw;
-    height: 5vh;
+    width: 400px;
+    height: 40px;
     font-size: 1.5em;
 }
 
 #search-pane__btn {
     align-self: center;
-    height: 6vh;
-    width: 4vw;
+    height: 50px;
+    width: 70px;
     font-size: 1em;
 }
