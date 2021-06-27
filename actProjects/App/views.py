@@ -11,6 +11,6 @@ def searchPage(request) :
 
 
 def search_play_with_options(request) :
-    #이미 파일들의 이름을 읽어 온다.
+    #이미지 파일들의 이름을 읽어 온다.
     images_name = os.listdir(os.path.join(os.getcwd(), 'App/static/img'))
     return render(request, 'search-play-with-options.html', {'images_name': images_name})

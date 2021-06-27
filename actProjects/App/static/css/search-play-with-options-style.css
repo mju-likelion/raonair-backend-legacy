@@ -27,6 +27,8 @@
 }
         /*search-options__input*/
 #search-options__input {
+    /* height: 17vh;
+    width: 82vw; */
     display: flex;
     justify-content: space-around;
 }

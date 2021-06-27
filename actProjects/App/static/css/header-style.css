@@ -32,14 +32,23 @@ a {
 
     /*id = search-play__search-menus*/
 #search-play__logo {
-    width: 15vw;
-    height: 7vh;
+    /* width: 15vw;
+    height: 7vh; */
     margin-right: 10vw;
     padding: 1em;
     box-shadow: 10px 5px 5px lightgrey;
     border: 2px solid lightgrey;
     /*임시 영역 표시용*/
     /* background-color: lightgrey; */
+}
+
+#search-play__logo {
+    height: 8vh;
+    width: 13vw;
+}
+
+#logo__page-name, #logo__logo{
+    font-size: 1rem;
 }
 
     /*id = search-play__search-method*/
