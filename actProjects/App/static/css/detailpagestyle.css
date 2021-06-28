@@ -44,7 +44,7 @@ tr {
 }
 
 h3 {
-    padding-top : 25px;
+    padding-top : 20px;
 }
 
 .name2 {
@@ -67,6 +67,7 @@ h3 {
     height: 700px;
     border-radius: 10px;
     border: 3px solid rgb(194, 191, 191);
+    overflow-x: auto;
 }
 
 .review {
