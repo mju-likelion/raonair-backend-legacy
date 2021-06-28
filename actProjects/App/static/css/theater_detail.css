@@ -1,0 +1,107 @@
+.containner {
+    top: 0%;
+    margin: 0 auto;
+    width: 1200px;
+
+    border: solid 1px rgb(236, 236, 236)
+}
+.slide_wrap {
+    position: relative;
+    width: 1200px;
+    height: 400px;
+    margin : auto;
+    background-color: red;
+}
+.slide_box {
+    width: 100%;
+    margin: auto;
+    /* height: 100%; */
+    overflow: hidden;
+}
+.slide_view {
+    overflow: hidden;
+}
+.slide_btn {
+    position: absolute;
+    display: flex;
+    width: 1200px;
+    height: 100%;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 50px;
+}
+.slide_btn p:hover {
+    cursor: pointer;
+}
+.slide_content {
+    display: table;
+    float: left;
+    width: 1200px;
+    height: 400px;
+    background-color: blue;
+}
+.notion_wrap {
+    display: flex;
+    justify-content: center;
+}
+.notion_list {
+    width: 100%;
+    border: solid 1px rgb(231, 231, 231);
+    border-radius: 8px;
+    padding: 20px 30px;
+}
+.notion_post {
+    margin: 10px 0;
+}
+.acter_wrap {
+    margin: 50px 0px;
+}
+.acter_wrap h1 {
+    text-align: center;
+}
+.acter_list {
+    display: flex;
+    justify-content: center;
+}
+.acter_line {
+    width: 50%;
+    border: solid 1px rgb(231, 231, 231);
+    margin-bottom: 30px;
+}
+.acter_box p {
+    text-align: center;
+    font-weight: bold;
+}
+.acter_img {
+    width: 125px;
+    height: 125px;
+    object-fit: cover;
+    border-radius: 50%;
+    border: solid 1px rgb(231, 231, 231);
+    box-shadow: 0 0 12px rgb(221,221,221);
+    margin: 0 30px;
+}
+.act_wrap {
+
+}
+.act_wrap h1 {
+    text-align: center;
+}
+.act_list {
+    display: flex;
+    justify-content: center;
+}
+.act_box {
+    margin: 0 20px;
+}
+.act_box p {
+    text-align: center;
+}
+.act_img {
+    width: 240px;
+    height: 340px;
+    object-fit: cover;
+    border-radius: 5px;
+    border: solid 1px rgb(231, 231, 231);
+}

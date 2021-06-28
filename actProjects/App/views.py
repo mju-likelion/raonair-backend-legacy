@@ -6,3 +6,6 @@ def home(request) :
 
 def searchPage(request) :
     return render(request, 'searchPage.html')
+
+def theaterDetail(request) :
+    return render(request, 'theater_detail.html')

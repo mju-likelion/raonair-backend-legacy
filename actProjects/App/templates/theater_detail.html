@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/initStyle.css' %}">
+    <link rel="stylesheet" href="{% static 'css/theater_detail.css' %}">
+    <title>극단페이지</title>
+</head>
+<body>
+    {% include "navbar.html" %}
+    <div class="containner">
+        <div class="slide_wrap" id="slideWrap">
+            <!-- 임시 버튼 이모지 -->
+            <div class="slide_btn">
+                <p id="slide_prev">⏪</p><p id="slide_next">⏩</p>
+            </div>
+            <div class="slide_box">
+                <div class="slide_view" id="slideView">
+                    <div class="slide_content" id="slide1"><p>첫번째</p></div>
+                    <!-- 슬라이드 구현 중 -->
+                    <!-- <div class="slide_content" id="slide2"><p>두번째</p></div>
+                    <div class="slide_content" id="slide3"><p>세번째</p></div> -->
+                </div>
+            </div>
+        </div>
+
+        <div class="notion_wrap">
+            <div class="notion_list">
+                <h2>공지</h2>
+                <ul>
+                    <li class="notion_post">배우를 모집합니다</li>
+                    <li class="notion_post">티켓 이벤트!</li>
+                    <li class="notion_post">우리 극단을 소개합니다</li>
+                </ul>
+            </div>
+            <div class="notion_list">
+                <h2>공지</h2>
+                <ul>
+                    <li class="notion_post">배우를 모집합니다</li>
+                    <li class="notion_post">티켓 이벤트!</li>
+                    <li class="notion_post">우리 극단을 소개합니다</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- 극단 구성원도 슬라이드 형태로 제작하면 어떨지 -->
+        <div class="acter_wrap">
+            <h1>극단 구성원</h1><hr class="acter_line">
+            <div class="acter_list">
+                <div class="acter_box">
+                    <a class="acter_img_box" href="">
+                        <img class="acter_img" src="{% static 'img/acter.png' %}" alt="배우이미지">
+                    </a>
+                    <p>이름</p>
+                    <p>직책</p>
+                </div>
+                <div class="acter_box">
+                    <a class="acter_img_box" href="">
+                        <img class="acter_img" src="{% static 'img/acter.png' %}" alt="배우이미지">
+                    </a>
+                    <p>이름</p>
+                    <p>직책</p>
+                </div>
+                <div class="acter_box">
+                    <a class="acter_img_box" href="">
+                        <img class="acter_img" src="{% static 'img/acter.png' %}" alt="배우이미지">
+                    </a>
+                    <p>이름</p>
+                    <p>직책</p>
+                </div>
+                <div class="acter_box">
+                    <a class="acter_img_box" href="">
+                        <img class="acter_img" src="{% static 'img/acter.png' %}" alt="배우이미지">
+                    </a>
+                    <p>이름</p>
+                    <p>직책</p>
+                </div>
+                <div class="acter_box">
+                    <a class="acter_img_box" href="">
+                        <img class="acter_img" src="{% static 'img/acter.png' %}" alt="배우이미지">
+                    </a>
+                    <p>이름</p>
+                    <p>직책</p>
+                </div>
+                <div class="acter_box">
+                    <a class="acter_img_box" href="">
+                        <img class="acter_img" src="{% static 'img/acter.png' %}" alt="배우이미지">
+                    </a>
+                    <p>이름</p>
+                    <p>직책</p>
+                </div>
+            </div>
+        </div>
+        
+        <!-- 슬라이드 형태로 구현할지 논의 필요 -->
+        <div class="act_wrap">
+            <h1>진행 예정 공연</h1><hr class="acter_line">
+            <div class="act_list">
+                <div class="act_box">
+                    <a class="act_img_box" href="/">
+                        <img class="act_img" src="{% static 'img/home5.jpg' %}" alt="공연이미지">
+                    </a>
+                    <p>제목</p>
+                </div>
+                <div class="act_box">
+                    <a class="act_img_box" href="/">
+                        <img class="act_img" src="{% static 'img/home2.jpg' %}" alt="공연이미지">
+                    </a>
+                    <p>제목</p>
+                </div>
+                <div class="act_box">
+                    <a class="act_img_box" href="/">
+                        <img class="act_img" src="{% static 'img/home4.jpg' %}" alt="공연이미지">
+                    </a>
+                    <p>제목</p>
+                </div>
+                <div class="act_box">
+                    <a class="act_img_box" href="/">
+                        <img class="act_img" src="{% static 'img/home3.jpg' %}" alt="공연이미지">
+                    </a>
+                    <p>제목</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="act_wrap">
+            <h1>지난 공연</h1><hr class="acter_line">
+            <div class="act_list">
+                <div class="act_box">
+                    <a class="act_img_box" href="/">
+                        <img class="act_img" src="{% static 'img/home5.jpg' %}" alt="공연이미지">
+                    </a>
+                    <p>제목</p>
+                </div>
+                <div class="act_box">
+                    <a class="act_img_box" href="/">
+                        <img class="act_img" src="{% static 'img/home2.jpg' %}" alt="공연이미지">
+                    </a>
+                    <p>제목</p>
+                </div>
+                <div class="act_box">
+                    <a class="act_img_box" href="/">
+                        <img class="act_img" src="{% static 'img/home4.jpg' %}" alt="공연이미지">
+                    </a>
+                    <p>제목</p>
+                </div>
+                <div class="act_box">
+                    <a class="act_img_box" href="/">
+                        <img class="act_img" src="{% static 'img/home3.jpg' %}" alt="공연이미지">
+                    </a>
+                    <p>제목</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="filmography_wrap">
+
+        </div>
+    </div>
+
+    <script src="{% static 'js/theater_detail_slid.js' %}"></script>
+</body>
+</html>
