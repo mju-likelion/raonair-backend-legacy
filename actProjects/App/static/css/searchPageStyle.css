@@ -8,14 +8,15 @@ hr {
     background-color: rgb(245, 245, 245);
     top: 0%;
     width: 1200px;
-    border: solid 1px rgb(204, 204, 204);
+    padding-top: 30px;
+    border: solid 1px rgb(238, 238, 238);
 }
 .content {
     background-color: rgb(255, 255, 255);
     margin: 1rem;
     padding: 20px 40px;
 }
-.content h1 {
+.containner h1 {
     text-align: center;
 }
 .contentTitle {
@@ -50,7 +51,7 @@ hr {
     border: solid 1px rgb(231, 231, 231);
 }
 .poster {
-    /* border-radius: 2px; */
+    margin: 20px 10px
 }
 .poster p {
     font-weight: bold;
@@ -86,6 +87,10 @@ hr {
     display: flex;
     align-items: center;
 }
+.contentText a:hover {
+    cursor: pointer;
+    font-weight: bold;
+}
 .filter {
     display: flex;
     justify-content: center;
@@ -110,15 +115,17 @@ hr {
 .actInner, .acterInner {
     padding: 20px 0px;
     display: flex;
-    justify-content: space-between;
-    position: relative;
+    flex-wrap: wrap;
+    justify-content: center;
 }
 .acterImg {
-    width: 140px;
-    height: 140px;
+    width: 125px;
+    height: 125px;
     object-fit: cover;
     border-radius: 50%;
     border: solid 1px rgb(231, 231, 231);
+    box-shadow: 0 0 12px rgb(221,221,221);
+    margin: 0 30px;
 }
 .theaterInner {
     padding: 20px 0px;
