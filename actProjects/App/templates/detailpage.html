@@ -14,94 +14,7 @@
 
     <link rel="stylesheet" href="{% static 'css/kakaomap.css' %}">
     <link rel="stylesheet" href="{% static 'css/detailpagestyle.css' %}">
-    <style>
 
-        .name{
-            width: 350px;
-            border-radius : 10px;
-            background-color : rgb(243, 241, 241);
-            border: 6px solid #fff;
-            box-shadow: 0 0 16px rgb(221,221,221);
-            text-align: center;
-            margin-bottom: 30px;
-
-        }
-        #grid{
-            display : grid;
-            grid-template-columns: 330px 120px 350px;
-        }
-    
-        h4{
-            font-weight: lighter;
-        }
-        .place{
-            width: 800px;
-            height :35px;
-            border-radius : 10px;
-            border : 3px solid rgb(194, 191, 191);
-            text-align: center;
-            padding-top: 10px;
-        }
-        .circle{
-            display : grid;
-            grid-template-columns: 1fr 1fr ;
-            width : 125px;
-            height : 125px;
-            border-radius : 50%;
-            border: 6px solid #fff;
-            background-color: rgb(194, 191, 191);
-            box-shadow: 0 0 16px rgb(221,221,221);
-            margin : 10px;
-        }
-        tr{
-            text-align: center;
-        }
-        .star{
-        }
-        .right{
-            text-align: right;
-            margin-right: 30px;
-            align-items: flex-end;
-        }
-        h3{
-            padding-top : 25px;
-        }
-        #center{
-            display : flex;
-            align-items: center;
-            flex-direction: column;
-        }
-        .name2{
-            margin: 0px;
-            padding: 10px;
-        }
-        .box{
-            width: 800px;
-            height : 700px;
-            border-radius : 10px;
-            border : 3px solid rgb(194, 191, 191);
-        }
-        .review{
-            width : 700px;
-            margin-left: 30px;
-
-        }
-        .reviewbox{
-            width : 750px;
-            height : 200px;
-            background-color : rgb(243, 241, 241);
-            border-radius : 10px;
-            margin-top: 25px;
-            margin-left: 20px;
-            display : flex;
-            flex-wrap: wrap;
-        }
-        .profile{
-            width : 125px;
-            height : 125px;
-            border-radius : 50%;
-        }
-    </style>
 </head>
 
 
@@ -269,49 +182,55 @@
 
             <div class="box">
                     <div class="reviewbox">
-                        <span class="star">
-                            &starf;  &starf; &starf;  &starf;  &starf;
-                        </span>
+                        <div class="reviewbox-header">
+                            <span class="star">
+                                <h4>&starf; &starf; &starf; &starf; &starf;</h4>
+                            </span>
 
-                        <span class="right">
-                            <h4> asdf*** ㅣ 2021.06.21</h4>
-                        </span>
+                            <span class="right">
+                                <h4> asdf*** ㅣ 2021.06.21</h4>
+                            </span>
+                        </div>
                         <div class="review">
-                            <h4>정말 대담한 극본….
+                            <p>정말 대담한 극본….
                                 배우님들은 어쩜 이런 연기를 매일 하시죠.. 정말 존경스러워요 대단합니다… ㅠㅠ 정말 극본도 괜찮고 참 좋네요…
                                 하. 그치만 정신적 심리적으로 많이 힘들기도 한 극.
                                 한편으로는 제가 꿈꾸는 사랑이야기를 듣기도 한 것 같아서 참 좋습니다…
-                            </h4>
+                            </p>
                         </div>
                     </div>
                 <div class="reviewbox">
-                    <span class="star">
-                        &starf;  &starf; &starf;  &starf; &star;
-                    </span>
-                    <span class="right">
-                        <h4> qrw*** ㅣ 2021.06.20</h4>
-                    </span> 
+                    <div class="reviewbox-header">
+                        <span class="star">
+                            <h4>&starf;  &starf; &starf;  &starf; &star;</h4>
+                        </span>
+                        <span class="right">
+                            <h4> qrw*** ㅣ 2021.06.20</h4>
+                        </span>
+                    </div>
                     <div class="review">
-                        <h4>정말 대담한 극본….
+                        <p>정말 대담한 극본….
                             배우님들은 어쩜 이런 연기를 매일 하시죠.. 정말 존경스러워요 대단합니다… ㅠㅠ 정말 극본도 괜찮고 참 좋네요…
                             하. 그치만 정신적 심리적으로 많이 힘들기도 한 극.
                             한편으로는 제가 꿈꾸는 사랑이야기를 듣기도 한 것 같아서 참 좋습니다…
-                        </h4>
+                        </p>
                     </div>
                 </div>
                 <div class="reviewbox">
-                    <span class="star">
-                        &starf;  &starf; &starf;  &star; &star;
-                    </span>
-                    <span class="right">
-                        <h4> zxcv*** ㅣ 2021.06.11</h4>
-                    </span>
+                    <div class="reviewbox-header">
+                        <span class="star">
+                            <h4>&starf; &starf; &starf; &star; &star;</h4>
+                        </span>
+                        <span class="right">
+                            <h4> zxcv*** ㅣ 2021.06.11</h4>
+                        </span>
+                    </div>
                     <div class="review">
-                        <h4>정말 대담한 극본….
+                        <p>정말 대담한 극본….
                             배우님들은 어쩜 이런 연기를 매일 하시죠.. 정말 존경스러워요 대단합니다… ㅠㅠ 정말 극본도 괜찮고 참 좋네요…
                             하. 그치만 정신적 심리적으로 많이 힘들기도 한 극.
                             한편으로는 제가 꿈꾸는 사랑이야기를 듣기도 한 것 같아서 참 좋습니다…
-                        </h4>
+                        </p>
                     </div>
                 </div>
             </div>
