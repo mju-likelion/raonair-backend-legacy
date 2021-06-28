@@ -1,117 +1,118 @@
 
-        .name {
-            width: 350px;
-            border-radius: 10px;
-            background-color: rgb(243, 241, 241);
-            border: 6px solid #fff;
-            box-shadow: 0 0 16px rgb(221,221,221);
-            text-align: center;
-            margin-bottom: 30px;
+#center {
+display: flex;
+align-items: center;
+flex-direction: column;
+}
 
-        }
+.actname {
+width: 350px;
+border-radius: 10px;
+background-color: rgb(243, 241, 241);
+border: 6px solid #fff;
+box-shadow: 0 0 16px rgb(221,221,221);
+text-align: center;
+margin-bottom: 30px;
+}
 
-        #grid {
-            display: grid;
-            grid-template-columns: 330px 120px 350px;
-        }
-    
-        h4 {
-            font-weight: lighter;
-        }
+#grid {
+    display: grid;
+    grid-template-columns: 330px 120px 350px;
+}
 
-        .place {
-            width: 800px;
-            height: 35px;
-            border-radius: 10px;
-            border: 3px solid rgb(194, 191, 191);
-            text-align: center;
-            padding-top: 10px;
-        }
+h4 {
+    font-weight: lighter;
+}
 
-        .circle {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            width: 125px;
-            height: 125px;
-            border-radius: 50%;
-            border: 6px solid #fff;
-            background-color: rgb(194, 191, 191);
-            box-shadow: 0 0 16px rgb(221,221,221);
-            margin: 10px;
-        }
+.place {
+    width: 800px;
+    height: 35px;
+    border-radius: 10px;
+    border: 3px solid rgb(194, 191, 191);
+    text-align: center;
+    padding-top: 10px;
+}
 
-        tr {
-            text-align: center;
-        }
+tr {
+    text-align: center;
+}
 
-        .right {
-            text-align: right;
-            margin-right: 30px;
-            align-items: flex-end;
-        }
+.right {
+    text-align: right;
+    margin-right: 30px;
+    align-items: flex-end;
+}
 
-        h3 {
-            padding-top : 25px;
-        }
+h3 {
+    padding-top : 25px;
+}
 
-        #center {
-            display: flex;
-            align-items: center;
-            flex-direction: column;
-        }
+.name2 {
+    margin: 0px;
+    padding: 10px;
+}
 
-        .name2 {
-            margin: 0px;
-            padding: 10px;
-        }
+.intro {
+    display: flex;
+    flex-direction: row;
+    overflow-x: auto;
+}
 
-        .box {
-            width: 800px;
-            height: 700px;
-            border-radius: 10px;
-            border: 3px solid rgb(194, 191, 191);
-        }
+.person {
+    margin-right: 10px;
+}
 
-        .review {
-            width: 700px;
-            margin-top: 0;
-            margin-left: 30px;
-            line-height: 35px;
-        }
-        .star {
-            height: 30px;
-            margin-left: 30px;
-        }
+.box {
+    width: 800px;
+    height: 700px;
+    border-radius: 10px;
+    border: 3px solid rgb(194, 191, 191);
+}
 
-        .reviewbox {
-            width: 750px;
-            height: 200px;
-            background-color: rgb(243, 241, 241);
-            border-radius: 10px;
-            margin-top: 25px;
-            margin-left: 20px;
-            display: flex;
-            flex-direction: column;
-        }
+.review {
+    width: 700px;
+    margin-top: 0;
+    margin-left: 30px;
+    line-height: 35px;
+}
+.star {
+    height: 30px;
+    margin-left: 30px;
+}
 
-        .reviewbox-header {
-            display: flex;
-            flex-direction: row;
-            justify-content: space-between;
-        }
+.reviewbox {
+    width: 750px;
+    height: 200px;
+    background-color: rgb(243, 241, 241);
+    border-radius: 10px;
+    margin-top: 25px;
+    margin-left: 20px;
+    display: flex;
+    flex-direction: column;
+}
 
-        .profile {
-            width: 125px;
-            height: 125px;
-            border-radius: 50%;
-        }
+.reviewbox-header {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
 
-        .person__photo {
-            width: 185px;
-            height: 185px;
-            border-radius: 50%;
-            border: 5px solid #fff;
-            object-fit: cover;
-            box-shadow: 0 0 16px rgb(80, 78, 78);
-            margin: 10px;
-        }
+.profile {
+    width: 125px;
+    height: 125px;
+    border-radius: 50%;
+}
+
+.person__photo {
+    width: 125px;
+    height: 125px;
+    border-radius: 50%;
+    border: 4px solid #fff;
+    object-fit: cover;
+    box-shadow: 0 0 16px rgb(80, 78, 78);
+    margin: 15px;
+}
+
+.person_name {
+    margin-bottom: 0px;
+}
