@@ -13,6 +13,7 @@
 
 
     <link rel="stylesheet" href="{% static 'css/kakaomap.css' %}">
+    <link rel="stylesheet" href="{% static 'css/detailpagestyle.css' %}">
     <style>
 
         .name{
@@ -56,7 +57,6 @@
             text-align: center;
         }
         .star{
-            margin : 20px;
         }
         .right{
             text-align: right;
@@ -83,6 +83,8 @@
         }
         .review{
             width : 700px;
+            margin-left: 30px;
+
         }
         .reviewbox{
             width : 750px;
@@ -93,6 +95,11 @@
             margin-left: 20px;
             display : flex;
             flex-wrap: wrap;
+        }
+        .profile{
+            width : 125px;
+            height : 125px;
+            border-radius : 50%;
         }
     </style>
 </head>
@@ -108,7 +115,7 @@
                 <h2 class="name2">빈센트 리버</h2>
             </div>
             <div id="grid">
-                <div class="포스터">
+                <div class="poster">
                     <img src="{% static 'img/month2.jpg' %}" width=300px; height: 400px;>
                 </div>
 
@@ -145,11 +152,32 @@
 
                 <table>
                     <tr>
-                        <td><span class="circle" img src="{% static 'img/actor1.jpg' %}" > </td>
-                        <td><span class="circle"> </td>
-                        <td><span class="circle"> </td>
-                        <td><span class="circle"> </td>
-                        <td><span class="circle"> </td>
+                        <td>
+                            <span class="profile">
+                                <img src="{% static 'img/actor1.jpg' %}" width=125px; height: 125px; 100%>
+                            </span>
+                        </td>
+                        <td>
+                            <span class="circle">
+                                <img src="{% static 'img/actor2.jpg' %}"  width=125px; height: 125px; 100%>
+                            </span>
+                        </td>
+                        <td>
+                            <span class="circle">
+                                <img src="{% static 'img/actor3.jpg' %}"  width=125px; height: 125px;>
+                            </span>
+                        </td>
+                        <td>
+                            <span class="circle">
+                                <img src="{% static 'img/actor4.jpg' %}"  width=125px; height: 125px;>
+                            </span>
+                        </td>
+                        <td>
+                            <span class="circle">
+                                <img src="{% static 'img/actor5.jpg' %}"  width=125px; height: 125px;>
+                            </span>
+                        </td>
+                        
                     </tr>
                     <tr>
                         
@@ -240,11 +268,11 @@
             <h3>관람후기</h3>
 
             <div class="box">
-                <div class="review">
                     <div class="reviewbox">
                         <span class="star">
                             &starf;  &starf; &starf;  &starf;  &starf;
                         </span>
+
                         <span class="right">
                             <h4> asdf*** ㅣ 2021.06.21</h4>
                         </span>
@@ -256,7 +284,6 @@
                             </h4>
                         </div>
                     </div>
-                </div>
                 <div class="reviewbox">
                     <span class="star">
                         &starf;  &starf; &starf;  &starf; &star;
