@@ -14,6 +14,7 @@
 <body>
     {% include "navbar.html" %}
     <div class="containner">
+        <h1>'공연'의 검색결과입니다</h1>
         <div class="filter">
             <input class="filterRadio" type="radio" id="filterAll" name="filtering" value="all" checked>
             <label for="filterAll" class="filterLabel" onclick="changeAll()">전체</label>
@@ -26,10 +27,6 @@
         </div>
         <hr>
         <div class="content">
-            <!-- '내용'은 검색어가 들어갈 자리임
-            버튼 클릭 시 바뀌는 부분은 임시로 display로 처리함
-            -->
-            <h1>'공연'의 검색결과입니다</h1>
             <div>
                 <div class="contentText"><h2>공연</h2>&nbsp;<a onclick="changeAct()">더보기</a></div>
                 <div class="actInner" id="view0">
@@ -72,31 +69,31 @@
                     <div class="poster">
                         <a class="imgInner" href=""><img class="acterImg" src="{% static 'img/acter.png' %}" alt="배우이미지"></a>
                         <div class="posterBtn" style="text-align:center;">
-                            <p>이름</p>
+                            <p>채송화</p>
                         </div>
                     </div>
                     <div class="poster">
                         <a class="imgInner" href=""><img class="acterImg" src="{% static 'img/acter.png' %}" alt="배우이미지"></a>
                         <div class="posterBtn" style="text-align:center;">
-                            <p>이름</p>
+                            <p>이익준</p>
                         </div>
                     </div>
                     <div class="poster">
                         <a class="imgInner" href=""><img class="acterImg" src="{% static 'img/acter.png' %}" alt="배우이미지"></a>
                         <div class="posterBtn" style="text-align:center;">
-                            <p>이름</p>
+                            <p>안정원</p>
                         </div>
                     </div>
                     <div class="poster">
                         <a class="imgInner" href=""><img class="acterImg" src="{% static 'img/acter.png' %}" alt="배우이미지"></a>
                         <div class="posterBtn" style="text-align:center;">
-                            <p>이름</p>
+                            <p>이노아</p>
                         </div>
                     </div>
                     <div class="poster">
                         <a class="imgInner" href=""><img class="acterImg" src="{% static 'img/acter.png' %}" alt="배우이미지"></a>
                         <div class="posterBtn" style="text-align:center;">
-                            <p>이름</p>
+                            <p>곽선영</p>
                         </div>
                     </div>
                 </div><hr style="margin-bottom: 0;">
@@ -105,23 +102,23 @@
                 <ul class="theaterInner" id="view2">
                     <li class="theaterList">
                         <p><a class="imgT" href="/"><img class="theaterImg" src="{% static 'img/theater1.png' %}" alt="극단이미지"></a></p>
-                        <p>극단이름</p>
+                        <p>극단 이방인</p>
                     </li>
                     <li class="theaterList">
                         <p><a class="imgT" href="/"><img class="theaterImg" src="{% static 'img/theater2.png' %}" alt="극단이미지"></a></p>
-                        <p>극단이름</p>
+                        <p>샐러드 극단</p>
                     </li>
                     <li class="theaterList">
                         <p><a class="imgT" href="/"><img class="theaterImg" src="{% static 'img/theater3.png' %}" alt="극단이미지"></a></p>
-                        <p>극단이름</p>
+                        <p>극단 돌파구</p>
                     </li>
                     <li class="theaterList">
                         <p><a class="imgT" href="/"><img class="theaterImg" src="{% static 'img/theater4.png' %}" alt="극단이미지"></a></p>
-                        <p>극단이름</p>
+                        <p>극단 청우</p>
                     </li>
                     <li class="theaterList">
                         <p><a class="imgT" href="/"><img class="theaterImg" src="{% static 'img/theater5.png' %}" alt="극단이미지"></a></p>
-                        <p>극단이름</p>
+                        <p>국립극단</p>
                     </li>
                 </ul>
 

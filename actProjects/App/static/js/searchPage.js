@@ -10,11 +10,16 @@ for(let i = 0; i < 3; i++) {
 
 const title = document.getElementsByClassName('contentText');
 const hr = document.getElementsByTagName('hr');
+let cntAct = 0;
+let cntActer = 0;
 
 function changeAll() {
-    view[0].style.display = view[1].style.display = view[2].style.display = 'flex';
-    title[0].style.display = title[1].style.display = title[2].style.display = 'flex';
-    hr[1].style.display = hr[2].style.display='block';
+    // 임시로 전체 버튼을 클릭하면 새로 추가된 요소 삭제를 위함
+    window.location.href = 'http://127.0.0.1:8000/searchPage';
+
+    // view[0].style.display = view[1].style.display = view[2].style.display = 'flex';
+    // title[0].style.display = title[1].style.display = title[2].style.display = 'flex';
+    // hr[1].style.display = hr[2].style.display='block';
 }
 function changeAct() {
     clickAct.checked = true;
@@ -23,6 +28,9 @@ function changeAct() {
     title[0].style.display = 'flex';
     title[1].style.display = title[2].style.display = 'none';
     hr[1].style.display = hr[2].style.display='none';
+    cntAct += 1;
+    if(cntAct <= 1)
+        addMoreAct();
 }
 function changeActer() {
     clickActer.checked = true;
@@ -31,6 +39,9 @@ function changeActer() {
     title[1].style.display = 'flex';
     title[0].style.display = title[2].style.display = 'none';
     hr[1].style.display = hr[2].style.display='none';
+    cntActer += 1;
+    if(cntActer <= 1)
+        addMoreActer();
 }
 function changeTheater() {
     clickTheater.checked = true;
@@ -39,4 +50,67 @@ function changeTheater() {
     title[2].style.display = 'flex';
     title[0].style.display = title[1].style.display = 'none';
     hr[1].style.display = hr[2].style.display='none';
+}
+function addMoreAct() {
+    const imgsrc = [
+        'http://tkfile.yes24.com/upload2/PerfBlog/202106/20210614/20210614-39335.jpg',
+        'http://tkfile.yes24.com/upload2/PerfBlog/202103/20210316/20210316-38572.jpg',
+        'http://tkfile.yes24.com/upload2/PerfBlog/202106/20210615/20210615-39354.jpg',
+        'http://tkfile.yes24.com/upload2/PerfBlog/202104/20210427/20210427-38965.jpg'
+    ];
+    const actName = ['일리아드','연극라면','토지','거룩한 직업'];
+
+    for(let i = 0; i < 4; i++) {
+        const posterEle = document.createElement('div');
+        posterEle.className = 'poster';
+        const imgInnerEle = document.createElement('a');
+        imgInnerEle.className = 'imgInner';
+
+        const imgEle = document.createElement('img');
+        imgEle.className = 'actImg';
+        imgEle.src = imgsrc[i];
+        imgInnerEle.appendChild(imgEle);
+
+        const posterBtnEle = document.createElement('div');
+        posterBtnEle.className = 'posterBtn';
+        posterBtnEle.innerHTML = '<p>' + actName[i] + '</p>';
+
+        const posterBtn1 = document.createElement('button');
+        posterBtn1.className = 'detailBtn';
+        posterBtn1.innerText = '자세히';
+        const posterBtn2 = document.createElement('button');
+        posterBtn2.className = 'detailBtn';
+        posterBtn2.innerText = '극단 보기';
+
+        posterBtnEle.appendChild(posterBtn1);
+        posterBtnEle.appendChild(posterBtn2);
+        posterEle.appendChild(imgInnerEle);
+        posterEle.appendChild(posterBtnEle);
+
+        view[0].appendChild(posterEle);
+    }
+}
+function addMoreActer() {
+    const acterName = ['조정석','신현빈','설유진','김수진','김재환'];
+    for(let i = 0; i < 5; i++) {
+        const posterEle = document.createElement('div');
+        posterEle.className = 'poster';
+        const imgInnerEle = document.createElement('a');
+        imgInnerEle.className = 'imgInner';
+
+        const imgEle = document.createElement('img');
+        imgEle.className = 'acterImg';
+        imgEle.src = 'http://127.0.0.1:8000/static/img/acter.png';
+        imgInnerEle.appendChild(imgEle);
+
+        const posterBtnEle = document.createElement('div');
+        posterBtnEle.className = 'posterBtn';
+        posterBtnEle.style = 'text-align:center;'
+        posterBtnEle.innerHTML = '<p>'+ acterName[i] +'</p>';
+
+        posterEle.appendChild(imgInnerEle);
+        posterEle.appendChild(posterBtnEle);
+
+        view[1].appendChild(posterEle);
+    }
 }
