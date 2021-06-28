@@ -74,8 +74,9 @@
 
         .review {
             width: 700px;
+            margin-top: 0;
             margin-left: 30px;
-
+            line-height: 35px;
         }
         .star {
             height: 30px;
@@ -103,4 +104,14 @@
             width: 125px;
             height: 125px;
             border-radius: 50%;
+        }
+
+        .person__photo {
+            width: 185px;
+            height: 185px;
+            border-radius: 50%;
+            border: 5px solid #fff;
+            object-fit: cover;
+            box-shadow: 0 0 16px rgb(80, 78, 78);
+            margin: 10px;
         }
