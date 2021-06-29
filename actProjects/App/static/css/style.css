@@ -107,13 +107,13 @@ hr {
     background-color: rgb(255, 255, 255);
     font-weight: bold;
 }
-.actInner, .acterInner {
+.actInner, .actorInner {
     padding: 20px 0px;
     display: flex;
     justify-content: space-between;
     position: relative;
 }
-.acterImg {
+.actorImg {
     width: 140px;
     height: 140px;
     object-fit: cover;

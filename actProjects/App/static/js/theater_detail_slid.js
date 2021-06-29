@@ -24,27 +24,27 @@ function theaterSlid() {
 }
 
 // 배우슬라이드
-function acterSlid() {
+function actorSlid() {
     console.log('실행');
-    const acterView = document.getElementsByClassName('acter_view');
-    const acterPrev = document.getElementById('acter_prev_btn');
-    const acterNext = document.getElementById('acter_next_btn');
+    const actorView = document.getElementsByClassName('actor_view');
+    const actorPrev = document.getElementById('actor_prev_btn');
+    const actorNext = document.getElementById('actor_next_btn');
 
-    let totalScroll = acterView[0].scrollWidth;
+    let totalScroll = actorView[0].scrollWidth;
     let nowScroll = 0;
     let moveScroll = 1100;
 
     // 이동버튼 클릭 이벤트
-    acterNext.addEventListener('click', function() {
+    actorNext.addEventListener('click', function() {
         if(nowScroll < totalScroll && nowScroll + moveScroll < totalScroll) {
             nowScroll += moveScroll;
-            acterView[0].scrollTo(nowScroll,0);
+            actorView[0].scrollTo(nowScroll,0);
         }
     })
-    acterPrev.addEventListener('click', function() {
+    actorPrev.addEventListener('click', function() {
         if(nowScroll > 0) {
             nowScroll -= moveScroll;
-            acterView[0].scrollTo(nowScroll,0);
+            actorView[0].scrollTo(nowScroll,0);
         }
     })
 
@@ -52,6 +52,6 @@ function acterSlid() {
 
 function init() {
     theaterSlid();
-    acterSlid();
+    actorSlid();
 }
 init();

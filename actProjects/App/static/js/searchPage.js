@@ -1,6 +1,6 @@
 const clickAll = document.getElementById('filterAll');
 const clickAct = document.getElementById('filterAct');
-const clickActer = document.getElementById('filterActer');
+const clickActor = document.getElementById('filterActor');
 const clickTheater = document.getElementById('filterTheater');
 
 const view = [];
@@ -11,7 +11,7 @@ for(let i = 0; i < 3; i++) {
 const title = document.getElementsByClassName('contentText');
 const hr = document.getElementsByTagName('hr');
 let cntAct = 0;
-let cntActer = 0;
+let cntActor = 0;
 
 function changeAll() {
     // 임시로 전체 버튼을 클릭하면 새로 추가된 요소 삭제를 위함
@@ -32,16 +32,16 @@ function changeAct() {
     if(cntAct <= 1)
         addMoreAct();
 }
-function changeActer() {
-    clickActer.checked = true;
+function changeActor() {
+    clickActor.checked = true;
     view[0].style.display = view[2].style.display = 'none';
     view[1].style.display = 'flex';
     title[1].style.display = 'flex';
     title[0].style.display = title[2].style.display = 'none';
     hr[1].style.display = hr[2].style.display='none';
-    cntActer += 1;
-    if(cntActer <= 1)
-        addMoreActer();
+    cntActor += 1;
+    if(cntActor <= 1)
+        addMoreActor();
 }
 function changeTheater() {
     clickTheater.checked = true;
@@ -90,8 +90,8 @@ function addMoreAct() {
         view[0].appendChild(posterEle);
     }
 }
-function addMoreActer() {
-    const acterName = ['조정석','신현빈','설유진','김수진','김재환'];
+function addMoreActor() {
+    const actorName = ['조정석','신현빈','설유진','김수진','김재환'];
     for(let i = 0; i < 5; i++) {
         const posterEle = document.createElement('div');
         posterEle.className = 'poster';
@@ -99,14 +99,14 @@ function addMoreActer() {
         imgInnerEle.className = 'imgInner';
 
         const imgEle = document.createElement('img');
-        imgEle.className = 'acterImg';
-        imgEle.src = 'http://127.0.0.1:8000/static/img/acter.png';
+        imgEle.className = 'actorImg';
+        imgEle.src = 'http://127.0.0.1:8000/static/img/actor.png';
         imgInnerEle.appendChild(imgEle);
 
         const posterBtnEle = document.createElement('div');
         posterBtnEle.className = 'posterBtn';
         posterBtnEle.style = 'text-align:center;'
-        posterBtnEle.innerHTML = '<p>'+ acterName[i] +'</p>';
+        posterBtnEle.innerHTML = '<p>'+ actorName[i] +'</p>';
 
         posterEle.appendChild(imgInnerEle);
         posterEle.appendChild(posterBtnEle);
