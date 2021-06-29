@@ -91,7 +91,7 @@ function addMoreAct() {
     }
 }
 function addMoreActor() {
-    const actorName = ['조정석','신현빈','설유진','김수진','김재환'];
+    const actorName = ['설유진','김수진','이달','전국향','이주승'];
     for(let i = 0; i < 5; i++) {
         const posterEle = document.createElement('div');
         posterEle.className = 'poster';
@@ -100,7 +100,7 @@ function addMoreActor() {
 
         const imgEle = document.createElement('img');
         imgEle.className = 'actorImg';
-        imgEle.src = 'http://127.0.0.1:8000/static/img/actor.png';
+        imgEle.src = 'http://127.0.0.1:8000/static/img/actor' + (i + 6) + '.jpg';
         imgInnerEle.appendChild(imgEle);
 
         const posterBtnEle = document.createElement('div');
