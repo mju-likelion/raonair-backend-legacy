@@ -15,7 +15,8 @@
         <div class="slide_wrap" id="slideWrap">
             <!-- 임시 버튼 이모지 -->
             <div class="slide_btn">
-                <p id="slide_prev">⏪</p><p id="slide_next">⏩</p>
+                <p id="slide_prev"><img src="{% static 'img/prev_btn.png' %}"></p>
+                <p id="slide_next"><img src="{% static 'img/next_btn.png' %}"></p>
             </div>
             <div class="slide_box">
                 <div class="slide_view" id="slideView">
@@ -46,82 +47,194 @@
             </div>
         </div>
 
-        <!-- 극단 구성원도 슬라이드 형태로 제작하면 어떨지 -->
         <div class="acter_wrap">
             <h1>극단 구성원</h1><hr class="acter_line">
             <div class="acter_list">
-                <div class="acter_box">
-                    <a class="acter_img_box" href="">
-                        <img class="acter_img" src="{% static 'img/acter.png' %}" alt="배우이미지">
-                    </a>
-                    <p>이름</p>
-                    <p>직책</p>
+                <a class="acter_scroll_btn" id="acter_prev_btn">
+                    <img src="{% static 'img/prev_btn.png' %}">
+                </a>
+                <div class="acter_view">
+                    <div class="acter_box">
+                        <a class="acter_img_box" href="">
+                            <img class="acter_img" src="{% static 'img/acter.png' %}" alt="배우이미지">
+                        </a>
+                        <p>이름1</p>
+                        <p>직책</p>
+                    </div>
+                    <div class="acter_box">
+                        <a class="acter_img_box" href="">
+                            <img class="acter_img" src="{% static 'img/acter.png' %}" alt="배우이미지">
+                        </a>
+                        <p>이름2</p>
+                        <p>직책</p>
+                    </div>
+                    <div class="acter_box">
+                        <a class="acter_img_box" href="">
+                            <img class="acter_img" src="{% static 'img/acter.png' %}" alt="배우이미지">
+                        </a>
+                        <p>이름3</p>
+                        <p>직책</p>
+                    </div>
+                    <div class="acter_box">
+                        <a class="acter_img_box" href="">
+                            <img class="acter_img" src="{% static 'img/acter.png' %}" alt="배우이미지">
+                        </a>
+                        <p>이름4</p>
+                        <p>직책</p>
+                    </div>
+                    <div class="acter_box">
+                        <a class="acter_img_box" href="">
+                            <img class="acter_img" src="{% static 'img/acter.png' %}" alt="배우이미지">
+                        </a>
+                        <p>이름5</p>
+                        <p>직책</p>
+                    </div>
+                    <div class="acter_box">
+                        <a class="acter_img_box" href="">
+                            <img class="acter_img" src="{% static 'img/acter.png' %}" alt="배우이미지">
+                        </a>
+                        <p>이름6</p>
+                        <p>직책</p>
+                    </div>
+                    <div class="acter_box">
+                        <a class="acter_img_box" href="">
+                            <img class="acter_img" src="{% static 'img/acter.png' %}" alt="배우이미지">
+                        </a>
+                        <p>이름7</p>
+                        <p>직책</p>
+                    </div>
+                    <div class="acter_box">
+                        <a class="acter_img_box" href="">
+                            <img class="acter_img" src="{% static 'img/acter.png' %}" alt="배우이미지">
+                        </a>
+                        <p>이름8</p>
+                        <p>직책</p>
+                    </div>
+                    <div class="acter_box">
+                        <a class="acter_img_box" href="">
+                            <img class="acter_img" src="{% static 'img/acter.png' %}" alt="배우이미지">
+                        </a>
+                        <p>이름9</p>
+                        <p>직책</p>
+                    </div>
+                    <div class="acter_box">
+                        <a class="acter_img_box" href="">
+                            <img class="acter_img" src="{% static 'img/acter.png' %}" alt="배우이미지">
+                        </a>
+                        <p>이름10</p>
+                        <p>직책</p>
+                    </div>
+                    <div class="acter_box">
+                        <a class="acter_img_box" href="">
+                            <img class="acter_img" src="{% static 'img/acter.png' %}" alt="배우이미지">
+                        </a>
+                        <p>이름11</p>
+                        <p>직책</p>
+                    </div>
+                    <div class="acter_box">
+                        <a class="acter_img_box" href="">
+                            <img class="acter_img" src="{% static 'img/acter.png' %}" alt="배우이미지">
+                        </a>
+                        <p>이름12</p>
+                        <p>직책</p>
+                    </div>
+
+                    <div class="acter_box">
+                        <a class="acter_img_box" href="">
+                            <img class="acter_img" src="{% static 'img/acter.png' %}" alt="배우이미지">
+                        </a>
+                        <p>이름13</p>
+                        <p>직책</p>
+                    </div>
+                    <div class="acter_box">
+                        <a class="acter_img_box" href="">
+                            <img class="acter_img" src="{% static 'img/acter.png' %}" alt="배우이미지">
+                        </a>
+                        <p>이름14</p>
+                        <p>직책</p>
+                    </div>
+                    <div class="acter_box">
+                        <a class="acter_img_box" href="">
+                            <img class="acter_img" src="{% static 'img/acter.png' %}" alt="배우이미지">
+                        </a>
+                        <p>이름15</p>
+                        <p>직책</p>
+                    </div>
+                    <div class="acter_box">
+                        <a class="acter_img_box" href="">
+                            <img class="acter_img" src="{% static 'img/acter.png' %}" alt="배우이미지">
+                        </a>
+                        <p>이름16</p>
+                        <p>직책</p>
+                    </div>
+                    <div class="acter_box">
+                        <a class="acter_img_box" href="">
+                            <img class="acter_img" src="{% static 'img/acter.png' %}" alt="배우이미지">
+                        </a>
+                        <p>이름17</p>
+                        <p>직책</p>
+                    </div>
+                    <div class="acter_box">
+                        <a class="acter_img_box" href="">
+                            <img class="acter_img" src="{% static 'img/acter.png' %}" alt="배우이미지">
+                        </a>
+                        <p>이름18</p>
+                        <p>직책</p>
+                    </div>
+                    <div class="acter_box">
+                        <a class="acter_img_box" href="">
+                            <img class="acter_img" src="{% static 'img/acter.png' %}" alt="배우이미지">
+                        </a>
+                        <p>이름19</p>
+                        <p>직책</p>
+                    </div>
+                    <div class="acter_box">
+                        <a class="acter_img_box" href="">
+                            <img class="acter_img" src="{% static 'img/acter.png' %}" alt="배우이미지">
+                        </a>
+                        <p>이름20</p>
+                        <p>직책</p>
+                    </div>
+                    <div class="acter_box">
+                        <a class="acter_img_box" href="">
+                            <img class="acter_img" src="{% static 'img/acter.png' %}" alt="배우이미지">
+                        </a>
+                        <p>마지막</p>
+                        <p>직책</p>
+                    </div>
                 </div>
-                <div class="acter_box">
-                    <a class="acter_img_box" href="">
-                        <img class="acter_img" src="{% static 'img/acter.png' %}" alt="배우이미지">
-                    </a>
-                    <p>이름</p>
-                    <p>직책</p>
-                </div>
-                <div class="acter_box">
-                    <a class="acter_img_box" href="">
-                        <img class="acter_img" src="{% static 'img/acter.png' %}" alt="배우이미지">
-                    </a>
-                    <p>이름</p>
-                    <p>직책</p>
-                </div>
-                <div class="acter_box">
-                    <a class="acter_img_box" href="">
-                        <img class="acter_img" src="{% static 'img/acter.png' %}" alt="배우이미지">
-                    </a>
-                    <p>이름</p>
-                    <p>직책</p>
-                </div>
-                <div class="acter_box">
-                    <a class="acter_img_box" href="">
-                        <img class="acter_img" src="{% static 'img/acter.png' %}" alt="배우이미지">
-                    </a>
-                    <p>이름</p>
-                    <p>직책</p>
-                </div>
-                <div class="acter_box">
-                    <a class="acter_img_box" href="">
-                        <img class="acter_img" src="{% static 'img/acter.png' %}" alt="배우이미지">
-                    </a>
-                    <p>이름</p>
-                    <p>직책</p>
-                </div>
+                <a class="acter_scroll_btn" id="acter_next_btn">
+                    <img src="{% static 'img/next_btn.png' %}">
+                </a>
             </div>
         </div>
         
-        <!-- 슬라이드 형태로 구현할지 논의 필요 -->
         <div class="act_wrap">
             <h1>진행 예정 공연</h1><hr class="acter_line">
             <div class="act_list">
                 <div class="act_box">
-                    <a class="act_img_box" href="/">
-                        <img class="act_img" src="{% static 'img/home5.jpg' %}" alt="공연이미지">
+                    <a class="act_img_box" href="">
+                        <img class="act_img" src="{% static 'img/theme1-1.jpg' %}" alt="공연이미지">
                     </a>
-                    <p>제목</p>
+                    <p>특별한 저녁식사</p>
                 </div>
                 <div class="act_box">
-                    <a class="act_img_box" href="/">
-                        <img class="act_img" src="{% static 'img/home2.jpg' %}" alt="공연이미지">
+                    <a class="act_img_box" href="">
+                        <img class="act_img" src="{% static 'img/theme1-2.jpg' %}" alt="공연이미지">
                     </a>
-                    <p>제목</p>
+                    <p>동굴가족</p>
                 </div>
                 <div class="act_box">
-                    <a class="act_img_box" href="/">
-                        <img class="act_img" src="{% static 'img/home4.jpg' %}" alt="공연이미지">
+                    <a class="act_img_box" href="">
+                        <img class="act_img" src="{% static 'img/theme1-3.jpg' %}" alt="공연이미지">
                     </a>
-                    <p>제목</p>
+                    <p>동치미</p>
                 </div>
                 <div class="act_box">
-                    <a class="act_img_box" href="/">
-                        <img class="act_img" src="{% static 'img/home3.jpg' %}" alt="공연이미지">
+                    <a class="act_img_box" href="">
+                        <img class="act_img" src="{% static 'img/theme1-4.jpg' %}" alt="공연이미지">
                     </a>
-                    <p>제목</p>
+                    <p>당신만이</p>
                 </div>
             </div>
         </div>
@@ -130,28 +243,28 @@
             <h1>지난 공연</h1><hr class="acter_line">
             <div class="act_list">
                 <div class="act_box">
-                    <a class="act_img_box" href="/">
-                        <img class="act_img" src="{% static 'img/home5.jpg' %}" alt="공연이미지">
+                    <a class="act_img_box" href="">
+                        <img class="act_img" src="{% static 'img/theme2-1.jpg' %}" alt="공연이미지">
                     </a>
-                    <p>제목</p>
+                    <p>우리가 사랑했던 정원에서</p>
                 </div>
                 <div class="act_box">
-                    <a class="act_img_box" href="/">
-                        <img class="act_img" src="{% static 'img/home2.jpg' %}" alt="공연이미지">
+                    <a class="act_img_box" href="">
+                        <img class="act_img" src="{% static 'img/theme2-2.jpg' %}" alt="공연이미지">
                     </a>
-                    <p>제목</p>
+                    <p>연애하기 좋은 날</p>
                 </div>
                 <div class="act_box">
-                    <a class="act_img_box" href="/">
-                        <img class="act_img" src="{% static 'img/home4.jpg' %}" alt="공연이미지">
+                    <a class="act_img_box" href="">
+                        <img class="act_img" src="{% static 'img/theme2-3.jpg' %}" alt="공연이미지">
                     </a>
-                    <p>제목</p>
+                    <p>그날밤, 너랑 나</p>
                 </div>
                 <div class="act_box">
-                    <a class="act_img_box" href="/">
-                        <img class="act_img" src="{% static 'img/home3.jpg' %}" alt="공연이미지">
+                    <a class="act_img_box" href="">
+                        <img class="act_img" src="{% static 'img/theme2-4.jpg' %}" alt="공연이미지">
                     </a>
-                    <p>제목</p>
+                    <p>뷰티풀 라이프</p>
                 </div>
             </div>
         </div>
