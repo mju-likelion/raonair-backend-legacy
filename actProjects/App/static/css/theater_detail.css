@@ -2,8 +2,8 @@
     top: 0%;
     margin: 0 auto;
     width: 1200px;
-
-    border: solid 1px rgb(236, 236, 236)
+    border: solid 1px rgb(236, 236, 236);
+    padding-bottom: 90px;
 }
 .slide_wrap {
     position: relative;
@@ -15,7 +15,6 @@
 .slide_box {
     width: 100%;
     margin: auto;
-    /* height: 100%; */
     overflow: hidden;
 }
 .slide_view {
@@ -44,15 +43,23 @@
 .notion_wrap {
     display: flex;
     justify-content: center;
+    background-color: rgb(248, 248, 248);
 }
-.notion_list {
-    width: 100%;
-    border: solid 1px rgb(231, 231, 231);
-    border-radius: 8px;
-    padding: 20px 30px;
+.notion_list1, .notion_list2 {
+    padding: 20px 0px;
+}
+.notion_list1 {
+    border-right: solid 1px rgb(231, 231, 231);
+}
+.notion_list1, .notion_list2 {
+    width: 50%;
 }
 .notion_post {
     margin: 10px 0;
+}
+.notion_post h2::before, .notion_post h2::before {
+    content: '';
+    border: solid 3px rgb(32, 32, 32);
 }
 .acter_wrap {
     margin: 50px 0px;
@@ -71,7 +78,6 @@
 }
 .acter_scroll_btn:hover {
     cursor: pointer;
-    /* background-color: rgb(245, 245, 245); */
     border-radius: 50%;
     box-shadow: 0 0 7px rgb(182, 182, 182);
 }
@@ -100,9 +106,9 @@
     box-shadow: 0 0 12px rgb(221,221,221);
     margin: 0 30px;
 }
-.act_wrap {
+/* .act_wrap {
 
-}
+} */
 .act_wrap h1 {
     text-align: center;
 }
@@ -116,7 +122,7 @@
 .act_box:hover {
     cursor: pointer;
 }
-.act_box:hover > .act_img {
+.act_img_box:hover > .act_img {
     transform: scale(1.05);
     transition: 0.3s;
 }
