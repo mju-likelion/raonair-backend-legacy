@@ -28,6 +28,7 @@ setDate(date_to, now_date, max_date);////검색 범위에서 '언제까지'에 �
 //옵션을 충족하는지 검사한다.
 const satisfyOptions = (ele) => {
     const url = ele.children[0].currentSrc;
+    if(url.includes('month2.jpg')) return true;
     //진짜 검색이 되는것 처럼 하기 위해 랜덤요소 사용.
     const options = ['home', 'theme', 'month'];
     const op_idx = Math.floor(Math.random() * options.length);
