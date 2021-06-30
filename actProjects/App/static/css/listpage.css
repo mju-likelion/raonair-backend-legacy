@@ -1,0 +1,32 @@
+
+body {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+}
+
+
+.click {
+
+}
+
+.spell {
+    
+}
+
+.popularity {
+    
+}
+
+.number {
+    
+}
+
+.closer {
+    
+}
+
+.list-container {
+    display: flex;
+}
+
