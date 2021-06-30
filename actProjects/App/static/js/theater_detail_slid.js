@@ -54,13 +54,13 @@ function actorSlid() {
     actorNext.addEventListener('click', function() {
         if(nowScroll < totalScroll && nowScroll + moveScroll < totalScroll) {
             nowScroll += moveScroll;
-            actorView[0].scrollTo(nowScroll,0);
+            actorView[0].scrollTo({top:0, left:nowScroll, behavior:'smooth'});
         }
     })
     actorPrev.addEventListener('click', function() {
         if(nowScroll > 0) {
             nowScroll -= moveScroll;
-            actorView[0].scrollTo(nowScroll,0);
+            actorView[0].scrollTo({top:0, left:nowScroll, behavior:'smooth'});
         }
     })
 
