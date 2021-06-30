@@ -9,115 +9,117 @@
         <!-- 부트스트랩 라이브러리는 써도 되는지 확실치 않아 사용하지 않았습니다 -->
         <!-- <link rel="stylesheet" href="{% static 'css/initStyle.css' %}"> -->
         <link rel="stylesheet" href="{% static 'css/style.css' %}">
+        <link rel="stylesheet" href="{% static 'css/detailpage.css' %}">
         <link rel="stylesheet" href="{% static 'css/listpage.css' %}">
 
         <title>RaonAir</title>
 
     </head>
     <body>
+        {% include "navbar.html" %}
         <div class="click">
-            <div class="click-spell">
-
-            </div>
-            <div class="click-popularity">
-
-            </div>
-            <div class="click-number">
-
-            </div>
-            <div class="click-closer">
-                
-            </div>
+            <a class="click-spell" href="/">
+                <p>가나다순 ㅣ</p>
+            </a>
+            <a class="click-popularity" href="/">
+                <p>인기순 ㅣ</p>
+            </a>
+            <a class="click-number" href="/">
+                <p>연극보유순 ㅣ</p>
+            </a>
+            <a class="click-closer" href="/">
+                <p>종료임박순</p>
+            </a>
         </div>
         <div class="troupe">
             <div class="list_tip">
-                <a><img src="{% static 'img/troupe1.jpg' %}" width="300"></a>
+                <a><img src="{% static 'img/troupe1.jpg' %}" width="250" height="200"></a>
                 <div class="list_name">가람</div>
             </div>
             <div class="list_tip">
-                <a><img src="{% static 'img/troupe2.jpg' %}" width="300"></a>
+                <a><img src="{% static 'img/troupe2.jpg' %}" width="250" height="200"></a>
                 <div class="list_name">경기도립극단</div>
             </div>
             <div class="list_tip">
-                <a><img src="{% static 'img/troupe3.jpg' %}" width="300"></a>
+                <a><img src="{% static 'img/troupe3.jpg' %}" width="250" height="200"></a>
                 <div class="list_name">경산시립극단</div>
             </div>
             <div class="list_tip">
-                <a><img src="{% static 'img/troupe4.jpg' %}" width="300"></a>
+                <a><img src="{% static 'img/troupe4.jpg' %}" width="250" height="200"></a>
                 <div class="list_name">해성</div>
             </div>
 
             <div class="list_tip">
-                <a><img src="{% static 'img/troupe5.jpg' %}" width="300"></a>
+                <a><img src="{% static 'img/troupe5.jpg' %}" width="250" height="200"></a>
                 <div class="list_name">청사</div>
             </div>
 
             <div class="list_tip">
-                <a><img src="{% static 'img/troupe6.jpg' %}" width="300"></a>
+                <a><img src="{% static 'img/troupe6.jpg' %}" width="250" height="200"></a>
                 <div class="list_name">서울</div>
             </div>
 
             <div class="list_tip">
-                <a><img src="{% static 'img/troupe7.jpg' %}" width="300"></a>
+                <a><img src="{% static 'img/troupe7.jpg' %}" width="250" height="200"></a>
                 <div class="list_name">이바구</div>
             </div>
 
             <div class="list_tip">
-                <a><img src="{% static 'img/troupe8.jpg' %}" width="300"></a>
+                <a><img src="{% static 'img/troupe8.jpg' %}" width="250" height="200"></a>
                 <div class="list_name">초록칠판</div>
             </div>
 
             <div class="list_tip">
-                <a><img src="{% static 'img/troupe9.jpg' %}" width="300"></a>
+                <a><img src="{% static 'img/troupe9.jpg' %}" width="250" height="200"></a>
                 <div class="list_name">무변</div>
             </div>
 
             <div class="list_tip">
-                <a><img src="{% static 'img/troupe10.jpg' %}" width="300"></a>
+                <a><img src="{% static 'img/troupe10.jpg' %}" width="250" height="200"></a>
                 <div class="list_name">동동</div>
             </div>
 
             <div class="list_tip">
-                <a><img src="{% static 'img/troupe11.jpg' %}" width="300"></a>
+                <a><img src="{% static 'img/troupe11.jpg' %}" width="250" height="200"></a>
                 <div class="list_name">도모</div>
             </div>
 
             <div class="list_tip">
-                <a><img src="{% static 'img/troupe12.jpg' %}" width="300"></a>
+                <a><img src="{% static 'img/troupe12.jpg' %}" width="250" height="200"></a>
                 <div class="list_name">강원도립극단</div>
             </div>
 
             <div class="list_tip">
-                <a><img src="{% static 'img/troupe13.jpg' %}" width="300"></a>
+                <a><img src="{% static 'img/troupe13.jpg' %}" width="250" height="200"></a>
                 <div class="list_name">전주시립극단</div>
             </div>
 
             <div class="list_tip">
-                <a><img src="{% static 'img/troupe14.jpg' %}" width="300"></a>
+                <a><img src="{% static 'img/troupe14.jpg' %}" width="250" height="200"></a>
                 <div class="list_name">씨어터컴퍼니 웃끼</div>
             </div>
             <div class="list_tip">
-                <a><img src="{% static 'img/troupe15.jpg' %}" width="300"></a>
+                <a><img src="{% static 'img/troupe15.jpg' %}" width="250" height="200"></a>
                 <div class="list_name">예촌</div>
             </div>
             <div class="list_tip">
-                <a><img src="{% static 'img/troupe16.jpg' %}" width="300"></a>
+                <a><img src="{% static 'img/troupe16.jpg' %}" width="250" height="200"></a>
                 <div class="list_name">청춘</div>
             </div>
             <div class="list_tip">
-                <a><img src="{% static 'img/troupe17.jpg' %}" width="300"></a>
+                <a><img src="{% static 'img/troupe17.jpg' %}" width="250" height="200"></a>
                 <div class="list_name">인향</div>
             </div>
             <div class="list_tip">
-                <a><img src="{% static 'img/troupe18.jpg' %}" width="300"></a>
+                <a><img src="{% static 'img/troupe18.jpg' %}" width="250" height="200"></a>
                 <div class="list_name">아토</div>
             </div>
             <div class="list_tip">
-                <a><img src="{% static 'img/troupe19.jpg' %}" width="300"></a>
+                <a><img src="{% static 'img/troupe19.jpg' %}" width="250" height="200"></a>
                 <div class="list_name">라무르앙상블</div>
             </div>
             <div class="list_tip">
-                <a><img src="{% static 'img/troupe20.jpg' %}" width="300"></a>
+                <a><img src="{% static 'img/troupe20.jpg' %}" width="250" height="200"></a>
                 <div class="list_name">명작극단</div>
             </div>
 

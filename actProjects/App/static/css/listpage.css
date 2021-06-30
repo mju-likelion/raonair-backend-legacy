@@ -5,24 +5,32 @@ body {
     flex-direction: column;
 }
 
-
 .click {
+    display: flex;
+    flex-direction: row;
+}
+
+.click-detail {
 
 }
 
-.spell {
+.click-spell {
+
+}
+
+.click-popularity {
     
 }
 
-.popularity {
+.click-popularity {
     
 }
 
-.number {
+.click-number {
     
 }
 
-.closer {
+.click-closer {
     
 }
 
@@ -30,3 +38,17 @@ body {
     display: flex;
 }
 
+.troupe {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+
+}
+.list_tip {
+    margin: 20px;
+}
+
+.list_name {
+    text-align: center;
+    margin-top: 5px;
+    margin-bottom: -10px;
+}

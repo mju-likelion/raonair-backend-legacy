@@ -10,5 +10,8 @@ def searchPage(request) :
 def detailpage(request) :
     return render(request, 'detailpage.html')
 
+def listpage(request) :
+    return render(request, 'listpage.html')
+
        
     

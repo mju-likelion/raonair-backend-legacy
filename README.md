@@ -38,4 +38,6 @@ cd actProjects
 
 ```
 python manage.py runserver
+
+python actProjects/manage.py runserver
 ```

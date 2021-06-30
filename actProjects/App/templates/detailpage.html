@@ -13,7 +13,9 @@
 
 
     <link rel="stylesheet" href="{% static 'css/kakaomap.css' %}">
-    <link rel="stylesheet" href="{% static 'css/detailpagestyle.css' %}">
+    <link rel="stylesheet" href="{% static 'css/detailpage.css' %}">
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <link rel="stylesheet" href="{% static 'css/listpage.css' %}">
 
 </head>
 
@@ -22,6 +24,7 @@
 
 
     <body>
+        {% include "navbar.html" %}
         <div id="center">
             <h2>공연정보</h2>
             <div class="actname">

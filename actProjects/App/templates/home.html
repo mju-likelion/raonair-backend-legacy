@@ -10,6 +10,7 @@
     <!-- 부트스트랩 라이브러리는 써도 되는지 확실치 않아 사용하지 않았습니다 -->
     <!-- <link rel="stylesheet" href="{% static 'css/initStyle.css' %}"> -->
     <link rel="stylesheet" href="{% static 'css/style.css' %}">
+
     <title>RaonAir</title>
 </head>
 
@@ -81,7 +82,7 @@
                     </div>
                 </div>
                 <div class="poster">
-                    <a class="imgInner" href="/"><img class="actImg" src="{% static 'img/home3.jpg' %}" alt="likedAct"></a>
+                    <a class="imgInner" href="{%url 'listpage'%}"><img class="actImg" src="{% static 'img/home3.jpg' %}" alt="likedAct"></a>
                     <div class="posterBtn">
                         <p>햄릿</p>
                         <button name="button">자세히</button>
