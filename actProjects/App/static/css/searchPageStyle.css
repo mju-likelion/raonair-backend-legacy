@@ -8,14 +8,15 @@ hr {
     background-color: rgb(245, 245, 245);
     top: 0%;
     width: 1200px;
-    border: solid 1px rgb(204, 204, 204);
+    padding-top: 30px;
+    border: solid 1px rgb(238, 238, 238);
 }
 .content {
     background-color: rgb(255, 255, 255);
     margin: 1rem;
     padding: 20px 40px;
 }
-.content h1 {
+.containner h1 {
     text-align: center;
 }
 .contentTitle {
@@ -50,39 +51,28 @@ hr {
     border: solid 1px rgb(231, 231, 231);
 }
 .poster {
-    /* border-radius: 2px; */
-}
-.posterMonth{ overflow: hidden; border-radius: 5px; }
-
-.posterMonth img{
-    transform:scale(1);
-    -webkit-transform:scale(1);
-    transition: all 0.5s ease-in-out;
-}
-.posterMonth:hover img {
-    transform:scale(1.04);
-    -webkit-transform:scale(1.04);
+    margin: 20px 10px
 }
 .poster p {
     font-weight: bold;
 }
 .posterTip{
     position: relative;
-    display: block;
+    margin:auto;
+    display: inline-block;
+    color:beige;
+    font-weight: bold;
 }
 .posterTip-text{
-    border-radius: 5px;
-    text-align: center;
-    top: 0px;
+    top: 10px;
     display: none;
     position: absolute;
     border: 1px solid;
-    padding: 20px;
+    border-radius: 5px;
+    padding: 5px;
     font-size: 1em;
-    color: rgb(241, 241, 241);
-    background-color: rgba(0, 0, 0, 0.685);
-    line-height: 1.4em;
-    bottom: 0px;
+    color: black;
+    background: rgb(254, 255, 246);
 }
 .posterTip:hover .posterTip-text{
     display:block;
@@ -96,6 +86,10 @@ hr {
     justify-content: start;
     display: flex;
     align-items: center;
+}
+.contentText a:hover {
+    cursor: pointer;
+    font-weight: bold;
 }
 .filter {
     display: flex;
@@ -121,15 +115,17 @@ hr {
 .actInner, .actorInner {
     padding: 20px 0px;
     display: flex;
-    justify-content: space-between;
-    position: relative;
+    flex-wrap: wrap;
+    justify-content: center;
 }
 .actorImg {
-    width: 140px;
-    height: 140px;
+    width: 125px;
+    height: 125px;
     object-fit: cover;
     border-radius: 50%;
     border: solid 1px rgb(231, 231, 231);
+    box-shadow: 0 0 12px rgb(221,221,221);
+    margin: 0 30px;
 }
 .theaterInner {
     padding: 20px 0px;
@@ -156,4 +152,18 @@ hr {
 .imgT {
     width: 150px;
     height: 150px;
+}
+.detailBtn {
+    border: 0;
+    outline: 0;
+    font-weight: bold;
+    background-color: inherit;
+    color: rgb(99, 99, 99);
+    padding-bottom: 5px;
+    border-bottom: solid 5px rgb(255, 255, 255);
+}
+.detailBtn:hover {
+    cursor: pointer;
+    border-bottom: solid 5px rgb(0, 96, 221);
+    transition: 0.5s;
 }

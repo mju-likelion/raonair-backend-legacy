@@ -14,3 +14,6 @@ def search_play_with_options(request) :
     #이미지 파일들의 이름을 읽어 온다.
     images_name = os.listdir(os.path.join(os.getcwd(), 'App/static/img'))
     return render(request, 'search-play-with-options.html', {'images_name': images_name})
+
+def theaterDetail(request) :
+    return render(request, 'theater_detail.html')

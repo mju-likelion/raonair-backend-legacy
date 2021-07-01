@@ -8,4 +8,5 @@ urlpatterns = [
     path('', App.views.home, name="home"),
     path('searchPage', App.views.searchPage, name="searchPage"),
     path('search-with-options', App.views.search_play_with_options),
+    path('theaterDetail', App.views.theaterDetail, name="theater_detail"),
 ]
