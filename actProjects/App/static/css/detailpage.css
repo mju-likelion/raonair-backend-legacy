@@ -3,8 +3,8 @@
     display: flex;
     align-items: center;
     flex-direction: column;
-    margin-left: 200px;
-    margin-right: 200px;
+    margin-left: 250px;
+    margin-right: 250px;
     background-color: rgb(245, 245, 245);
     border: solid 1px rgb(238, 238, 238);  
 }

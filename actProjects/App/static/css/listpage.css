@@ -69,6 +69,10 @@ input[type="radio"][name="filtering"]:checked + .filterLabel {
 }
 
 .troupe {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    justify-content: center;
+
    
 }
 .list_tip {
@@ -76,8 +80,8 @@ input[type="radio"][name="filtering"]:checked + .filterLabel {
 }
 
 .list_name {
-    text-align: center;
-   
+    text-align: center; 
+    font-weight: bold;
 }
 
 .list_tip:hover {
@@ -90,5 +94,10 @@ input[type="radio"][name="filtering"]:checked + .filterLabel {
 }
 
 .troupe_img {
+    margin-top: 30px;
+    object-fit: contain;
+    border-radius: 10px;
+    border: 2px solid rgb(194, 191, 191);
+    background-color: white;
    
 }
