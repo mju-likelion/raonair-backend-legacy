@@ -5,6 +5,13 @@ body {
     flex-direction: column;
 }
 
+.container {
+    margin: 0 auto;
+    background-color: rgb(245, 245, 245);
+    top: 0%;
+    width: 1200px;
+    border: solid 1px rgb(204, 204, 204);
+}
 .click {
     display: flex;
     flex-direction: row;
@@ -39,16 +46,37 @@ body {
 }
 
 .troupe {
+    margin: 20px;
     display: grid;
-    grid-template-columns: 1fr 1fr 1fr 1fr;
+    justify-content: center;
+    grid-template-columns: repeat(4, 1fr);;
 
 }
 .list_tip {
-    margin: 20px;
+    display: grid;
+    justify-content: center;
+    text-align: center;
+    font-weight: bold;
+    margin: 25px;
 }
 
 .list_name {
     text-align: center;
     margin-top: 5px;
-    margin-bottom: -10px;
+}
+
+.list_tip:hover {
+    cursor: pointer;
+}
+
+.troupe_img_box:hover > .troupe_img {
+    transform: scale(1.05);
+    transition: 0.3s;
+}
+
+.troupe_img {
+    object-fit: contain;
+    border-radius: 8px;
+    border: 2px solid rgb(206, 205, 205);
+    background-color: white;
 }

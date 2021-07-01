@@ -1,18 +1,23 @@
 
 #center {
-display: flex;
-align-items: center;
-flex-direction: column;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    width: 1000px;
+    background-color: rgb(245, 245, 245);
+    top: 0%;
+    border: solid 1px rgb(238, 238, 238);
+    
 }
 
 .actname {
-width: 350px;
-border-radius: 10px;
-background-color: rgb(243, 241, 241);
-border: 6px solid #fff;
-box-shadow: 0 0 16px rgb(221,221,221);
-text-align: center;
-margin-bottom: 30px;
+    text-align: center;
+    margin-bottom: 10px;
+}
+
+.container {
+    width: 1100px;
+    background-color: white;
 }
 
 #grid {
@@ -25,10 +30,6 @@ h4 {
 }
 
 .place {
-    width: 800px;
-    height: 35px;
-    border-radius: 10px;
-    border: 3px solid rgb(194, 191, 191);
     text-align: center;
     padding-top: 10px;
 }
@@ -47,11 +48,7 @@ h3 {
     padding-top : 20px;
 }
 
-.name2 {
-    margin: 0px;
-    padding: 10px;
-    
-}
+
 
 .intro {
     display: flex;
@@ -85,10 +82,11 @@ h3 {
 .reviewbox {
     width: 750px;
     height: 200px;
-    background-color: rgb(243, 241, 241);
+    background-color: white;
     border-radius: 10px;
     margin-top: 25px;
     margin-left: 20px;
+    border: solid 2px rgb(238, 238, 238);
     display: flex;
     flex-direction: column;
 }
@@ -109,10 +107,11 @@ h3 {
     width: 125px;
     height: 125px;
     border-radius: 50%;
-    border: 4px solid #fff;
+    border: 2px solid #fff;
     object-fit: cover;
     box-shadow: 0 0 16px rgb(80, 78, 78);
-    margin: 15px;
+    margin: 10px;
+    margin-top: 30px;
 }
 
 .person_name {
