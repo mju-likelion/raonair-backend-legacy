@@ -14,9 +14,6 @@
 
     <link rel="stylesheet" href="{% static 'css/kakaomap.css' %}">
     <link rel="stylesheet" href="{% static 'css/detailpage.css' %}">
-    <link rel="stylesheet" href="{% static 'css/style.css' %}">
-    <link rel="stylesheet" href="{% static 'css/listpage.css' %}">
-
 </head>
 
 
@@ -27,30 +24,31 @@
         {% include "navbar.html" %}
         <div id="center">
             <h2>공연정보</h2>
-            <h3 class="actname">빈센트 리버</h3>
-                <hr>
-                <br>
-            <div class="contanier">    
-                <div id="grid">
-                    <div class="poster">
-                        <img src="{% static 'img/month2.jpg' %}" width=300px; height: 400px;>
-                    </div>
+            <div id="contanier">  
+                <h3 class="actname">빈센트 리버</h3>
+                    <hr>
+                    <br>  
+                    <div id="grid">
+                        <div class="poster">
+                            <img src="{% static 'img/month2.jpg' %}" width=300px; height: 400px;>
+                        </div>
 
-                    <div class="소개">
-                        <p>공연기간</p>
-                        <p>공연시간</p>
-                        <p>가격</p>
-                        <p>작품소개</p>
-                    </div>
+                        <div class="소개">
+                            <p>공연기간</p>
+                            <p>공연시간</p>
+                            <p>가격</p>
+                            <p>작품소개</p>
+                        </div>
 
-                    <div class="정보">
-                        <p>2021.06.01-2021.06.31</p>
-                        <p>130분</p>
-                        <p>10000원</p>
-                        <h4>하루아침에 아들이 처참하게 살해당한다. 동성애자라는 이유에서다. 가상의 이야기지만, 우리 사회가 마주하는 현실도 크게 다르지 않은 요즘이다. 차별과 혐오에 대한 담론이 계속되는 오늘날, 성소수자 문제에 뿌리까지 접근하는 연극 ‘빈센트 리버’가 막을 올린다. 드라마, 연극 등 다방면에서 관록의 연기를 보여주고 있는 배우 서이숙은 아들을 잃고 절망하는 ‘아니타’ 역을 맡아 작품의 메시지를 전한다. “지금 내가 발 딛고 살아가는 세상의 일을 작품으로 말하고, 연기로 표현하고 싶다”는 그녀의 이야기를 들어봤다.
-                        </h4>
+                        <div class="정보">
+                            <p>2021.06.01-2021.06.31</p>
+                            <p>130분</p>
+                            <p>10000원</p>
+                            <h4>하루아침에 아들이 처참하게 살해당한다. 동성애자라는 이유에서다. 가상의 이야기지만, 우리 사회가 마주하는 현실도 크게 다르지 않은 요즘이다. 차별과 혐오에 대한 담론이 계속되는 오늘날, 성소수자 문제에 뿌리까지 접근하는 연극 ‘빈센트 리버’가 막을 올린다. 드라마, 연극 등 다방면에서 관록의 연기를 보여주고 있는 배우 서이숙은 아들을 잃고 절망하는 ‘아니타’ 역을 맡아 작품의 메시지를 전한다. “지금 내가 발 딛고 살아가는 세상의 일을 작품으로 말하고, 연기로 표현하고 싶다”는 그녀의 이야기를 들어봤다.
+                            </h4>
+                        </div>
                     </div>
-                </div>
+                </h3> 
             </div>
             <br>
 
