@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html>
+<head>
+    {% load static %}
+    <!-- static 파일 load -->
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- 부트스트랩 라이브러리는 써도 되는지 확실치 않아 사용하지 않았습니다 -->
+    <!-- <link rel="stylesheet" href="{% static 'css/initStyle.css' %}"> -->
+    
+    <title>RaonAir</title>
+
+
+    <link rel="stylesheet" href="{% static 'css/kakaomap.css' %}">
+    <link rel="stylesheet" href="{% static 'css/detailpage.css' %}">
+</head>
+
+
+<!-- ----------------------------------------------------------------------- -->
+
+
+    <body>
+        {% include "navbar.html" %}
+        <div id="center">
+            <h2>공연정보</h2>
+            <div id="contanier">  
+                <h3 class="actname">빈센트 리버</h3>
+                    <hr>
+                    <br>  
+                    <div id="grid">
+                        <div class="poster">
+                            <img src="{% static 'img/month2.jpg' %}" width=300px; height: 400px;>
+                        </div>
+
+                        <div class="introduce">
+                            <p>공연기간</p>
+                            <p>공연시간</p>
+                            <p>가격</p>
+                            <p>작품소개</p>
+                        </div>
+
+                        <div class="information">
+                            <p>2021.06.01-2021.06.31</p>
+                            <p>130분</p>
+                            <p>10000원</p>
+                            <h4>하루아침에 아들이 처참하게 살해당한다. 동성애자라는 이유에서다. 가상의 이야기지만, 우리 사회가 마주하는 현실도 크게 다르지 않은 요즘이다. 차별과 혐오에 대한 담론이 계속되는 오늘날, 성소수자 문제에 뿌리까지 접근하는 연극 ‘빈센트 리버’가 막을 올린다. 드라마, 연극 등 다방면에서 관록의 연기를 보여주고 있는 배우 서이숙은 아들을 잃고 절망하는 ‘아니타’ 역을 맡아 작품의 메시지를 전한다. “지금 내가 발 딛고 살아가는 세상의 일을 작품으로 말하고, 연기로 표현하고 싶다”는 그녀의 이야기를 들어봤다.
+                            </h4>
+                        </div>
+                    </div>
+                </h3> 
+            </div>
+            <br>
+
+
+
+<!-- ----------------------------------------------------------------------- -->       
+            <h3>극단 및 배우 소개</h3>
+            <hr>
+            <div class="intro">
+                <div class="person">
+                    <img class="person__photo" src="{% static 'img/actdetail_actor1.jpg' %}" alt="인물사진">
+                    <p class="person__name" style="text-align: center;">전국향</p>
+                    <p class="person__cast-name" style="text-align: center;">아니타</p>
+                </div>
+                <div class="person">
+                    <img class="person__photo" src="{% static 'img/actdetail_actor2.jpg' %}" alt="인물사진">
+                    <p class="person__name" style="text-align: center;">서이숙</p>
+                    <p class="person__cast-name" style="text-align: center;">아니타</p>
+                </div>
+                <div class="person">
+                    <img class="person__photo" src="{% static 'img/actdetail_actor3.jpg' %}" alt="인물사진">
+                    <p class="person__name" style="text-align: center;">우미화</p>
+                    <p class="person__cast-name" style="text-align: center;">아니타</p>
+                </div>
+                <div class="person">
+                    <img class="person__photo" src="{% static 'img/actdetail_actor4.jpg' %}" alt="인물사진">
+                    <p class="person__name" style="text-align: center;">이주승</p>
+                    <p class="person__cast-name" style="text-align: center;">데이비</p>
+                </div>
+                <div class="person">
+                    <img class="person__photo" src="{% static 'img/actdetail_actor5.jpg' %}" alt="인물사진">
+                    <p class="person__name" style="text-align: center;">강승호</p>
+                    <p class="person__cast-name" style="text-align: center;">데이비</p>
+                </div>
+                
+            </div>
+            <br>
+
+
+
+
+
+
+<!-- ----------------------------------------------------------------------- -->
+
+            <h3>공연장소</h3> <hr>
+            <div class="place">
+                서울특별시 서초구 서초동 남부순환로 2406
+            </div>
+            <br>
+            <h4>찾아오시는 길</h4>
+            <div id="map" style="width:800px;height:450px;"></div>
+
+            <script type="text/javascript" src="https://dapi.kakao.com/v2/maps/sdk.js?appkey=a54c726b5ce36fe62c59417ce4dd636b"></script>
+            <script>
+                var mapContainer = document.getElementById('map'), // 지도의 중심좌표
+                    mapOption = { 
+                        center: new kakao.maps.LatLng(37.4789929, 127.0116218), // 지도의 중심좌표
+                        level: 3 // 지도의 확대 레벨
+                    }; 
+
+                var map = new kakao.maps.Map(mapContainer, mapOption); // 지도를 생성합니다
+
+                // 지도에 마커를 표시합니다 
+                var marker = new kakao.maps.Marker({
+                    map: map, 
+                    position: new kakao.maps.LatLng(37.4789929, 127.0116218)
+                });
+
+                // 커스텀 오버레이에 표시할 컨텐츠 입니다
+                // 커스텀 오버레이는 아래와 같이 사용자가 자유롭게 컨텐츠를 구성하고 이벤트를 제어할 수 있기 때문에
+                // 별도의 이벤트 메소드를 제공하지 않습니다 
+                var content = '<div class="wrap">' + 
+                            '    <div class="info">' + 
+                            '        <div class="title">' + 
+                            '            예술의 전당' + 
+                            '            <div class="close" onclick="closeOverlay()" title="닫기"></div>' + 
+                            '        </div>' + 
+                            '        <div class="body">' + 
+                            '            <div class="img">' +
+                            '                <img src="https://www.google.com/maps/uv?pb=!1s0x357ca11a4018d209%3A0xdf93b7c7ab38a690!3m1!7e115!4shttps%3A%2F%2Flh5.googleusercontent.com%2Fp%2FAF1QipMmLh1zagKasxfFOziCc5O7GnxVlWl5sraZ9mus%3Dw191-h144-k-no!5z7JiI7Iig7J2Y7KCE64u5IC0gR29vZ2xlIOqygOyDiQ!15sCgIgAQ&imagekey=!1e10!2sAF1QipMmLh1zagKasxfFOziCc5O7GnxVlWl5sraZ9mus&hl=ko&sa=X&ved=2ahUKEwiJg6mNr6nxAhWMK5QKHTENAcgQoiowLHoECFAQAw" width="73" height="70">' +
+                            '           </div>' + 
+                            '            <div class="desc">' + 
+                            '                <div class="ellipsis">서울특별시 서초구 서초동 남부순환로 2406</div>' + 
+                            '                <div class="jibun ellipsis">F2H6+HJ 서울특별시</div>' + 
+                            '                <div><a href="https://www.sac.or.kr/site/main/home" target="_blank" class="link">홈페이지</a></div>' + 
+                            '            </div>' + 
+                            '        </div>' + 
+                            '    </div>' +    
+                            '</div>';
+
+                // 마커 위에 커스텀오버레이를 표시합니다
+                // 마커를 중심으로 커스텀 오버레이를 표시하기위해 CSS를 이용해 위치를 설정했습니다
+                var overlay = new kakao.maps.CustomOverlay({
+                    content: content,
+                    map: map,
+                    position: marker.getPosition()       
+                });
+
+                // 마커를 클릭했을 때 커스텀 오버레이를 표시합니다
+                kakao.maps.event.addListener(marker, 'click', function() {
+                    overlay.setMap(map);
+                });
+
+                // 커스텀 오버레이를 닫기 위해 호출되는 함수입니다 
+                function closeOverlay() {
+                    overlay.setMap(null);     
+                }
+            </script>
+            <br>
+
+ <!-- ----------------------------------------------------------------------- -->
+            <h3>관람후기</h3>
+
+            <div class="box">
+                    <div class="reviewbox">
+                        <div class="reviewbox-header">
+                            <span class="star">
+                                <h4>&starf; &starf; &starf; &starf; &starf;</h4>
+                            </span>
+
+                            <span class="review-name-date">
+                                <h4> asdf*** ㅣ 2021.06.21</h4>
+                            </span>
+                        </div>
+                        <p class="review">
+                            정말 대담한 극본….
+                            배우님들은 어쩜 이런 연기를 매일 하시죠.. 정말 존경스러워요 대단합니다… ㅠㅠ 정말 극본도 괜찮고 참 좋네요…
+                            하. 그치만 정신적 심리적으로 많이 힘들기도 한 극.
+                            한편으로는 제가 꿈꾸는 사랑이야기를 듣기도 한 것 같아서 참 좋습니다…
+                        </p>
+                    </div>
+                <div class="reviewbox">
+                    <div class="reviewbox-header">
+                        <span class="star">
+                            <h4>&starf;  &starf; &starf;  &starf; &star;</h4>
+                        </span>
+                        <span class="review-name-date">
+                            <h4> qrw*** ㅣ 2021.06.20</h4>
+                        </span>
+                    </div>
+                    <p class="review">
+                        정말 대담한 극본….
+                        배우님들은 어쩜 이런 연기를 매일 하시죠.. 정말 존경스러워요 대단합니다… ㅠㅠ 정말 극본도 괜찮고 참 좋네요…
+                        하. 그치만 정신적 심리적으로 많이 힘들기도 한 극.
+                        한편으로는 제가 꿈꾸는 사랑이야기를 듣기도 한 것 같아서 참 좋습니다…
+                    </p>
+                </div>
+                <div class="reviewbox">
+                    <div class="reviewbox-header">
+                        <span class="star">
+                            <h4>&starf; &starf; &starf; &star; &star;</h4>
+                        </span>
+                        <span class="review-name-date">
+                            <h4> zxcv*** ㅣ 2021.06.11</h4>
+                        </span>
+                    </div>
+                    <p class="review">
+                        정말 대담한 극본….
+                        배우님들은 어쩜 이런 연기를 매일 하시죠.. 정말 존경스러워요 대단합니다… ㅠㅠ 정말 극본도 괜찮고 참 좋네요…
+                        하. 그치만 정신적 심리적으로 많이 힘들기도 한 극.
+                        한편으로는 제가 꿈꾸는 사랑이야기를 듣기도 한 것 같아서 참 좋습니다…
+                    </p>
+                    
+                </div>
+                <div class="reviewbox">
+                    <div class="reviewbox-header">
+                        <span class="star">
+                            <h4>&starf; &starf; &starf; &star; &star;</h4>
+                        </span>
+                        <span class="review-name-date">
+                            <h4> zxcv*** ㅣ 2021.06.11</h4>
+                        </span>
+                    </div>
+                    <p class="review">
+                        정말 대담한 극본….
+                        배우님들은 어쩜 이런 연기를 매일 하시죠.. 정말 존경스러워요 대단합니다… ㅠㅠ 정말 극본도 괜찮고 참 좋네요…
+                        하. 그치만 정신적 심리적으로 많이 힘들기도 한 극.
+                        한편으로는 제가 꿈꾸는 사랑이야기를 듣기도 한 것 같아서 참 좋습니다…
+                    </p>
+                    
+                </div>
+                <div class="reviewbox">
+                    <div class="reviewbox-header">
+                        <span class="star">
+                            <h4>&starf; &starf; &starf; &star; &star;</h4>
+                        </span>
+                        <span class="review-name-date">
+                            <h4> zxcv*** ㅣ 2021.06.11</h4>
+                        </span>
+                    </div>
+                    <p class="review">
+                        정말 대담한 극본….
+                        배우님들은 어쩜 이런 연기를 매일 하시죠.. 정말 존경스러워요 대단합니다… ㅠㅠ 정말 극본도 괜찮고 참 좋네요…
+                        하. 그치만 정신적 심리적으로 많이 힘들기도 한 극.
+                        한편으로는 제가 꿈꾸는 사랑이야기를 듣기도 한 것 같아서 참 좋습니다…
+                    </p>
+                    
+                </div>
+                <div class="reviewbox">
+                    <div class="reviewbox-header">
+                        <span class="star">
+                            <h4>&starf; &starf; &starf; &star; &star;</h4>
+                        </span>
+                        <span class="review-name-date">
+                            <h4> zxcv*** ㅣ 2021.06.11</h4>
+                        </span>
+                    </div>
+                    <p class="review">
+                        정말 대담한 극본….
+                        배우님들은 어쩜 이런 연기를 매일 하시죠.. 정말 존경스러워요 대단합니다… ㅠㅠ 정말 극본도 괜찮고 참 좋네요…
+                        하. 그치만 정신적 심리적으로 많이 힘들기도 한 극.
+                        한편으로는 제가 꿈꾸는 사랑이야기를 듣기도 한 것 같아서 참 좋습니다…
+                    </p>
+                    
+                </div>
+                <br>
+                <br>
+            </div>
+            <br>
+        </div>
+    </body>
+</html>

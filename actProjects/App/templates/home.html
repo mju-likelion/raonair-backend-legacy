@@ -9,6 +9,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="{% static 'css/header-style.css' %}">
     <link rel="stylesheet" href="{% static 'css/style.css' %}">
+
     <title>RaonAir</title>
 </head>
 
@@ -40,8 +41,10 @@
                 </div>
                 <div class="poster">
                     <div class="posterTip">
+                        <a href="{%url 'detailpage'%}"><img src="{% static 'img/month2.jpg' %}" width="300"></a>
+                        <div class="posterTip-text">하루아침에 아들이 처참하게 살해당한다. 동성애자라는 이유에서다. 
                         <div class="posterMonth">
-                            <a><img src="{% static 'img/month2.jpg' %}" width="300" height="420"></a>
+                            <a href="{% url 'detailpage' %}"><img src="{% static 'img/month2.jpg' %}" width="300" height="420"></a>
                             <div class="posterTip-text"><h3>하루아침에</h3>아들이 처참하게 살해당한다. 동성애자라는 이유에서다. 
                             가상의 이야기지만, 우리 사회가 마주하는 현실도 크게 다르지 않은 요즘이다. 차별과 혐오에 대한 
                             담론이 계속되는 오늘날, 성소수자 문제에 뿌리까지 접근하는 연극 ‘빈센트 리버’가 막을 올린다.
@@ -93,7 +96,7 @@
                     </div>
                 </div>
                 <div class="poster">
-                    <a class="imgInner" href="/"><img class="actImg" src="{% static 'img/home3.jpg' %}" alt="likedAct"></a>
+                    <a class="imgInner" href="{%url 'listpage'%}"><img class="actImg" src="{% static 'img/home3.jpg' %}" alt="likedAct"></a>
                     <div class="posterBtn">
                         <p>햄릿</p>
                         <button name="button">자세히</button>

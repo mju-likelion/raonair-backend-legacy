@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        {% load static %}
+        <!-- static 파일 load -->
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <!-- 부트스트랩 라이브러리는 써도 되는지 확실치 않아 사용하지 않았습니다 -->
+        <!-- <link rel="stylesheet" href="{% static 'css/initStyle.css' %}"> -->
+        <link rel="stylesheet" href="{% static 'css/style.css' %}">
+        <link rel="stylesheet" href="{% static 'css/listpage.css' %}">
+
+        <title>RaonAir</title>
+
+    </head>
+    <body>
+        {% include "navbar.html" %}
+
+        <div class="container">
+            <!-- 필터는 라디오 버튼인지 체크박스인지 -->
+            <div class="filter">
+                <input class="filterRadio" type="radio" id="filterAll" name="filtering" value="all" checked><label for="filterAll"class="filterLabel">가나다순</label>
+                <input class="filterRadio" type="radio" id="filterAct" name="filtering" value="act"><label for="filterAct" class="filterLabel">인기순</label>
+                <input class="filterRadio" type="radio" id="filterActer" name="filtering" value="acter"><label for="filterActer" class="filterLabel">연극보유순</label>
+                <input class="filterRadio" type="radio" id="filterTheater" name="filtering" value="theater"><label for="filterTheater" class="filterLabel">종료임박순</label>
+            </div>
+            <hr>
+
+            <!-- <div class="click">
+                <a class="click-spell" href="/">
+                </a>
+                <a class="click-popularity" href="/">
+                </a>
+                <a class="click-number" href="/">
+                </a>
+                <a class="click-closer" href="/">
+                </a>
+            </div> -->
+
+            <div class="troupe">
+                <div class="list_tip">
+                    <a class="troupe_img_box">
+                    <img class="troupe_img" src="{% static 'img/troupe1.png' %}" width="250" height="180" alt="극단사진"></a>
+                    <p class="list_name">박장대소</p>
+                </div>
+                <div class="list_tip">
+                    <a class="troupe_img_box">
+                    <img class="troupe_img" src="{% static 'img/troupe2.png' %}" width="250" height="180" alt="극단사진"></a>
+                    <p class="list_name">구십구도</p>
+                </div>
+                <div class="list_tip">
+                    <a class="troupe_img_box">
+                    <img class="troupe_img" src="{% static 'img/troupe3.png' %}" width="250" height="180" alt="극단사진"></a>
+                    <p class="list_name">국립극단</p>
+                </div>
+                <div class="list_tip">
+                    <a class="troupe_img_box">
+                    <img class="troupe_img" src="{% static 'img/troupe4.png' %}" width="250" height="180" alt="극단사진"></a>
+                    <p class="list_name">노을</p>
+                </div>
+                <div class="list_tip">
+                    <a class="troupe_img_box">
+                    <img class="troupe_img" src="{% static 'img/troupe5.png' %}" width="250" height="180" alt="극단사진"></a>
+                    <p class="list_name">이루마</p>
+                </div>
+                <div class="list_tip">
+                    <a class="troupe_img_box">
+                    <img class="troupe_img" src="{% static 'img/troupe6.jpg' %}" width="250" height="180" alt="극단사진"></a>
+                    <p class="list_name">날으는 자동차</p>
+                </div>
+                <div class="list_tip">
+                    <a class="troupe_img_box">
+                    <img class="troupe_img" src="{% static 'img/troupe7.png' %}" width="250" height="180" alt="극단사진"></a>
+                    <p class="list_name">미스터리</p>
+                </div>
+                <div class="list_tip">
+                    <a class="troupe_img_box">
+                    <img class="troupe_img" src="{% static 'img/troupe8.png' %}" width="250" height="180" alt="극단사진"></a>
+                    <p class="list_name">강원도립극단</p>
+                </div>
+                
+                <div class="list_tip">
+                    <a class="troupe_img_box">
+                    <img class="troupe_img" src="{% static 'img/troupe9.png' %}" width="250" height="180" alt="극단사진"></a>
+                    <p class="list_name">가게</p>
+                </div>
+                <div class="list_tip">
+                    <a class="troupe_img_box">
+                    <img class="troupe_img" src="{% static 'img/troupe10.png' %}" width="250" height="180" alt="극단사진"></a>
+                    <p class="list_name">갯돌</p>
+                </div>
+                <div class="list_tip">
+                    <a class="troupe_img_box">
+                    <img class="troupe_img" src="{% static 'img/troupe11.png' %}" width="250" height="180" alt="극단사진"></a>
+                    <p class="list_name">한울림</p>
+                </div>
+                <div class="list_tip">
+                    <a class="troupe_img_box">
+                    <img class="troupe_img" src="{% static 'img/troupe12.png' %}" width="250" height="180" alt="극단사진"></a>
+                    <p class="list_name">미리내</p>
+                </div>
+                
+                <div class="list_tip">
+                    <a class="troupe_img_box">
+                    <img class="troupe_img" src="{% static 'img/troupe13.png' %}" width="250" height="180" alt="극단사진"></a>
+                    <p class="list_name">타리</p>
+                </div>
+                <div class="list_tip">
+                    <a class="troupe_img_box">
+                    <img class="troupe_img" src="{% static 'img/troupe14.jpg' %}" width="250" height="180" alt="극단사진"></a>
+                    <p class="list_name">목화</p>
+                </div>
+                <div class="list_tip">
+                    <a class="troupe_img_box">
+                    <img class="troupe_img" src="{% static 'img/troupe15.png' %}" width="250" height="180" alt="극단사진"></a>
+                    <p class="list_name">드란</p>
+                </div>
+                <div class="list_tip">
+                    <a class="troupe_img_box">
+                    <img class="troupe_img" src="{% static 'img/troupe16.png' %}" width="250" height="180" alt="극단사진"></a>
+                    <p class="list_name">은행나무</p>
+                </div>
+                
+                <div class="list_tip">
+                    <a class="troupe_img_box">
+                    <img class="troupe_img" src="{% static 'img/troupe17.png' %}" width="250" height="180" alt="극단사진"></a>
+                    <p class="list_name">국립극단</p>
+                </div>
+                <div class="list_tip">
+                    <a class="troupe_img_box">
+                    <img class="troupe_img" src="{% static 'img/troupe18.png' %}" width="250" height="180" alt="극단사진"></a>
+                    <p class="list_name">이방인</p>
+                </div>
+                <div class="list_tip">
+                    <a class="troupe_img_box"><img class="troupe_img" src="{% static 'img/troupe19.jpg' %}" width="250" height="180" alt="극단사진"></a>
+                    <p class="list_name">고래</p>
+                </div>
+                <div class="list_tip">
+                    <a class="troupe_img_box">
+                    <img class="troupe_img" src="{% static 'img/troupe20.jpg' %}" width="250" height="180" alt="극단사진"></a>
+                    <p class="list_name">휘파람</p>
+                </div>
+                <br><br>
+            </div>
+        </div>
+    </body>
+</html>
