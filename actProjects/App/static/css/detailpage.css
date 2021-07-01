@@ -3,8 +3,10 @@
     display: flex;
     align-items: center;
     flex-direction: column;
-    margin-left: 250px;
-    margin-right: 250px;
+    margin: 0 auto;
+    top: 0%;
+    width: 1200px;
+    height: 100%;
     background-color: rgb(245, 245, 245);
     border: solid 1px rgb(238, 238, 238);  
 }
@@ -33,14 +35,17 @@ h4 {
     padding-top: 10px;
 }
 
-tr {
-    text-align: center;
-}
 
 .right {
     text-align: right;
     margin-right: 30px;
     align-items: flex-end;
+}
+
+hr {
+    width:80%;
+    border: solid 1px rgb(231, 231, 231);
+    margin-bottom:s 1.5rem;
 }
 
 h3 {
