@@ -10,6 +10,7 @@ body {
     background-color: rgb(245, 245, 245);
     top: 0%;
     width: 1200px;
+    height: 100%;
     border: solid 1px rgb(204, 204, 204);
 }
 .click {
@@ -68,6 +69,7 @@ input[type="radio"][name="filtering"]:checked + .filterLabel {
     font-weight: bold;
 }
 
+/* rmreksdlalwl */
 .troupe {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
@@ -76,6 +78,8 @@ input[type="radio"][name="filtering"]:checked + .filterLabel {
    
 }
 .list_tip {
+    display: grid;
+    justify-items: center;;
   
 }
 
