@@ -24,10 +24,18 @@ const date_to = document.getElementById('date-to__input');
 setDate(date_from, now_date, max_date);//검색 범위에서 '언제부터'에 해당하는 부분 세팅
 setDate(date_to, now_date, max_date);////검색 범위에서 '언제까지'에 해당하는 부분 세팅
 
+const extractSrc = (ele) => {
+    if(ele.children[0].tagName === 'A'){
+        return ele.children[0].childNodes[1].currentSrc;
+    }
+    else{
+        return ele.children[0].currentSrc;
+    }
+}
 
 //옵션을 충족하는지 검사한다.
 const satisfyOptions = (ele) => {
-    const url = ele.children[0].currentSrc;
+    const url = extractSrc(ele);
     if(url.includes('month2.jpg')) return true;
     //진짜 검색이 되는것 처럼 하기 위해 랜덤요소 사용.
     const options = ['home', 'theme', 'month'];
