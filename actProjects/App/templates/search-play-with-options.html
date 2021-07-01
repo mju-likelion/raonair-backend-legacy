@@ -72,7 +72,9 @@
         </article>
         <section id="main__plays">
             <div class="plays">
-                <img src="{% static 'img/month2.jpg' %}" alt="plays poster image" class="plays-image">
+                <a href="/detailpage">
+                    <img src="{% static 'img/month2.jpg' %}" alt="plays poster image" class="plays-image">
+                </a>
             </div> 
             <!-- 불러온 이미지 파일의 이름을 경로로 세팅 -->
             {% for image_name in images_name %}
