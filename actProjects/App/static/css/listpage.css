@@ -93,8 +93,13 @@ input[type="radio"][name="filtering"]:checked + .filterLabel {
 }
 
 .troupe_img_box:hover > .troupe_img {
-    transform: scale(1.05);
+    transform: scale(1.07);
     transition: 0.3s;
+}
+
+.troupe_img_box {
+    padding: -30px;
+    object-fit: contain;   
 }
 
 .troupe_img {
