@@ -1,0 +1,145 @@
+.containner {
+    top: 0%;
+    margin: 0 auto;
+    width: 1200px;
+    border: solid 1px rgb(236, 236, 236);
+    padding-bottom: 90px;
+}
+.slide_wrap {
+    display: flex;
+    width: 1200px;
+    height: 400px;
+    margin : auto;
+    /* background-color: red; */
+}
+.slide_box {
+    width: 100%;
+    position: relative;
+    margin: auto;
+    overflow: hidden;
+}
+.slide_btn_prev, .slide_btn_next {
+    position: absolute;
+    cursor: pointer;
+    top: 150px;
+    z-index: 1;
+}
+.slide_btn_prev:hover, .slide_btn_next:hover {
+    border-radius: 50%;
+    background-color: rgba(255, 255, 255, 0.164);
+}
+.slide_btn_next {
+    right: 0%;
+}
+.slide_view {
+    display: inline-flex;
+    overflow: hidden;
+}
+.slide_btn p:hover {
+    cursor: pointer;
+}
+.slide_content {
+    /* display: table;
+    float: left; */
+    width: 1200px;
+    height: 400px;
+}
+.slide_content img {
+    width: inherit;
+    height: inherit;
+    /* object-fit: cover; */
+}
+.notion_wrap {
+    display: flex;
+    justify-content: center;
+    background-color: rgb(248, 248, 248);
+}
+.notion_list1, .notion_list2 {
+    padding: 20px 0;
+}
+.notion_list1 {
+    border-right: solid 1px rgb(231, 231, 231);
+}
+.notion_list1, .notion_list2 {
+    width: 50%;
+}
+.notion_post {
+    margin: 10px 0;
+}
+.notion_post h2::before {
+    content: '';
+    border: solid 3px rgb(32, 32, 32);
+}
+.actor_wrap {
+    margin: 50px 0;
+}
+.actor_wrap h1 {
+    text-align: center;
+}
+.actor_list {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.actor_scroll_btn img {
+    width: 40px;
+}
+.actor_scroll_btn:hover {
+    cursor: pointer;
+    border-radius: 50%;
+    box-shadow: 0 0 7px rgb(182, 182, 182);
+}
+.actor_view {
+    display: flex;
+    overflow-x: hidden;
+}
+.actor_line {
+    width: 50%;
+    border: solid 1px rgb(231, 231, 231);
+    margin-bottom: 30px;
+}
+.actor_box {
+    text-align: center;
+}
+.actor_box p {
+    text-align: center;
+    font-weight: bold;
+}
+.actor_img {
+    width: 125px;
+    height: 125px;
+    object-fit: cover;
+    border-radius: 50%;
+    border: solid 1px rgb(231, 231, 231);
+    box-shadow: 0 0 12px rgb(221,221,221);
+    margin: 0 30px;
+}
+.act_wrap h1 {
+    text-align: center;
+}
+.act_list {
+    display: flex;
+    justify-content: center;
+}
+.act_box {
+    margin: 0 20px;
+}
+.act_box:hover {
+    cursor: pointer;
+}
+.act_img_box:hover > .act_img {
+    transform: scale(1.05);
+    transition: 0.3s;
+}
+.act_box p {
+    text-align: center;
+    font-weight: bold;
+}
+.act_img {
+    width: 240px;
+    height: 340px;
+    object-fit: cover;
+    border-radius: 5px;
+    border: solid 1px rgb(231, 231, 231);
+}

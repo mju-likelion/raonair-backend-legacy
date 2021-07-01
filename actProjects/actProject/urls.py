@@ -9,5 +9,7 @@ urlpatterns = [
     path('searchPage/', App.views.searchPage, name="searchPage"),
     path('detailpage/', App.views.detailpage, name="detailpage"),
     path('listpage/', App.views.listpage, name="listpage"),
+    path('search-with-options', App.views.search_play_with_options),
+    path('theaterDetail', App.views.theaterDetail, name="theater_detail"),
 ]
 

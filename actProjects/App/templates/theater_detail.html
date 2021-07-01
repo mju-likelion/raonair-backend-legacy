@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/initStyle.css' %}">
+    <link rel="stylesheet" href="{% static 'css/theater_detail.css' %}">
+    <title>극단페이지</title>
+</head>
+<body>
+    {% include "navbar.html" %}
+    <div class="containner">
+        <div class="slide_wrap" id="slideWrap">
+            <div class="slide_box">
+                <p class="slide_btn_prev" id="slide_prev"><img src="{% static 'img/prev_btn.png' %}"></p>
+                <div class="slide_view" id="slideView">
+                    <div class="slide_content"><img src="{% static 'img/banner1.jpg' %}"></div>
+                    <div class="slide_content"><img src="{% static 'img/banner2.jpg' %}"></div>
+                    <div class="slide_content"><img src="{% static 'img/banner3.jpg' %}"></div>
+                </div>
+                <p class="slide_btn_next" id="slide_next"><img src="{% static 'img/next_btn.png' %}"></p>
+            </div>
+        </div>
+
+        <div class="notion_wrap">
+            <div class="notion_list1">
+                <ul>
+                    <li class="notion_post"><h2>&nbsp;공지</h2></li>
+                    <li class="notion_post">배우를 모집합니다</li>
+                    <li class="notion_post">'특별한 저녁식사' 공연 개시</li>
+                    <li class="notion_post">우리 극단을 소개합니다</li>
+                </ul>
+            </div>
+            <div class="notion_list2">
+                <ul>
+                    <li class="notion_post"><h2>&nbsp;전화문의</h2></li>
+                    <li class="notion_post"><h1>02-1234-9324</h1></li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="actor_wrap">
+            <h1>극단 구성원</h1><hr class="actor_line">
+            <div class="actor_list">
+                <a class="actor_scroll_btn" id="actor_prev_btn">
+                    <img src="{% static 'img/prev_btn.png' %}">
+                </a>
+                <div class="actor_view">
+                    <div class="actor_box">
+                        <a class="actor_img_box" href="">
+                            <img class="actor_img" src="{% static 'img/actor1.jpg' %}" alt="구성원이미지">
+                        </a>
+                        <p>채송화</p>
+                        <p>배우</p>
+                    </div>
+                    <div class="actor_box">
+                        <a class="actor_img_box" href="">
+                            <img class="actor_img" src="{% static 'img/actor2.jpg' %}" alt="구성원이미지">
+                        </a>
+                        <p>이익준</p>
+                        <p>배우</p>
+                    </div>
+                    <div class="actor_box">
+                        <a class="actor_img_box" href="">
+                            <img class="actor_img" src="{% static 'img/actor3.jpg' %}" alt="구성원이미지">
+                        </a>
+                        <p>안정원</p>
+                        <p>배우</p>
+                    </div>
+                    <div class="actor_box">
+                        <a class="actor_img_box" href="">
+                            <img class="actor_img" src="{% static 'img/actor4.jpg' %}" alt="구성원이미지">
+                        </a>
+                        <p>이노아</p>
+                        <p>배우</p>
+                    </div>
+                    <div class="actor_box">
+                        <a class="actor_img_box" href="">
+                            <img class="actor_img" src="{% static 'img/actor5.jpg' %}" alt="구성원이미지">
+                        </a>
+                        <p>장겨울</p>
+                        <p>배우</p>
+                    </div>
+                    <div class="actor_box">
+                        <a class="actor_img_box" href="">
+                            <img class="actor_img" src="{% static 'img/actor6.jpg' %}" alt="구성원이미지">
+                        </a>
+                        <p>곽선영</p>
+                        <p>배우</p>
+                    </div>
+                    <div class="actor_box">
+                        <a class="actor_img_box" href="">
+                            <img class="actor_img" src="{% static 'img/actor7.jpg' %}" alt="구성원이미지">
+                        </a>
+                        <p>김수진</p>
+                        <p>배우</p>
+                    </div>
+                    <div class="actor_box">
+                        <a class="actor_img_box" href="">
+                            <img class="actor_img" src="{% static 'img/actor8.jpg' %}" alt="구성원이미지">
+                        </a>
+                        <p>이달</p>
+                        <p>배우</p>
+                    </div>
+                    <div class="actor_box">
+                        <a class="actor_img_box" href="">
+                            <img class="actor_img" src="{% static 'img/actor9.jpg' %}" alt="구성원이미지">
+                        </a>
+                        <p>전국향</p>
+                        <p>배우</p>
+                    </div>
+                    <div class="actor_box">
+                        <a class="actor_img_box" href="">
+                            <img class="actor_img" src="{% static 'img/actor10.jpg' %}" alt="구성원이미지">
+                        </a>
+                        <p>이주승</p>
+                        <p>감독</p>
+                    </div>
+                    <div class="actor_box">
+                        <a class="actor_img_box" href="">
+                            <img class="actor_img" src="{% static 'img/actor4.jpg' %}" alt="구성원이미지">
+                        </a>
+                        <p>이노아</p>
+                        <p>공연기획</p>
+                    </div>
+                    <div class="actor_box">
+                        <a class="actor_img_box" href="">
+                            <img class="actor_img" src="{% static 'img/actor5.jpg' %}" alt="구성원이미지">
+                        </a>
+                        <p>신현빈</p>
+                        <p>공연기획</p>
+                    </div>
+
+                    <div class="actor_box">
+                        <a class="actor_img_box" href="">
+                            <img class="actor_img" src="{% static 'img/actor7.jpg' %}" alt="구성원이미지">
+                        </a>
+                        <p>김수진</p>
+                        <p>마케팅</p>
+                    </div>
+                    <div class="actor_box">
+                        <a class="actor_img_box" href="">
+                            <img class="actor_img" src="{% static 'img/actor6.jpg' %}" alt="구성원이미지">
+                        </a>
+                        <p>은선진</p>
+                        <p>마케팅</p>
+                    </div>
+                    <div class="actor_box">
+                        <a class="actor_img_box" href="">
+                            <img class="actor_img" src="{% static 'img/actor9.jpg' %}" alt="구성원이미지">
+                        </a>
+                        <p>전국향</p>
+                        <p>무대기술</p>
+                    </div>
+                    <div class="actor_box">
+                        <a class="actor_img_box" href="">
+                            <img class="actor_img" src="{% static 'img/actor2.jpg' %}" alt="구성원이미지">
+                        </a>
+                        <p>조정석</p>
+                        <p>무대기술</p>
+                    </div>
+                    <div class="actor_box">
+                        <a class="actor_img_box" href="">
+                            <img class="actor_img" src="{% static 'img/actor3.jpg' %}" alt="구성원이미지">
+                        </a>
+                        <p>유연석</p>
+                        <p>작품개발</p>
+                    </div>
+                    <div class="actor_box">
+                        <a class="actor_img_box" href="">
+                            <img class="actor_img" src="{% static 'img/actor10.jpg' %}" alt="구성원이미지">
+                        </a>
+                        <p>이주승</p>
+                        <p>작품개발</p>
+                    </div>
+                    <div class="actor_box">
+                        <a class="actor_img_box" href="">
+                            <img class="actor_img" src="{% static 'img/actor1.jpg' %}" alt="구성원이미지">
+                        </a>
+                        <p>전미도</p>
+                        <p>분장</p>
+                    </div>
+                    <div class="actor_box">
+                        <a class="actor_img_box" href="">
+                            <img class="actor_img" src="{% static 'img/actor.png' %}" alt="구성원이미지">
+                        </a>
+                        <p>김봉천</p>
+                        <p>분장</p>
+                    </div>
+                </div>
+                <a class="actor_scroll_btn" id="actor_next_btn">
+                    <img src="{% static 'img/next_btn.png' %}">
+                </a>
+            </div>
+        </div>
+        
+        <div class="act_wrap">
+            <h1>진행 예정 공연</h1><hr class="actor_line">
+            <div class="act_list">
+                <div class="act_box">
+                    <a class="act_img_box" href="">
+                        <img class="act_img" src="{% static 'img/theme1-1.jpg' %}" alt="공연이미지">
+                    </a>
+                    <p>특별한 저녁식사</p>
+                </div>
+                <div class="act_box">
+                    <a class="act_img_box" href="">
+                        <img class="act_img" src="{% static 'img/theme1-2.jpg' %}" alt="공연이미지">
+                    </a>
+                    <p>동굴가족</p>
+                </div>
+                <div class="act_box">
+                    <a class="act_img_box" href="">
+                        <img class="act_img" src="{% static 'img/theme1-3.jpg' %}" alt="공연이미지">
+                    </a>
+                    <p>동치미</p>
+                </div>
+                <div class="act_box">
+                    <a class="act_img_box" href="">
+                        <img class="act_img" src="{% static 'img/theme1-4.jpg' %}" alt="공연이미지">
+                    </a>
+                    <p>당신만이</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="act_wrap">
+            <h1>지난 공연</h1><hr class="actor_line">
+            <div class="act_list">
+                <div class="act_box">
+                    <a class="act_img_box" href="">
+                        <img class="act_img" src="{% static 'img/theme2-1.jpg' %}" alt="공연이미지">
+                    </a>
+                    <p>우리가 사랑했던 정원에서</p>
+                </div>
+                <div class="act_box">
+                    <a class="act_img_box" href="">
+                        <img class="act_img" src="{% static 'img/theme2-2.jpg' %}" alt="공연이미지">
+                    </a>
+                    <p>연애하기 좋은 날</p>
+                </div>
+                <div class="act_box">
+                    <a class="act_img_box" href="">
+                        <img class="act_img" src="{% static 'img/theme2-3.jpg' %}" alt="공연이미지">
+                    </a>
+                    <p>그날밤, 너랑 나</p>
+                </div>
+                <div class="act_box">
+                    <a class="act_img_box" href="">
+                        <img class="act_img" src="{% static 'img/theme2-4.jpg' %}" alt="공연이미지">
+                    </a>
+                    <p>뷰티풀 라이프</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="filmography_wrap">
+
+        </div>
+    </div>
+
+    <script src="{% static 'js/theater_detail_slid.js' %}"></script>
+</body>
+</html>
