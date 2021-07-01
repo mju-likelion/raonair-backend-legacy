@@ -21,7 +21,7 @@
 .slide_btn_prev, .slide_btn_next {
     position: absolute;
     cursor: pointer;
-    top: 38%;
+    top: 150px;
     z-index: 1;
 }
 .slide_btn_prev:hover, .slide_btn_next:hover {
@@ -55,7 +55,7 @@
     background-color: rgb(248, 248, 248);
 }
 .notion_list1, .notion_list2 {
-    padding: 20px 0px;
+    padding: 20px 0;
 }
 .notion_list1 {
     border-right: solid 1px rgb(231, 231, 231);
@@ -66,12 +66,12 @@
 .notion_post {
     margin: 10px 0;
 }
-.notion_post h2::before, .notion_post h2::before {
+.notion_post h2::before {
     content: '';
     border: solid 3px rgb(32, 32, 32);
 }
 .actor_wrap {
-    margin: 50px 0px;
+    margin: 50px 0;
 }
 .actor_wrap h1 {
     text-align: center;
@@ -115,9 +115,6 @@
     box-shadow: 0 0 12px rgb(221,221,221);
     margin: 0 30px;
 }
-/* .act_wrap {
-
-} */
 .act_wrap h1 {
     text-align: center;
 }

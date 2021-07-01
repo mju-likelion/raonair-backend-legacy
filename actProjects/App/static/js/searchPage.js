@@ -15,11 +15,7 @@ let cntActor = 0;
 
 function changeAll() {
     // 임시로 전체 버튼을 클릭하면 새로 추가된 요소 삭제를 위함
-    window.location.href = 'http://127.0.0.1:8000/searchPage';
-
-    // view[0].style.display = view[1].style.display = view[2].style.display = 'flex';
-    // title[0].style.display = title[1].style.display = title[2].style.display = 'flex';
-    // hr[1].style.display = hr[2].style.display='block';
+    window.location.reload();
 }
 function changeAct() {
     clickAct.checked = true;
@@ -100,7 +96,7 @@ function addMoreActor() {
 
         const imgEle = document.createElement('img');
         imgEle.className = 'actorImg';
-        imgEle.src = 'http://127.0.0.1:8000/static/img/actor' + (i + 6) + '.jpg';
+        imgEle.src = `http://127.0.0.1:8000/static/img/actor${i + 6}.jpg`; // Template literal
         imgInnerEle.appendChild(imgEle);
 
         const posterBtnEle = document.createElement('div');
