@@ -36,7 +36,7 @@ h4 {
 }
 
 
-.right {
+.review-name-date {
     text-align: right;
     margin-right: 30px;
     align-items: flex-end;
@@ -51,8 +51,6 @@ hr {
 h3 {
     padding-top : 20px;
 }
-
-
 
 .intro {
     display: flex;
