@@ -10,13 +10,13 @@
         <!-- <link rel="stylesheet" href="{% static 'css/initStyle.css' %}"> -->
         <link rel="stylesheet" href="{% static 'css/style.css' %}">
         <link rel="stylesheet" href="{% static 'css/listpage.css' %}">
+        <link rel="stylesheet" href="{% static 'css/header-style.css' %}">
 
         <title>RaonAir</title>
 
     </head>
     <body>
-        {% include "navbar.html" %}
-
+        {% include "header.html" %}
         <div class="container">
             <!-- 필터는 라디오 버튼인지 체크박스인지 -->
             <div class="filter">
@@ -40,9 +40,10 @@
 
             <div class="troupe">
                 <div class="list_tip">
-                    <a class="troupe_img_box">
-                    <img class="troupe_img" src="{% static 'img/troupe1.png' %}" width="250" height="180" alt="극단사진"></a>
-                    <p class="list_name">박장대소</p>
+                        <a href="/theaterDetail" class="troupe_img_box">
+                            <img class="troupe_img" src="{% static 'img/troupe1.png' %}" width="250" height="180" alt="극단사진"></a>
+                            <p class="list_name">박장대소</p>
+                        </a>
                 </div>
                 <div class="list_tip">
                     <a class="troupe_img_box">

@@ -18,7 +18,14 @@ def listpage(request) :
 def search_play_with_options(request) :
     #이미지 파일들의 이름을 읽어 온다.
     images_name = os.listdir(os.path.join(os.getcwd(), 'App/static/img'))
-    return render(request, 'search-play-with-options.html', {'images_name': images_name})
+    posters_name = []
+    for img in images_name:
+        if is_poster(img):
+            posters_name.append(img)
+    return render(request, 'search-play-with-options.html', {'images_name': posters_name})
 
 def theaterDetail(request) :
     return render(request, 'theater_detail.html')
+
+def is_poster(image_name) :
+    return True if (('home' in image_name) or ('theme' in image_name) or ('month' in image_name)) else False
