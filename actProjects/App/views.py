@@ -1,4 +1,5 @@
-from django.shortcuts import render
+from django.http import JsonResponse
+
 import base64
 import os
 
@@ -10,7 +11,7 @@ def searchPage(request) :
     return render(request, 'searchPage.html')
 
 def detailpage(request) :
-    return render(request, 'detailpage.html')
+    return JsonResponse({"request":"detailpage.html"})
 
 def listpage(request) :
     return render(request, 'listpage.html')
