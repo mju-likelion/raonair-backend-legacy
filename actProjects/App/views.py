@@ -1,4 +1,5 @@
 from django.shortcuts import render
+from django.http import JsonResponse
 import base64
 import os
 
@@ -25,7 +26,7 @@ def search_play_with_options(request) :
     return render(request, 'search-play-with-options.html', {'images_name': posters_name})
 
 def theaterDetail(request) :
-    return render(request, 'theater_detail.html')
+    return JsonResponse({'request': 'theater_detail.html'})
 
 def is_poster(image_name) :
     return True if (('home' in image_name) or ('theme' in image_name) or ('month' in image_name)) else False
