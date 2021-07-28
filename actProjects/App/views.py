@@ -1,4 +1,6 @@
 
+from django.http import JsonResponse
+
 from django.shortcuts import render
 
 from django.http import JsonResponse
@@ -17,7 +19,7 @@ def detailpage(request) :
     return JsonResponse({"request":"detailpage.html"})
 
 def listpage(request) :
-    return render(request, 'listpage.html')
+    return  JsonResponse({"request": "listpage.html"})
 
 def search_play_with_options(request) :
     return JsonResponse({
