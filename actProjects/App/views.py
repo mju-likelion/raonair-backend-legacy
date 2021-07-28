@@ -1,3 +1,4 @@
+from django.http import JsonResponse
 from django.shortcuts import render
 import base64
 import os
@@ -13,7 +14,7 @@ def detailpage(request) :
     return render(request, 'detailpage.html')
 
 def listpage(request) :
-    return render(request, 'listpage.html')
+    return  JsonResponse({"request": "listpage.html"})
 
 def search_play_with_options(request) :
     #이미지 파일들의 이름을 읽어 온다.
