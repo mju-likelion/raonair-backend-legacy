@@ -1,7 +1,7 @@
 
 from django.shortcuts import render
-
 from django.http import JsonResponse
+
 import base64
 import os
 
@@ -10,7 +10,7 @@ def home(request) :
     return JsonResponse({"request":'home.html'})
 
 def searchPage(request) :
-    return render(request, 'searchPage.html')
+    return JsonResponse({"request":'searchPage.html'})
 
 def detailpage(request) :
     return render(request, 'detailpage.html')
