@@ -1,11 +1,13 @@
+
 from django.shortcuts import render
+
 from django.http import JsonResponse
 import base64
 import os
 
 # Create your views here.
 def home(request) :
-    return render(request, 'home.html')
+    return JsonResponse({"request":'home.html'})
 
 def searchPage(request) :
     return render(request, 'searchPage.html')
