@@ -1,14 +1,10 @@
-
 from pathlib import Path
 from . import my_settings
 import os
 
 BASE_DIR = Path(__file__).resolve().parent.parent
-
-from . import my_settings
 SECRET_KEY = my_settings.SECRET_KEY
 
-# SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
 ALLOWED_HOSTS = []
