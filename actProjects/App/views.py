@@ -1,5 +1,6 @@
 from django.http import JsonResponse
 from django.shortcuts import render
+from . import models
 
 import base64
 import os
@@ -9,35 +10,7 @@ import os
 
 # 홈페이지 공연 추천
 def home(request):
-    return JsonResponse({
-        "data": {
-            "play": {
-                "name": string,  # 연극이름
-                "poster": string,  # 포스터 링크
-                "like_count": number,  # 찜수
-                "star_avg": number,  # 평균 별점
-                "star_count": number,  # 별점수
-                "price": number,  # 가격
-                "time": number,  # 공연시간
-                "start_date": date,  # 공연시작일
-                "end_date": date,  # 공연시작일
-                "external_links": [
-                    {
-                        "key": enum(yes24, interpark, playDB, cultureGov),
-                        "link": string,
-                    },
-                ],
-                "actor": [
-                    {
-                        "name": string,  # 배우 이름
-                        "photo": string,  # 사진 링크
-                        "position": string,  # 배역
-                    },
-                ],
-            }
-        }
-    }
-    )
+    return JsonResponse({"request": 'searchPage.html'})
 
 
 # 검색결과 페이지
@@ -56,8 +29,55 @@ def troupe(request):
 
 
 # 연극 개별 페이지
-def play(request):
-    return JsonResponse({'request': 'theater_detail.html'})
+def play(request, id):
+    print(id)
+    plays = models.Play.objects.get(id=id)
+    stars = models.Star.objects.get(play=id)  # 데이터들의 리스트
+    star_count = models.Star.objects.count(play=id)  # 정수 별점 갯수
+    staffs = models.Staff.objects.get(play=id)
+    likes = models.Staff.objects.count(play=id)
+    print(plays.title)
+
+    '''
+    t=0
+
+    for i in range (star_count):
+        if play == id :
+            sum+=stars
+            t+=1
+
+    avg = sum/t;
+
+    '''
+
+    return JsonResponse({
+        "data": {
+            "play": {
+                "name": plays.title,  # 연극이름
+                "poster": plays.poster,  # 포스터 링크
+                "like_count": likes.title,  # 찜수
+                "star_avg": avg,  # 평균 별점
+                "star_count": star_count.  # 별점수
+                "price": plays.price,  # 가격
+                "time": plays.running_time,  # 공연시간
+                "start_date": plays.start_date,  # 공연시작일
+                "end_date": plays.end_date,  # 공연시작일
+                "external_links": [
+                    {
+                        "key": "enum(yes24, interpark, playDB, cultureGov)",
+                        "link": "string",
+                    },
+                ],
+                "actor": [
+                    {
+                        "name": staffs.person,  # 배우 이름
+                        "photo": person.photo,  # 사진 링크
+                        "position": staffs.role,  # 배역
+                    },
+                ],
+            }
+        }
+    })
 
 
 # 로그인
@@ -93,3 +113,35 @@ def star(request):
 # 커멘트 달기
 def comment(request):
     return JsonResponse({"request": "listpage.html"})
+
+
+'''
+#c언어
+#include <stdio.h>
+int main()
+{
+    int avg=0, sum=0, t=0;
+    for(int i=0; i< ; i++)
+    {
+        if(play_id == 1)
+        {
+            sum+=play_id;
+            t+=1;
+        }
+    }
+    avg = sum/t;
+    return avg;
+}
+
+#파이썬
+t=0
+
+for i in range :
+    if play_id == 1 :
+        sum+=play_id
+        t+=1
+
+avg = sum/t;
+
+
+'''
