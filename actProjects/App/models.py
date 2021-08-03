@@ -157,7 +157,6 @@ class Play(models.Model):
     start_date = models.DateField(db_column='start_DATE')  # Field name made lowercase.
     end_date = models.DateField(db_column='end_DATE', blank=True, null=True)  # Field name made lowercase.
     running_time = models.IntegerField()
-    price = models.IntegerField()
     troupe = models.ForeignKey('Troupe', models.DO_NOTHING, db_column='troupe')
     theater = models.ForeignKey('Theater', models.DO_NOTHING, db_column='theater')
     yes24_external_link = models.CharField(unique=True, max_length=255, blank=True, null=True)

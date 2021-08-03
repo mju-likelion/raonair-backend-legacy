@@ -14,12 +14,12 @@ def home(request):
 
 
 # 검색결과 페이지
-def serch(request):
+def search(request):
     return JsonResponse({"request": 'searchPage.html'})
 
 
 # 검색결과 페이지, 더보기 클릭
-def serch_detail(request):
+def search_detail(request):
     return JsonResponse({"request": "detailpage.html"})
 
 
@@ -32,10 +32,10 @@ def troupe(request):
 def play(request, id):
     print(id)
     plays = models.Play.objects.get(id=id)
-    stars = models.Star.objects.get(play=id)  # 데이터들의 리스트
-    star_count = models.Star.objects.count(play=id)  # 정수 별점 갯수
-    staffs = models.Staff.objects.get(play=id)
-    likes = models.Staff.objects.count(play=id)
+    # stars = models.Star.objects.get(play=id)  # 데이터들의 리스트
+    # star_count = models.Star.objects.count(play=id)  # 정수 별점 갯수
+    staffs = models.Staff.objects.filter(play=id)
+    likes = models.Like.objects.filter(play=id).count()
     print(plays.title)
 
     '''
@@ -55,26 +55,25 @@ def play(request, id):
             "play": {
                 "name": plays.title,  # 연극이름
                 "poster": plays.poster,  # 포스터 링크
-                "like_count": likes.title,  # 찜수
-                "star_avg": avg,  # 평균 별점
-                "star_count": star_count.  # 별점수
-                "price": plays.price,  # 가격
+                "like_count": likes,  # 찜수
+                # "star_avg": avg,  # 평균 별점
+                # "star_count": star_count,  # 별점수
                 "time": plays.running_time,  # 공연시간
                 "start_date": plays.start_date,  # 공연시작일
                 "end_date": plays.end_date,  # 공연시작일
-                "external_links": [
-                    {
-                        "key": "enum(yes24, interpark, playDB, cultureGov)",
-                        "link": "string",
-                    },
-                ],
-                "actor": [
-                    {
-                        "name": staffs.person,  # 배우 이름
-                        "photo": person.photo,  # 사진 링크
-                        "position": staffs.role,  # 배역
-                    },
-                ],
+                # "external_links": [
+                #     {
+                #         "key": "enum(yes24, interpark, playDB, cultureGov)",
+                #         "link": "string",
+                #     },
+                # ],
+                # "actor": [
+                #     {
+                #         "name": staffs.person,  # 배우 이름
+                #         # "photo": person.photo,  # 사진 링크
+                #         "position": staffs.role,  # 배역
+                #     },
+                # ],
             }
         }
     })
