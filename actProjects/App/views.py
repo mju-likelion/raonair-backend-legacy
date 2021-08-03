@@ -49,6 +49,9 @@ def play(request, id):
     avg = sum/t;
 
     '''
+    staffss = []
+    for i in range(len(staffs)):
+        staffss.append({"name": staffs[i].person.name, "position": staffs[i].role, "photo": staffs[i].person.photo})
 
     return JsonResponse({
         "data": {
@@ -67,13 +70,7 @@ def play(request, id):
                 #         "link": "string",
                 #     },
                 # ],
-                # "actor": [
-                #     {
-                #         "name": staffs.person,  # 배우 이름
-                #         # "photo": person.photo,  # 사진 링크
-                #         "position": staffs.role,  # 배역
-                #     },
-                # ],
+                "actor": staffss
             }
         }
     })
