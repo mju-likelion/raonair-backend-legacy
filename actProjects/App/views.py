@@ -30,29 +30,41 @@ def troupe(request):
 
 # 연극 개별 페이지
 def play(request, id):
-    print(id)
-    plays = models.Play.objects.get(id=id)
-    stars = models.Star.objects.filter(play=id)  # 데이터들의 리스트
-    # star_count = models.Star.objects.count(play=id)  # 정수 별점 갯수
+    play = models.Play.objects.get(id=id)
+    star = models.Star.objects.filter(play=id)  # 데이터들의 리스트
     staffs = models.Staff.objects.filter(play=id)
-    likes = models.Like.objects.filter(play=id).count()
+    like = models.Like.objects.filter(play=id).count()
+    comment = models.Comment.objects.filter(play=id)
 
     # 별점 갯수
-    stars_count = 0
-    for i in range(len(stars)):
-        stars_count += stars[i].star
+    star_count = 0
+    for i in range(len(star)):
+        star_count += star[i].star
 
     # 별점 평균 리스트
-    avg = stars_count/len(stars)
+    avg = star_count/len(star)/2
+
+    # 찜 갯수
+    # like_cnt = 0
+    # for i in range(len(like)):
+    #     like_cnt += like[i].like #찜 갯수 컬럼 없음
+
+    # 리뷰
+    review = []
+    for i in range(len(comment)):
+        review.append({"nickname": comment[i].user.nickname, "comment": comment[i].comment})
+    # "date": comment.date}) # date 컬럼 없음
 
     # 관련정보더보기 링크 리스트
-    links = []
-    # for i in range(4):
-    # if plays.yes24_external_link is not None: // null은 출력안하려면 ?
-    links.append({"name": 'yes24', "link": plays.yes24_external_link})
-    links.append({"name": 'interpark', "link": plays.interpark_external_link})
-    links.append({"name": 'playDB', "link": plays.playdb_external_link})
-    links.append({"name": 'cultureGov', "link": plays.culturegov_external_link})
+    link = []
+    if play.yes24_external_link is not None:
+        link.append({"name": 'yes24', "link": play.yes24_external_link})
+    if play.interpark_external_link is not None:
+        link.append({"name": 'interpark', "link": play.interpark_external_link})
+    if play.playdb_external_link is not None:
+        link.append({"name": 'playDB', "link": play.playdb_external_link})
+    if play.culturegov_external_link is not None:
+        link.append({"name": 'cultureGov', "link": play.culturegov_external_link})
 
     # 배우 및 극단 프로필 리스트
     staffss = []
@@ -62,16 +74,22 @@ def play(request, id):
     return JsonResponse({
         "data": {
             "play": {
-                "name": plays.title,  # 연극이름
-                "poster": plays.poster,  # 포스터 링크
-                # "like_count": likes,  # 찜수
+                "name": play.title,  # 연극이름
+                "poster": play.poster,  # 포스터 링크
+                # "like_cnt": like_cnt,  # 찜수
                 "star_avg": avg,  # 평균 별점
-                "star_cnt": stars_count,  # 별점수
-                "time": plays.running_time,  # 공연시간
-                "start_date": plays.start_date,  # 공연시작일
-                "end_date": plays.end_date,  # 공연시작일
-                "external_links": links,  # 관련정보더보기 링크
-                "actor": staffss  # 배우 및 극단 프로필
+                "star_cnt": star_count,  # 별점수
+                "time": play.running_time,  # 공연시간
+                "start_date": play.start_date,  # 공연시작일
+                "end_date": play.end_date,  # 공연시작일
+                "external_links": link,  # 관련정보더보기 링크
+                "staff": staffss,  # 배우 및 극단 프로필
+                "review": review,  # 리뷰 및 커멘트
+                "location": play.location,  # 위치
+                # "context": {
+                # "like_check": boolean,
+                # "rating": number | | null,
+                # }
             }
         }
     })
