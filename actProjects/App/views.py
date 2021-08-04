@@ -1,6 +1,7 @@
 from django.http import JsonResponse
 from django.shortcuts import render
 from . import models
+from datetime import datetime
 
 import base64
 import os
@@ -8,29 +9,47 @@ import os
 def home(request) :
     return JsonResponse({"request":'home.html'})
 
-# self의 정확한 용도?
 def search(request) :
-    keyword = request.POST.get('q', "") # 검색어 쿼리
-    # plays = models.Play.objects.get(title=keyword)
+    # 검색어 쿼리, 두 번째 요소에는 기본값을 넣어야한다 (임시로 POST를 넣음)
+    keyword = request.POST.get('q', "")
+    plays = models.Play.objects.filter(title__icontains=keyword) # play 모든 결과 불러옴
 
-    # plays = models.Play.objects.get(title__icontains=keyword)
-    plays = models.Play.objects.all() # play 모든 결과 불러옴
-    play_list = []
-    for i in range(len(plays)):
-        play_list.append({
-            "title": plays[i].title,
-            "start_date": plays[i].start_date,
-            "end_date": plays[i].end_date,
-            "poster": plays[i].poster,
+    ongoing_list = []
+    tobe_list = []
+    closed_list = []
+
+    tody = datetime.strftime(datetime.now(), '%Y-%m-%d')
+
+    for i in plays:
+        # 날짜 비교
+        start_date = datetime.strftime(i.start_date, '%Y-%m-%d')
+        end_date = datetime.strftime(i.end_date, '%Y-%m-%d') if (i.end_date) else None
+
+        new_play = ({
+            "title": i.title,
+            "poster": i.poster,
+            "start_date": start_date,
+            "end_date": end_date,
+
+            "keyword": keyword, # 쿼리 확인용
         })
+
+        if(tody >= start_date and (end_date == None or tody <= end_date)):
+            ongoing_list.append(new_play)
+        elif(tody < start_date):
+            tobe_list.append(new_play)
+        elif(tody > end_date):
+            closed_list.append(new_play)
+        else:
+            print("에러")
 
     return JsonResponse({
         "data": {
             # "query": str,
             "searched_results": {
-                "ongoing_plays": play_list[0:len(play_list)],
-                # "tobe_plays": play_tobe[4],
-                # "closed_plays": play_closed[4],
+                "ongoing_plays": ongoing_list[0:4],
+                "tobe_plays": tobe_list[0:4],
+                "closed_plays": closed_list[0:4],
             }
         }
     })
