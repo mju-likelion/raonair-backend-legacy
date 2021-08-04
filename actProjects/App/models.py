@@ -151,7 +151,6 @@ class Person(models.Model):
 
 class Play(models.Model):
     title = models.CharField(max_length=255)
-    location = models.CharField(max_length=14)
     poster = models.CharField(unique=True, max_length=255)
     start_date = models.DateField(db_column='start_DATE')  # Field name made lowercase.
     end_date = models.DateField(db_column='end_DATE', blank=True, null=True)  # Field name made lowercase.
