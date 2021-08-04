@@ -32,30 +32,34 @@ def troupe(request):
 def play(request, id):
     print(id)
     plays = models.Play.objects.get(id=id)
-    # stars = models.Star.objects.filter(play=id)  # 데이터들의 리스트
-    # stars_count = models.Star.objects.count(play=id)  # 정수 별점 갯수
+    stars = models.Star.objects.filter(play=id)  # 데이터들의 리스트
+    # star_count = models.Star.objects.count(play=id)  # 정수 별점 갯수
     staffs = models.Staff.objects.filter(play=id)
     likes = models.Like.objects.filter(play=id).count()
-    # links24 = models.Play.objects.filter(play=id)
 
+    # 별점 갯수
+    stars_count = 0
+    for i in range(len(stars)):
+        stars_count += stars[i].star
+
+    # 별점 평균 리스트
     # sum = 0
     # for i in range(stars_count):
     #     if plays.id == id:
-    #         sum += stars_count
+    #         sum += stars_count148+]
 
     # avg = sum/len(stars)
 
+    # 관련정보더보기 링크 리스트
     links = []
     # for i in range(4):
-    # if plays.yes24_external_link is not None:
+    # if plays.yes24_external_link is not None: // null은 출력안하려면 ?
     links.append({"name": 'yes24', "link": plays.yes24_external_link})
-    # if plays.interpark_external_link != None:
     links.append({"name": 'interpark', "link": plays.interpark_external_link})
-    # if plays.playDB_external_link != None:
     links.append({"name": 'playDB', "link": plays.playdb_external_link})
-    # if plays.cultureGov_external_link != None:
     links.append({"name": 'cultureGov', "link": plays.culturegov_external_link})
 
+    # 배우 및 극단 프로필 리스트
     staffss = []
     for i in range(len(staffs)):
         staffss.append({"name": staffs[i].person.name, "position": staffs[i].role, "photo": staffs[i].person.photo})
@@ -65,14 +69,14 @@ def play(request, id):
             "play": {
                 "name": plays.title,  # 연극이름
                 "poster": plays.poster,  # 포스터 링크
-                "like_count": likes,  # 찜수
+                # "like_count": likes,  # 찜수
                 # "star_avg": avg,  # 평균 별점
-                # "star_count": stars_count,  # 별점수
+                "star_cnt": stars_count,  # 별점수
                 "time": plays.running_time,  # 공연시간
                 "start_date": plays.start_date,  # 공연시작일
                 "end_date": plays.end_date,  # 공연시작일
                 "external_links": links,  # 관련정보더보기 링크
-                "actor": staffss  # 극단 및 배우 프로필
+                "actor": staffss  # 배우 및 극단 프로필
             }
         }
     })
@@ -111,35 +115,3 @@ def star(request):
 # 커멘트 달기
 def comment(request):
     return JsonResponse({"request": "listpage.html"})
-
-
-'''
-#c언어
-#include <stdio.h>
-int main()
-{
-    int avg=0, sum=0, t=0;
-    for(int i=0; i< ; i++)
-    {
-        if(play_id == 1)
-        {
-            sum+=play_id;
-            t+=1;
-        }
-    }
-    avg = sum/t;
-    return avg;
-}
-
-#파이썬
-t=0
-
-for i in range :
-    if play_id == 1 :
-        sum+=play_id
-        t+=1
-
-avg = sum/t;
-
-
-'''
