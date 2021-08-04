@@ -43,12 +43,7 @@ def play(request, id):
         stars_count += stars[i].star
 
     # 별점 평균 리스트
-    # sum = 0
-    # for i in range(stars_count):
-    #     if plays.id == id:
-    #         sum += stars_count148+]
-
-    # avg = sum/len(stars)
+    avg = stars_count/len(stars)
 
     # 관련정보더보기 링크 리스트
     links = []
@@ -70,7 +65,7 @@ def play(request, id):
                 "name": plays.title,  # 연극이름
                 "poster": plays.poster,  # 포스터 링크
                 # "like_count": likes,  # 찜수
-                # "star_avg": avg,  # 평균 별점
+                "star_avg": avg,  # 평균 별점
                 "star_cnt": stars_count,  # 별점수
                 "time": plays.running_time,  # 공연시간
                 "start_date": plays.start_date,  # 공연시작일
