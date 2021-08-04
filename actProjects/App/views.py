@@ -22,16 +22,19 @@ def search(request) :
             }
         })
 
+    # 공연 진행 상태
     ongoing_list = []
     tobe_list = []
     closed_list = []
+
     tody = datetime.strftime(datetime.now(), '%Y-%m-%d')
 
     for i in plays:
         start_date = datetime.strftime(i.start_date, '%Y-%m-%d')
         end_date = datetime.strftime(i.end_date, '%Y-%m-%d') if (i.end_date) else None
         stars = models.Star.objects.filter(play = i.id)
-        
+        likes = models.Like.objects.filter(play = i.id).count() # 별점 데이터 아직 없음
+
         #평균 별점 구하기
         star_sum = 0
         for j in stars:
@@ -39,13 +42,13 @@ def search(request) :
         star_avg = star_sum / len(stars) / 2
 
         new_play = ({
+            "id": i.id,
             "title": i.title,
             "poster": i.poster,
             "start_date": start_date,
             "end_date": end_date,
             "star_avg": star_avg,
-
-            "keyword": keyword, # 쿼리 확인용
+            "likes": likes,
         })
 
         # 날짜 비교
@@ -58,7 +61,6 @@ def search(request) :
         else:
             print("날짜설정에러")
 
-    # 출력할 때 앞에서부터? 뒤에서부터?
     return JsonResponse({
         "data": {
             "query": keyword,
