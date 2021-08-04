@@ -11,8 +11,18 @@ def home(request) :
 
 def search(request) :
     # 검색어 쿼리, 두 번째 요소에는 기본값을 넣어야한다 (임시로 POST를 넣음)
+    # 검색어를 어떻게 받아와야할지 감이 안잡힘
     keyword = request.POST.get('q', "")
     plays = models.Play.objects.filter(title__icontains=keyword) # play 모든 결과 불러옴
+
+    # 검색결과가 0개일 때 return
+    if(len(plays) == 0):
+        return JsonResponse({
+            "error": {
+                # "query": str,
+                "error_meessage": '검색 결과가 없습니다',
+            }
+        })
 
     ongoing_list = []
     tobe_list = []
@@ -41,7 +51,7 @@ def search(request) :
         elif(tody > end_date):
             closed_list.append(new_play)
         else:
-            print("에러")
+            print("날짜설정에러")
 
     return JsonResponse({
         "data": {
