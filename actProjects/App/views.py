@@ -9,7 +9,7 @@ import os
 def home(request) :
     return JsonResponse({"request":'home.html'})
 
-def search(request) :
+def search_play(request) :
     keyword = request.GET.get('query', "")
     location = request.GET.get('location',"") # 지역 검색
 
