@@ -12,7 +12,10 @@ def searchPage(request) :
     return JsonResponse({"request":'searchPage.html'})
 
 def detailpage(request) :
-    return JsonResponse({"request":"detailpage.html"})
+    return JsonResponse({
+        #"request":"detailpage.html"
+
+    })
 
 def listpage(request) :
     return  JsonResponse({"request": "listpage.html"})
