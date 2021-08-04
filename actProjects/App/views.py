@@ -85,7 +85,7 @@ def play(request, id):
                 "external_links": link,  # 관련정보더보기 링크
                 "staff": staffss,  # 배우 및 극단 프로필
                 "review": review,  # 리뷰 및 커멘트
-                "location": play.location,  # 위치
+                "location": play.location,  # 위치 theater로 바뀔 수 있음
                 # "context": {
                 # "like_check": boolean,
                 # "rating": number | | null,
