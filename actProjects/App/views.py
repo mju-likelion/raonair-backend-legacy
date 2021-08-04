@@ -32,7 +32,7 @@ def troupe(request):
 def play(request, id):
     play = models.Play.objects.get(id=id)
     star = models.Star.objects.filter(play=id)  # 데이터들의 리스트
-    staffs = models.Staff.objects.filter(play=id)
+    staff = models.Staff.objects.filter(play=id)
     like = models.Like.objects.filter(play=id).count()
     comment = models.Comment.objects.filter(play=id)
 
@@ -67,9 +67,9 @@ def play(request, id):
         link.append({"name": 'cultureGov', "link": play.culturegov_external_link})
 
     # 배우 및 극단 프로필 리스트
-    staffss = []
-    for i in range(len(staffs)):
-        staffss.append({"name": staffs[i].person.name, "position": staffs[i].role, "photo": staffs[i].person.photo})
+    staffs = []
+    for i in range(len(staff)):
+        staffs.append({"name": staff[i].person.name, "position": staff[i].role, "photo": staff[i].person.photo})
 
     return JsonResponse({
         "data": {
@@ -83,7 +83,7 @@ def play(request, id):
                 "start_date": play.start_date,  # 공연시작일
                 "end_date": play.end_date,  # 공연시작일
                 "external_links": link,  # 관련정보더보기 링크
-                "staff": staffss,  # 배우 및 극단 프로필
+                "staff": staffs,  # 배우 및 극단 프로필
                 "review": review,  # 리뷰 및 커멘트
                 "location": play.location,  # 위치 theater로 바뀔 수 있음
                 # "context": {
