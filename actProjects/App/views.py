@@ -32,23 +32,30 @@ def troupe(request):
 def play(request, id):
     print(id)
     plays = models.Play.objects.get(id=id)
-    # stars = models.Star.objects.get(play=id)  # 데이터들의 리스트
-    # star_count = models.Star.objects.count(play=id)  # 정수 별점 갯수
+    # stars = models.Star.objects.filter(play=id)  # 데이터들의 리스트
+    # stars_count = models.Star.objects.count(play=id)  # 정수 별점 갯수
     staffs = models.Staff.objects.filter(play=id)
     likes = models.Like.objects.filter(play=id).count()
-    print(plays.title)
+    # links24 = models.Play.objects.filter(play=id)
 
-    '''
-    t=0
+    # sum = 0
+    # for i in range(stars_count):
+    #     if plays.id == id:
+    #         sum += stars_count
 
-    for i in range (star_count):
-        if play == id :
-            sum+=stars
-            t+=1
+    # avg = sum/len(stars)
 
-    avg = sum/t;
+    links = []
+    # for i in range(4):
+    # if plays.yes24_external_link is not None:
+    links.append({"name": 'yes24', "link": plays.yes24_external_link})
+    # if plays.interpark_external_link != None:
+    links.append({"name": 'interpark', "link": plays.interpark_external_link})
+    # if plays.playDB_external_link != None:
+    links.append({"name": 'playDB', "link": plays.playdb_external_link})
+    # if plays.cultureGov_external_link != None:
+    links.append({"name": 'cultureGov', "link": plays.culturegov_external_link})
 
-    '''
     staffss = []
     for i in range(len(staffs)):
         staffss.append({"name": staffs[i].person.name, "position": staffs[i].role, "photo": staffs[i].person.photo})
@@ -60,17 +67,12 @@ def play(request, id):
                 "poster": plays.poster,  # 포스터 링크
                 "like_count": likes,  # 찜수
                 # "star_avg": avg,  # 평균 별점
-                # "star_count": star_count,  # 별점수
+                # "star_count": stars_count,  # 별점수
                 "time": plays.running_time,  # 공연시간
                 "start_date": plays.start_date,  # 공연시작일
                 "end_date": plays.end_date,  # 공연시작일
-                # "external_links": [
-                #     {
-                #         "key": "enum(yes24, interpark, playDB, cultureGov)",
-                #         "link": "string",
-                #     },
-                # ],
-                "actor": staffss
+                "external_links": links,  # 관련정보더보기 링크
+                "actor": staffss  # 극단 및 배우 프로필
             }
         }
     })

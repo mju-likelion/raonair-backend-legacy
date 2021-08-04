@@ -180,7 +180,7 @@ class Staff(models.Model):
 
 
 class Star(models.Model):
-    rating = models.DecimalField(max_digits=2, decimal_places=1)
+    star = models.DecimalField(max_digits=2, decimal_places=0)
     play = models.ForeignKey(Play, models.DO_NOTHING, db_column='play')
     user = models.ForeignKey('User', models.DO_NOTHING, db_column='user')
 
