@@ -10,7 +10,7 @@ def home(request) :
     return JsonResponse({"request":'home.html'})
 
 def search(request) :
-    keyword = request.GET.get('q', "")
+    keyword = request.GET.get('query', "")
     location = request.GET.get('location',"") # 지역 검색
 
     filter_keyword = models.Play.objects.filter(title__icontains=keyword) # 검색어에 포함되는 play를 받아옴
