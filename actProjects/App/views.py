@@ -11,10 +11,13 @@ def home(request) :
 
 def search(request) :
     keyword = request.GET.get('q', "")
-    plays = models.Play.objects.filter(title__icontains=keyword) # 검색어에 포함되는 play를 받아옴
+    location = request.GET.get('location',"") # 지역 검색
+
+    filter_keyword = models.Play.objects.filter(title__icontains=keyword) # 검색어에 포함되는 play를 받아옴
+    plays = filter_keyword.filter(location__icontains=location) # 검색어 필터링에 지역 설정 추가 필터링
 
     # 검색결과가 0개일 때 return
-    if(len(plays) == 0):
+    if(len(filter_keyword) == 0 or len(plays) == 0):
         return JsonResponse({
             "error": {
                 "query": keyword,
@@ -49,6 +52,7 @@ def search(request) :
             "end_date": end_date,
             "star_avg": star_avg,
             "likes": likes,
+            "locations": i.location,
         })
 
         # 날짜 비교
