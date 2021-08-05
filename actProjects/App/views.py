@@ -20,7 +20,7 @@ def search_play(request) :
     plays = filter_keyword.filter(theater__location="")
 
     # 검색결과가 0개일 때 return
-    if(len(filter_keyword) == 0 or len(plays) == 0):
+    if len(filter_keyword) == 0 or len(plays) == 0 :
         return JsonResponse({
             "error": {
                 "query": keyword,
@@ -59,11 +59,11 @@ def search_play(request) :
         })
 
         # 날짜 비교
-        if(tody >= start_date and (end_date == None or tody <= end_date)):
+        if tody >= start_date and (end_date == None or tody <= end_date) :
             ongoing_list.append(new_play)
-        elif(tody < start_date):
+        elif tody < start_date :
             tobe_list.append(new_play)
-        elif(tody > end_date):
+        elif tody > end_date :
             closed_list.append(new_play)
         else:
             print("날짜설정에러")
