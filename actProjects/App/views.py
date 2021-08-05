@@ -1,5 +1,5 @@
 from django.http import JsonResponse
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404
 from . import models
 from datetime import datetime
 
@@ -18,7 +18,6 @@ def search_play(request):
 def search_detail(request, type):
     keyword = request.GET.get('query', "")
     plays = models.Play.objects.filter(title__icontains=keyword)  # play 모든 결과 불러옴
-    play_type = request.GET.get('type', "")
     #nextLink =
 
     search_list = []  # 검색 결과들
@@ -29,7 +28,7 @@ def search_detail(request, type):
         return JsonResponse({
             "error": {
                 "query": keyword,
-                "type": play_type,
+                "type": type,
                 "error_message": "검색 결과가 없습니다",
             }
         })
@@ -51,7 +50,7 @@ def search_detail(request, type):
         },
         "data": {
             "query": keyword,
-            "type": play_type,
+            "type": type,
             "search_results": search_list[data_start:data_start+10],
         },
     })

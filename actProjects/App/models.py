@@ -161,6 +161,8 @@ class Play(models.Model):
     interpark_external_link = models.CharField(unique=True, max_length=255, blank=True, null=True)
     playdb_external_link = models.CharField(db_column='playDB_external_link', unique=True, max_length=255, blank=True, null=True)  # Field name made lowercase.
     culturegov_external_link = models.CharField(db_column='cultureGov_external_link', unique=True, max_length=255, blank=True, null=True)  # Field name made lowercase.
+    created_at = models.DateTimeField()
+    updated_at = models.DateTimeField()
 
     class Meta:
         managed = False
