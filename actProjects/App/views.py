@@ -101,11 +101,51 @@ def signin(request):
 
 
 # 회원가입
-def signup(request):
-    return JsonResponse({"request": "listpage.html"})
+def signup(
+        {
+            "email": user.email,  # 사용자의 email
+            "password": user.password,  # 비밀번호의 제약 조건 -> 미정
+            "nickname": user.nickname,
+            "name": user.name,
+        }):
 
+    user = models.User.objects.get(id=id)
+
+    return JsonResponse(
+        if:
+        {
+            "id": user.id,  # 사용자의 id
+            "email": user.email,  # 사용자의 email
+            "nickname": user.nickname,  # 사용자의 nickname
+            "name": user.name,  # 사용자의 이름
+            "email_send": user.email_confirmed,
+        }
+        else if:
+        {
+            {
+                "data": {
+                    "email": user.email,  # 사용자가 입력한 아이디
+                    "id": user.id,  # 사용자의 id
+                    "nickname": user.nickname,  # 사용자의 nickname
+                    "name": user.name,  # 사용자의 이름
+                },
+                "error": {
+                    "message": '아이디가 이메일 형식이 아닙니다',  # "아이디가 이메일 형식이 아닙니다" 같은 식의
+                }
+            }
+        }
+        # else{
+        #     // 이메일 또는 비밀번호가 틀린 경우
+        #     "이메일 또는 비밀번호가 틀렸습니다"
+
+        #     // 이메일 인증이 되지 않은 경우
+        #     "이메일을 먼저 인증해주세요"
+        # }
+    )
 
 # 비밀번호 찾기
+
+
 def password(request):
     return JsonResponse({"request": "listpage.html"})
 
