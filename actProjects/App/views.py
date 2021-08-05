@@ -11,10 +11,13 @@ def home(request) :
 
 def search_play(request) :
     keyword = request.GET.get('query', "")
-    location = request.GET.get('location',"") # 지역 검색
+    loc = request.GET.get('location',"") # 지역 검색
 
     filter_keyword = models.Play.objects.filter(title__icontains=keyword) # 검색어에 포함되는 play를 받아옴
-    plays = filter_keyword.filter(location__icontains=location) # 검색어 필터링에 지역 설정 추가 필터링
+    
+    # 지역검색에 대한 추가 구현 필요
+    # 현재 테이블에 location 값 없음
+    plays = filter_keyword.filter(theater__location="")
 
     # 검색결과가 0개일 때 return
     if(len(filter_keyword) == 0 or len(plays) == 0):
@@ -52,7 +55,7 @@ def search_play(request) :
             "end_date": end_date,
             "star_avg": star_avg,
             "likes": likes,
-            "locations": i.location,
+            "theater": i.theater.location,
         })
 
         # 날짜 비교
