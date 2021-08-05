@@ -13,73 +13,11 @@ def home(request):
 
 
 def search_play(request):
-    keyword = request.GET.get('query', '')
-    loc = request.GET.get('location', '')
+    return JsonResponse({'request': 'search_play.html'})
 
-    filter_keyword = models.Play.objects.filter(
-        title__icontains=keyword)  # 검색어에 포함되는 play를 받아옴
-    plays = filter_keyword.filter(theater__location__icontains=loc)
 
-    # 검색결과가 0개일 때 return
-    if len(plays) == 0:
-        return JsonResponse({
-            'error': {
-                'query': keyword,
-                'error_meessage': '검색 결과가 없습니다',
-            }
-        })
-
-    # 공연 진행 상태
-    ongoing_list = []
-    tobe_list = []
-    closed_list = []
-
-    tody = datetime.strftime(datetime.now(), '%Y-%m-%d')
-
-    for i in plays:
-        start_date = datetime.strftime(i.start_date, '%Y-%m-%d')
-        end_date = datetime.strftime(
-            i.end_date, '%Y-%m-%d') if (i.end_date) else None
-        stars = models.Star.objects.filter(play=i.id)
-        likes = models.Like.objects.filter(play=i.id).count()  # 찜 데이터 아직 없음
-
-        # 평균 별점 구하기
-        star_sum = 0
-        for j in stars:
-            star_sum += j.star
-        star_avg = star_sum / len(stars) / 2
-
-        new_play = ({
-            'id': i.id,
-            'title': i.title,
-            'poster': i.poster,
-            'start_date': start_date,
-            'end_date': end_date,
-            'star_avg': star_avg,
-            'likes': likes,
-            'location': i.theater.location,
-        })
-
-        # 날짜 비교
-        if tody >= start_date and (end_date == None or tody <= end_date):
-            ongoing_list.append(new_play)
-        elif tody < start_date:
-            tobe_list.append(new_play)
-        elif tody > end_date:
-            closed_list.append(new_play)
-        else:
-            print('날짜설정에러')
-
-    return JsonResponse({
-        'data': {
-            'query': keyword,
-            'searched_results': {
-                'ongoing_plays': ongoing_list[0:4],
-                'tobe_plays': tobe_list[0:4],
-                'closed_plays': closed_list[0:4],
-            }
-        }
-    })
+def search_troupe(request):
+    return JsonResponse({'request': 'search_troupe.html'})
 
 
 def search_detail(request):
