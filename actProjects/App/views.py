@@ -21,7 +21,6 @@ def search_play(request):
     plays = filter_keyword.filter(theater__location__icontains=loc)
 
     # 검색결과가 0개일 때 return
-    # if len(filter_keyword) == 0 or len(plays) == 0 :
     if len(plays) == 0:
         return JsonResponse({
             'error': {
@@ -58,7 +57,7 @@ def search_play(request):
             'end_date': end_date,
             'star_avg': star_avg,
             'likes': likes,
-            'theater': i.theater.location,
+            'location': i.theater.location,
         })
 
         # 날짜 비교
