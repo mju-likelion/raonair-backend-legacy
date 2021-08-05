@@ -2,5 +2,14 @@ repos:
   # - repo: https://github.com/pre-commit/pre-commit-hooks
 - repo: https://github.com/pre-commit/mirrors-autopep8
   rev: ''
-  hooks:    
+  hooks:
   - id: autopep8
+
+- repo: https://github.com/pre-commit/pre-commit-hooks
+  rev: v2.0.0
+  hooks:
+  - id: trailing-whitespace
+  - id: end-of-file-fixer
+  - id: fix-encoding-pragma
+  - id: double-quote-string-fixer
+  - id: requirements-txt-fixer
