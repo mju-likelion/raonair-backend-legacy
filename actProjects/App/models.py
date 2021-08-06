@@ -7,9 +7,6 @@
 # Feel free to rename the models, but don't rename db_table values or field names.
 from django.db import models
 
-from django.db import models
-
-
 class AuthGroup(models.Model):
     name = models.CharField(unique=True, max_length=150)
 

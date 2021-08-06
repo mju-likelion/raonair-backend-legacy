@@ -8,15 +8,15 @@ import os
 
 # Create your views here.
 def home(request) :
-    return JsonResponse({"request": 'home.html'})
+    return JsonResponse({"request": "home.html"})
 
 # 검색결과 페이지
 def search_play(request):
-    return JsonResponse({"request": 'searchPage.html'})
+    return JsonResponse({"request": "searchPage.html"})
 
 # 검색 결과 페이지, 더보기 클릭 (GET /api/search/:type)
 def search_detail(request, type, start):
-    keyword = request.GET.get('query', "")
+    keyword = request.GET.get("query", "")
     plays = models.Play.objects.filter(title__icontains=keyword)  # play 모든 결과 불러옴
 
     search_list = []  # 검색 결과들
@@ -28,7 +28,7 @@ def search_detail(request, type, start):
     if start:
         next = request.get_full_path().split("&start")[0]
         + "&start"
-        + string(start+10)
+        + "string(start+10)"
     else:
         next = request.get_full_path() + "&start=11"
 
