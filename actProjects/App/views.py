@@ -17,16 +17,16 @@ def search_play(request):
 
 def search_troupe(request):
     query = request.GET.get('query', '')
-    form = request.GET.get('form', '')
+    type = request.GET.get('type', '')
 
     filter_query = models.Troupe.objects.filter(name__icontains=query)
-    troupes = filter_query.filter(type__icontains=form)
+    troupes = filter_query.filter(type__icontains=type)
 
     if len(troupes) == 0:
         return JsonResponse({
             'error': {
                 'query': query,
-                'type': form,
+                'type': type,
                 'error_message': '검색 결과가 없습니다'
             }
         })
@@ -43,7 +43,7 @@ def search_troupe(request):
     return JsonResponse({
         'data': {
             'query': query,
-            'type': form,
+            'type': type,
             'searched_results': {
                 'troupes': troupe_list[0:12],
             }
