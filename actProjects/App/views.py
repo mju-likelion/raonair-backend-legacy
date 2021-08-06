@@ -30,22 +30,34 @@ def search_troupe(request):
                 'error_message': '검색 결과가 없습니다'
             }
         })
-
-    troupe_list = []
+    troupe_all = []  # 타입 선택 안했을 때
+    troupe_normal = []  # 일반 극단
+    troupe_student = []  # 학생 극단
     for i in troupes:
-        troupe_list.append({
+        new_troupe = ({
             'id': i.id,
             'name': i.name,
             'type': i.type,
             'logo': i.logo,
         })
 
+        # type을 선택 안하면 타입 구분 없이 출력
+        if type == '':
+            troupe_all.append(new_troupe)
+        else:
+            if i.type == 'normal':
+                troupe_normal.append(new_troupe)
+            elif i.type == 'student':
+                troupe_student.append(new_troupe)
+
     return JsonResponse({
         'data': {
             'query': query,
             'type': type,
             'searched_results': {
-                'troupes': troupe_list[0:12],
+                'troupe_all': troupe_all[0:12],
+                'troupe_normal': troupe_normal[0:6],
+                'troupe_student': troupe_student[0:6],
             }
         }
     })
