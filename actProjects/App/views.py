@@ -5,6 +5,25 @@ import base64
 import os
 
 # Create your views here.
+def search_troupe_detail(request):
+    query = request.GET.get('query', '')
+    type = request.GET.get('type', '')
+
+
+    return JsonResponse({
+        'links': {
+            #'next': string,
+        },
+        'data': {
+            #'query': string,
+            #'type': string,
+            #'search_results': troupe_simple[10],
+        }
+    })
+
+
+
+
 def home(request) :
     return JsonResponse({"request":'home.html'})
 
