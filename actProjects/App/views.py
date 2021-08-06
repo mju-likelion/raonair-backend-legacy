@@ -11,10 +11,6 @@ def home(request):
     return JsonResponse({'request': 'home.html'})
 
 
-def choose_type(request):
-    return JsonResponse({'request': 'choose-type'})
-
-
 def search_play(request):
     keyword = request.GET.get('query', '')
     loc = request.GET.get('location', '')
@@ -83,6 +79,10 @@ def search_play(request):
             }
         }
     })
+
+
+def troupe_options(request):
+    return JsonResponse({'request': 'troupe_options'})
 
 
 def search_detail(request):

@@ -6,10 +6,10 @@ import App.views
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('api/home', App.views.home, name='home'),  # 홈페이지
-    path('api/choose/type', App.views.choose_type,
-         name='choose_type'),  # 극단 타입 선택 옵션
     path('api/search/play', App.views.search_play,
          name='search_play'),  # 검색결과페이지
+    path('api/search/troupe-options', App.views.troupe_options,
+         name='troupe_options'),  # 극단 타입 선택 옵션
     path('api/search/:category', App.views.search_detail,
          name='search_detail'),  # 검색결과페이지, 더보기 클릭
     path('api/troupe/:id', App.views.troupe, name='troupe'),  # 극단개별페이지
