@@ -14,25 +14,36 @@ def home(request) :
 def search_play(request):
     return JsonResponse({"request": "searchPage.html"})
 
-# 검색 결과 페이지, 더보기 클릭 (GET /api/search/:type)
-def search_detail(request, type, start):
+# 검색 결과 페이지, 더보기 클릭 (GET /api/search/<str:type>)
+def search_detail(request, type):
     keyword = request.GET.get("query", "")
     plays = models.Play.objects.filter(title__icontains=keyword)  # play 모든 결과 불러옴
-
     search_list = []  # 검색 결과들
-    data_start = 0 # 앞으로 가져올 데이터의 시작점
-    #print(request.resolver_match.url_name)
-    #print(request.resolver_match.view_name)
-    print(request.get_full_path())
 
-    if start:
-        next = request.get_full_path().split("&start")[0]
-        + "&start"
-        + "string(start+10)"
+    '''
+    # 전체 url 출력 테스트
+    print(request.get_full_path())
+    '''
+
+    if request.GET.get("start", ""):
+        start = int(request.GET.get("start", ""))
+        next = request.get_full_path().split("&start=")[0] \
+               + "&start=" \
+               + str(start + 10)
     else:
+        start = 0
         next = request.get_full_path() + "&start=11"
 
-    # 검색 결과가 0개 일 때
+    '''
+    if start:
+        next = request.get_full_path().split("&start=")[0] \
+               + "&start" \
+               + str(start+10)
+    else:
+        next = request.get_full_path() + "&start=11"
+    '''
+
+    # 검색 결과가 0 일 때
     if len(plays) == 0:
         return JsonResponse({
             "error": {
@@ -51,7 +62,7 @@ def search_detail(request, type, start):
         })
         search_list.append(new_play)
 
-    # 더보기를 눌러서 더 많은 공연을 조회했을 때
+    # 검색결과가 0이 아닐 때
     return JsonResponse({
         "links": {
             "next": next
@@ -59,7 +70,7 @@ def search_detail(request, type, start):
         "data": {
             "query": keyword,
             "type": type,
-            "search_results": search_list[data_start:data_start+10],
+            "search_results": search_list[start:start+10],
         },
     })
 
