@@ -177,9 +177,11 @@ class Staff(models.Model):
 
 
 class Star(models.Model):
-    rating = models.DecimalField(max_digits=2, decimal_places=1)
     play = models.ForeignKey(Play, models.DO_NOTHING, db_column='play')
     user = models.ForeignKey('User', models.DO_NOTHING, db_column='user')
+    star = models.DecimalField(max_digits=2, decimal_places=0)
+    created_at = models.DateTimeField()
+    updated_at = models.DateTimeField()
 
     class Meta:
         managed = False
@@ -196,9 +198,12 @@ class Team(models.Model):
 
 class Theater(models.Model):
     name = models.CharField(unique=True, max_length=255)
+    location = models.CharField(max_length=14, blank=True, null=True)
     address = models.CharField(max_length=255)
     longitude = models.DecimalField(max_digits=11, decimal_places=8, blank=True, null=True)
     latitude = models.DecimalField(max_digits=10, decimal_places=8, blank=True, null=True)
+    created_at = models.DateTimeField()
+    updated_at = models.DateTimeField()
 
     class Meta:
         managed = False

@@ -17,31 +17,12 @@ def search_play(request):
 # 검색 결과 페이지, 더보기 클릭 (GET /api/search/<str:type>)
 def search_detail(request, type):
     keyword = request.GET.get("query", "")
-    plays = models.Play.objects.filter(title__icontains=keyword)  # play 모든 결과 불러옴
+    loc = request.GET.get("location", "")
+
+    filter_keyword = models.Play.objects.filter(title__icontains=keyword)  # 검색어에 포함되는 play를 받아옴
+    plays = filter_keyword.filter(theater__location__icontains=loc)
+
     search_list = []  # 검색 결과들
-
-    '''
-    # 전체 url 출력 테스트
-    print(request.get_full_path())
-    '''
-
-    if request.GET.get("start", ""):
-        start = int(request.GET.get("start", ""))
-        next = request.get_full_path().split("&start=")[0] \
-               + "&start=" \
-               + str(start + 10)
-    else:
-        start = 0
-        next = request.get_full_path() + "&start=11"
-
-    '''
-    if start:
-        next = request.get_full_path().split("&start=")[0] \
-               + "&start" \
-               + str(start+10)
-    else:
-        next = request.get_full_path() + "&start=11"
-    '''
 
     # 검색 결과가 0 일 때
     if len(plays) == 0:
@@ -53,12 +34,34 @@ def search_detail(request, type):
             }
         })
 
+    # start 데이터가 있는 경우와 없는 경우
+    if request.GET.get("start", ""):
+        start = int(request.GET.get("start", ""))
+        next = request.get_full_path().split("&start=")[0] \
+                + "&start=" \
+                + str(start + 10)
+    else:
+        start = 0
+        next = request.get_full_path() + "&start=11"
+
     for i in plays:
+        stars = models.Star.objects.filter(play=i.id)
+        likes = models.Like.objects.filter(play=i.id).count()
+
+        # 평균 별점 구하기
+        star_sum = 0
+        for each_star in stars:
+            star_sum += each_star.star
+        star_avg = star_sum / len(stars) / 2
+
         new_play = ({
             "title": i.title,
             "poster": i.poster,
             "start_date": i.start_date,
             "end_date": i.end_date,
+            'star_avg': star_avg,
+            "likes": likes,
+            "location": i.theater.location,
         })
         search_list.append(new_play)
 
