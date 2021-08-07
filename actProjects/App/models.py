@@ -75,10 +75,81 @@ class AuthUserUserPermissions(models.Model):
         unique_together = (('user', 'permission'),)
 
 
+class AuthGroup(models.Model):
+    name = models.CharField(unique=True, max_length=150)
+
+    class Meta:
+        managed = False
+        db_table = 'auth_group'
+
+
+class AuthGroupPermissions(models.Model):
+    id = models.BigAutoField(primary_key=True)
+    group = models.ForeignKey(AuthGroup, models.DO_NOTHING)
+    permission = models.ForeignKey('AuthPermission', models.DO_NOTHING)
+
+    class Meta:
+        managed = False
+        db_table = 'auth_group_permissions'
+        unique_together = (('group', 'permission'),)
+
+
+class AuthPermission(models.Model):
+    name = models.CharField(max_length=255)
+    content_type = models.ForeignKey('DjangoContentType', models.DO_NOTHING)
+    codename = models.CharField(max_length=100)
+
+    class Meta:
+        managed = False
+        db_table = 'auth_permission'
+        unique_together = (('content_type', 'codename'),)
+
+
+class AuthUser(models.Model):
+    password = models.CharField(max_length=128)
+    last_login = models.DateTimeField(blank=True, null=True)
+    is_superuser = models.IntegerField()
+    username = models.CharField(unique=True, max_length=150)
+    first_name = models.CharField(max_length=150)
+    last_name = models.CharField(max_length=150)
+    email = models.CharField(max_length=254)
+    is_staff = models.IntegerField()
+    is_active = models.IntegerField()
+    date_joined = models.DateTimeField()
+
+    class Meta:
+        managed = False
+        db_table = 'auth_user'
+
+
+class AuthUserGroups(models.Model):
+    id = models.BigAutoField(primary_key=True)
+    user = models.ForeignKey(AuthUser, models.DO_NOTHING)
+    group = models.ForeignKey(AuthGroup, models.DO_NOTHING)
+
+    class Meta:
+        managed = False
+        db_table = 'auth_user_groups'
+        unique_together = (('user', 'group'),)
+
+
+class AuthUserUserPermissions(models.Model):
+    id = models.BigAutoField(primary_key=True)
+    user = models.ForeignKey(AuthUser, models.DO_NOTHING)
+    permission = models.ForeignKey(AuthPermission, models.DO_NOTHING)
+
+    class Meta:
+        managed = False
+        db_table = 'auth_user_user_permissions'
+        unique_together = (('user', 'permission'),)
+
+
 class Comment(models.Model):
     comment = models.CharField(max_length=200)
     play = models.ForeignKey('Play', models.DO_NOTHING, db_column='play')
     user = models.ForeignKey('User', models.DO_NOTHING, db_column='user')
+    updated_at = models.DateTimeField()
+    created_at = models.DateTimeField()
 
     class Meta:
         managed = False
@@ -132,6 +203,8 @@ class DjangoSession(models.Model):
 class Like(models.Model):
     play = models.ForeignKey('Play', models.DO_NOTHING, db_column='play')
     user = models.ForeignKey('User', models.DO_NOTHING, db_column='user')
+    created_at = models.DateTimeField()
+    updated_at = models.DateTimeField()
 
     class Meta:
         managed = False
@@ -141,6 +214,8 @@ class Like(models.Model):
 class Person(models.Model):
     name = models.CharField(max_length=255)
     photo = models.CharField(unique=True, max_length=255, blank=True, null=True)
+    created_at = models.DateTimeField()
+    updated_at = models.DateTimeField()
 
     class Meta:
         managed = False
@@ -170,6 +245,8 @@ class Staff(models.Model):
     person = models.ForeignKey(Person, models.DO_NOTHING, db_column='person', blank=True, null=True)
     play = models.ForeignKey(Play, models.DO_NOTHING, db_column='play', blank=True, null=True)
     role = models.CharField(max_length=8)
+    created_at = models.DateTimeField()
+    updated_at = models.DateTimeField()
 
     class Meta:
         managed = False
@@ -191,6 +268,8 @@ class Star(models.Model):
 class Team(models.Model):
     person = models.ForeignKey(Person, models.DO_NOTHING, db_column='person', blank=True, null=True)
     troupe = models.ForeignKey('Troupe', models.DO_NOTHING, db_column='troupe', blank=True, null=True)
+    created_at = models.DateTimeField()
+    updated_at = models.DateTimeField()
 
     class Meta:
         managed = False
@@ -214,6 +293,8 @@ class Troupe(models.Model):
     name = models.CharField(unique=True, max_length=255)
     type = models.CharField(max_length=7)
     logo = models.CharField(unique=True, max_length=255, blank=True, null=True)
+    created_at = models.DateTimeField()
+    updated_at = models.DateTimeField()
 
     class Meta:
         managed = False
@@ -223,6 +304,8 @@ class Troupe(models.Model):
 class TroupeLike(models.Model):
     troupe = models.ForeignKey(Troupe, models.DO_NOTHING, db_column='troupe', blank=True, null=True)
     user = models.ForeignKey('User', models.DO_NOTHING, db_column='user', blank=True, null=True)
+    created_at = models.DateTimeField()
+    updated_at = models.DateTimeField()
 
     class Meta:
         managed = False
@@ -235,6 +318,8 @@ class User(models.Model):
     name = models.CharField(max_length=10)
     nickname = models.CharField(unique=True, max_length=10)
     email_confirmed = models.IntegerField()
+    created_at = models.DateTimeField()
+    updated_at = models.DateTimeField()
 
     class Meta:
         managed = False
