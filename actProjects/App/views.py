@@ -171,7 +171,12 @@ def troupelike(request):
 
 
 def star(request):
-    return JsonResponse({'request': 'star.html'})
+    return JsonResponse({
+        #'id': num,
+        #'email': string,
+        #'nickname': string,
+        #'name': string,
+    })
 
 
 def comment(request):
