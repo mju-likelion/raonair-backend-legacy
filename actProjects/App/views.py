@@ -108,7 +108,7 @@ def signin(request):
 @csrf_exempt
 def signup(request):
     input = json.loads(request.body)
-
+    print(input)
     # 400_BAD_REQUEST
 
     # 아이디(이메일) 형식 오류
@@ -139,13 +139,15 @@ def signup(request):
 
     # 200_OK
 
-    user = models.User.objects.get(email=input.email)
+    userdata = models.User(email=input.email, nickname=input.nickname, name=input.name)
+    userdata.save()  # 테이블에 데이터 저장
+
     return JsonResponse({
         "data": {
-            "id": user.id,  # 사용자의 id
-            "email": user.email,  # 사용자의 email
-            "nickname": user.nickname,  # 사용자의 nickname
-            "name": user.name,  # 사용자의 이름
+            "id": userdata.id,  # 사용자의 id
+            "email": userdata.email,  # 사용자의 email
+            "nickname": userdata.nickname,  # 사용자의 nickname
+            "name": userdata.name,  # 사용자의 이름
         },
         "message": "회원가입이 완료되었습니다."
     }, status=200)
