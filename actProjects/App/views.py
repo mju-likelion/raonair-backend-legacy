@@ -3,6 +3,7 @@ from django.shortcuts import redirect, render
 from django.views.decorators.csrf import csrf_exempt
 from . import models
 import json
+import re
 # from email_validator import validate_email, EmailNotValidError
 
 import base64
@@ -106,32 +107,53 @@ def signin(request):
 # 회원가입
 @csrf_exempt
 def signup(request):
+    input = json.loads(request.body)
 
-    print(request.body)
-
-    request = json.loads(request.body)
+    # 400_BAD_REQUEST
 
     # 아이디(이메일) 형식 오류
-    if len(request.email) > 10:
+    if len(input.email) > 10:
         return JsonResponse({
-            "error": "아이디 형식이 틀렸습니다."
+            "error": "아이디 형식 오류입니다 아이디는 ~."
         }, status=400)
 
     # 비밀번호 형식 오류
-    if len(request.password) > 10:
+    if len(input.password) < 6:
         return JsonResponse({
-            "error": "비밀번호 형식이 틀렸습니다."
+            "error": "비밀번호 형식 오류입니다. 비밀번호는 6글자 이상입니다."
         }, status=400)
 
     # 사용자 닉네임 형식 오류
-    if len(request.nickname) > 10:
+    if len(input.nickname) > 10:
         return JsonResponse({
-            "error": "닉네임 형식이 틀렸습니다."
+            "error": "닉네임 형식 오류입니다. 닉네임은 10글자 이하 입니다."
         }, status=400)
+
+    # 사용자 이름 형식 오류
+    if re.match(r"^ [가-힣]{2, 4}$"):
+        return JsonResponse({
+            "error": "이름 형식 오류입니다."
+        }, status=400)
+
+    # 409_CONFLICT
+
+    # 200_OK
+
+    user = models.User.objects.get(email=input.email)
+    return JsonResponse({
+        "data": {
+            "id": user.id,  # 사용자의 id
+            "email": user.email,  # 사용자의 email
+            "nickname": user.nickname,  # 사용자의 nickname
+            "name": user.name,  # 사용자의 이름
+        },
+        "message": "회원가입이 완료되었습니다."
+    }, status=200)
 
 
 # status = status.HTTP_400_BAD_REQUEST
-# status = 400`
+# status = 400
+# HTTP_409_CONFLICT
 
 # try:
 # # Validate.
