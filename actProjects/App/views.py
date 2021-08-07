@@ -1,7 +1,6 @@
 from django.http import JsonResponse
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import render
 from . import models
-from datetime import datetime
 
 import base64
 import os
