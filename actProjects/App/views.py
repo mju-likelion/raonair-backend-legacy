@@ -5,7 +5,8 @@ from datetime import datetime
 
 import base64
 import os
-  
+
+
 def home(request):
     return JsonResponse({'request': 'home.html'})
 
@@ -80,11 +81,14 @@ def search_play(request):
     })
 
 # 검색 결과 페이지, 더보기 클릭 (GET /api/search/<str:type>)
-def search_detail(request, type):
-    keyword = request.GET.get("query", "")
-    loc = request.GET.get("location", "")
 
-    filter_keyword = models.Play.objects.filter(title__icontains=keyword)  # 검색어에 포함되는 play를 받아옴
+
+def search_detail(request, type):
+    keyword = request.GET.get('query', '')
+    loc = request.GET.get('location', '')
+
+    filter_keyword = models.Play.objects.filter(
+        title__icontains=keyword)  # 검색어에 포함되는 play를 받아옴
     plays = filter_keyword.filter(theater__location__icontains=loc)
 
     search_list = []  # 검색 결과들
@@ -92,22 +96,22 @@ def search_detail(request, type):
     # 검색 결과가 0 일 때
     if len(plays) == 0:
         return JsonResponse({
-            "error": {
-                "query": keyword,
-                "type": type,
-                "error_message": "검색 결과가 없습니다",
+            'error': {
+                'query': keyword,
+                'type': type,
+                'error_message': '검색 결과가 없습니다',
             }
         })
 
     # start 데이터가 있는 경우와 없는 경우
-    if request.GET.get("start", ""):
-        start = int(request.GET.get("start", ""))
-        next = request.get_full_path().split("&start=")[0] \
-                + "&start=" \
-                + str(start + 10)
+    if request.GET.get('start', ''):
+        start = int(request.GET.get('start', ''))
+        next = request.get_full_path().split('&start=')[0] \
+            + '&start=' \
+            + str(start + 10)
     else:
         start = 0
-        next = request.get_full_path() + "&start=11"
+        next = request.get_full_path() + '&start=11'
 
     for i in plays:
         stars = models.Star.objects.filter(play=i.id)
@@ -120,30 +124,31 @@ def search_detail(request, type):
         star_avg = star_sum / len(stars) / 2
 
         new_play = ({
-            "title": i.title,
-            "poster": i.poster,
-            "start_date": i.start_date,
-            "end_date": i.end_date,
+            'title': i.title,
+            'poster': i.poster,
+            'start_date': i.start_date,
+            'end_date': i.end_date,
             'star_avg': star_avg,
-            "likes": likes,
-            "location": i.theater.location,
+            'likes': likes,
+            'location': i.theater.location,
         })
         search_list.append(new_play)
 
     # 검색결과가 0이 아닐 때
     return JsonResponse({
-        "links": {
-            "next": next
+        'links': {
+            'next': next
         },
-        "data": {
-            "query": keyword,
-            "type": type,
-            "search_results": search_list[start:start+10],
+        'data': {
+            'query': keyword,
+            'type': type,
+            'search_results': search_list[start:start+10],
         },
     })
 
-def troupe(request):
-    return JsonResponse({'request': 'listpage.html'})
+
+def troupe(request, id):
+    return JsonResponse({'request': 'troupe.html'})
 
 
 def play(request):
