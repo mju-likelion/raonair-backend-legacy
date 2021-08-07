@@ -166,8 +166,12 @@ class Play(models.Model):
     theater = models.ForeignKey('Theater', models.DO_NOTHING, db_column='theater')
     yes24_external_link = models.CharField(unique=True, max_length=255, blank=True, null=True)
     interpark_external_link = models.CharField(unique=True, max_length=255, blank=True, null=True)
-    playdb_external_link = models.CharField(db_column='playDB_external_link', unique=True, max_length=255, blank=True, null=True)  # Field name made lowercase.
-    culturegov_external_link = models.CharField(db_column='cultureGov_external_link', unique=True, max_length=255, blank=True, null=True)  # Field name made lowercase.
+    # Field name made lowercase.
+    playdb_external_link = models.CharField(db_column='playDB_external_link',
+                                            unique=True, max_length=255, blank=True, null=True)
+    # Field name made lowercase.
+    culturegov_external_link = models.CharField(
+        db_column='cultureGov_external_link', unique=True, max_length=255, blank=True, null=True)
     created_at = models.DateTimeField()
     updated_at = models.DateTimeField()
 
@@ -243,8 +247,8 @@ class Troupe(models.Model):
 class TroupeLike(models.Model):
     troupe = models.ForeignKey(Troupe, models.DO_NOTHING, db_column='troupe', blank=True, null=True)
     user = models.ForeignKey('User', models.DO_NOTHING, db_column='user', blank=True, null=True)
-    created_at = models.DateTimeField()
-    updated_at = models.DateTimeField()
+    created_at = models.DateTimeField(blank=True, null=True)
+    updated_at = models.DateTimeField(blank=True, null=True)
 
     class Meta:
         managed = False
@@ -256,9 +260,9 @@ class User(models.Model):
     password = models.CharField(max_length=255)
     name = models.CharField(max_length=10)
     nickname = models.CharField(unique=True, max_length=11)
-    email_confirmed = models.IntegerField()
-    created_at = models.DateTimeField()
-    updated_at = models.DateTimeField()
+    email_confirmed = models.IntegerField(blank=True, null=True)
+    created_at = models.DateTimeField(blank=True, null=True)
+    updated_at = models.DateTimeField(blank=True, null=True)
 
     class Meta:
         managed = False
