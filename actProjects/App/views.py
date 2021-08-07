@@ -1,3 +1,4 @@
+from django.db.models.fields import EmailField
 from django.http import JsonResponse
 from django.shortcuts import redirect, render
 from django.views.decorators.csrf import csrf_exempt
@@ -108,39 +109,44 @@ def signin(request):
 @csrf_exempt
 def signup(request):
     input = json.loads(request.body)
-    print(input)
-    # 400_BAD_REQUEST
+    print(input['email'])
+    print(type(input))
+
+    # 403_BAD_REQUEST
 
     # 아이디(이메일) 형식 오류
-    if len(input.email) > 10:
+    if len(input['email']) > 20:
         return JsonResponse({
             "error": "아이디 형식 오류입니다 아이디는 ~."
         }, status=400)
 
     # 비밀번호 형식 오류
-    if len(input.password) < 6:
+    if len(input['password']) < 6:
         return JsonResponse({
             "error": "비밀번호 형식 오류입니다. 비밀번호는 6글자 이상입니다."
         }, status=400)
 
     # 사용자 닉네임 형식 오류
-    if len(input.nickname) > 10:
+    if len(input['nickname']) > 10:
         return JsonResponse({
             "error": "닉네임 형식 오류입니다. 닉네임은 10글자 이하 입니다."
         }, status=400)
 
     # 사용자 이름 형식 오류
-    if re.match(r"^ [가-힣]{2, 4}$"):
+    if re.match(r"^ [가-힣]{2, 4}$", input['name']):
         return JsonResponse({
             "error": "이름 형식 오류입니다."
         }, status=400)
 
     # 409_CONFLICT
+    if models.User.objects.filter(email=input['email']):
+        return JsonResponse({
+            "data": "이미 존재하는 아이디입니다."
+        }, status=409)
 
-    # 200_OK
-
-    userdata = models.User(email=input.email, nickname=input.nickname, name=input.name)
-    userdata.save()  # 테이블에 데이터 저장
+     # 200_OK
+    userdata = models.User.objects.create(email=input['email'], nickname=input['nickname'], name=input['name'])
+    # userdata.save()  # 테이블에 데이터 저장
 
     return JsonResponse({
         "data": {
@@ -167,50 +173,8 @@ def signup(request):
 #     # email is not valid, exception message is human-readable
 # print(str(e))
 
-# if request.method == 'POST':
-#     username = request.POST['username']
-#     password = request.POST['password']
-
-#     user = auth.authenticate(request, username=username, password=password)
-#     if user is not None:
-#         auth.login(request, user)
-
-#     return JsonResponse({
-#         "data": {
-#             "id": user.id,  # 사용자의 id
-#             "email": user.email,  # 사용자의 email
-#             "nickname": user.nickname,  # 사용자의 nickname
-#             "name": user.name,  # 사용자의 이름
-#             "email_send": boolean,
-#         }
-#     }, status=200)
-
-# elif:
-#     return JsonResponse({
-#         "data": {
-#             "email": user.email,  # 사용자가 입력한 아이디
-#             "id": user.id,  # 사용자의 id
-#             "nickname": user.nickname,  # 사용자의 nickname
-#             "name": user.name,  # 사용자의 이름
-#         },
-#         "error": {
-#             "message": '아이디가 이메일 형식이 아닙니다',  # "아이디가 이메일 형식이 아닙니다" 같은 식의
-#         }
-#     }, status=400)
-# else
-# return JsonResponse(
-#   data = {
-#     // 이메일 또는 비밀번호가 틀린 경우
-#     "이메일 또는 비밀번호가 틀렸습니다"
-
-#     // 이메일 인증이 되지 않은 경우
-#     "이메일을 먼저 인증해주세요"
-# })
-
 
 # 비밀번호 찾기
-
-
 def password(request):
     return JsonResponse({"request": "listpage.html"})
 
