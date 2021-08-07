@@ -1,6 +1,9 @@
 from django.http import JsonResponse
-from django.shortcuts import render
+from django.shortcuts import redirect, render
+from django.views.decorators.csrf import csrf_exempt
 from . import models
+import json
+# from email_validator import validate_email, EmailNotValidError
 
 import base64
 import os
@@ -101,47 +104,85 @@ def signin(request):
 
 
 # 회원가입
-def signup(
-        {
-            "email": user.email,  # 사용자의 email
-            "password": user.password,  # 비밀번호의 제약 조건 -> 미정
-            "nickname": user.nickname,
-            "name": user.name,
-        }):
+@csrf_exempt
+def signup(request):
 
-    user = models.User.objects.get(id=id)
+    print(request.body)
 
-    return JsonResponse(
-        if:
-        {
-            "id": user.id,  # 사용자의 id
-            "email": user.email,  # 사용자의 email
-            "nickname": user.nickname,  # 사용자의 nickname
-            "name": user.name,  # 사용자의 이름
-            "email_send": user.email_confirmed,
-        }
-        else if:
-        {
-            {
-                "data": {
-                    "email": user.email,  # 사용자가 입력한 아이디
-                    "id": user.id,  # 사용자의 id
-                    "nickname": user.nickname,  # 사용자의 nickname
-                    "name": user.name,  # 사용자의 이름
-                },
-                "error": {
-                    "message": '아이디가 이메일 형식이 아닙니다',  # "아이디가 이메일 형식이 아닙니다" 같은 식의
-                }
-            }
-        }
-        # else{
-        #     // 이메일 또는 비밀번호가 틀린 경우
-        #     "이메일 또는 비밀번호가 틀렸습니다"
+    request = json.loads(request.body)
 
-        #     // 이메일 인증이 되지 않은 경우
-        #     "이메일을 먼저 인증해주세요"
-        # }
-    )
+    # 아이디(이메일) 형식 오류
+    if len(request.email) > 10:
+        return JsonResponse({
+            "error": "아이디 형식이 틀렸습니다."
+        }, status=400)
+
+    # 비밀번호 형식 오류
+    if len(request.password) > 10:
+        return JsonResponse({
+            "error": "비밀번호 형식이 틀렸습니다."
+        }, status=400)
+
+    # 사용자 닉네임 형식 오류
+    if len(request.nickname) > 10:
+        return JsonResponse({
+            "error": "닉네임 형식이 틀렸습니다."
+        }, status=400)
+
+
+# status = status.HTTP_400_BAD_REQUEST
+# status = 400`
+
+# try:
+# # Validate.
+# valid = validate_email(email)
+
+# # Update with the normalized form.
+# email = valid.email
+# except EmailNotValidError as e:
+#     # email is not valid, exception message is human-readable
+# print(str(e))
+
+# if request.method == 'POST':
+#     username = request.POST['username']
+#     password = request.POST['password']
+
+#     user = auth.authenticate(request, username=username, password=password)
+#     if user is not None:
+#         auth.login(request, user)
+
+#     return JsonResponse({
+#         "data": {
+#             "id": user.id,  # 사용자의 id
+#             "email": user.email,  # 사용자의 email
+#             "nickname": user.nickname,  # 사용자의 nickname
+#             "name": user.name,  # 사용자의 이름
+#             "email_send": boolean,
+#         }
+#     }, status=200)
+
+# elif:
+#     return JsonResponse({
+#         "data": {
+#             "email": user.email,  # 사용자가 입력한 아이디
+#             "id": user.id,  # 사용자의 id
+#             "nickname": user.nickname,  # 사용자의 nickname
+#             "name": user.name,  # 사용자의 이름
+#         },
+#         "error": {
+#             "message": '아이디가 이메일 형식이 아닙니다',  # "아이디가 이메일 형식이 아닙니다" 같은 식의
+#         }
+#     }, status=400)
+# else
+# return JsonResponse(
+#   data = {
+#     // 이메일 또는 비밀번호가 틀린 경우
+#     "이메일 또는 비밀번호가 틀렸습니다"
+
+#     // 이메일 인증이 되지 않은 경우
+#     "이메일을 먼저 인증해주세요"
+# })
+
 
 # 비밀번호 찾기
 
