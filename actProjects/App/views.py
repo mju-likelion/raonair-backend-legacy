@@ -170,9 +170,11 @@ def troupelike(request):
     return JsonResponse({'request': 'troupelike.html'})
 
 
-def star(request):
+def star(request, id):
+    user_id = request.GET.get(id=id)
+
     return JsonResponse({
-        #'id': num,
+        'id': user_id,
         #'email': string,
         #'nickname': string,
         #'name': string,
