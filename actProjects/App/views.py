@@ -219,3 +219,6 @@ def star(request):
 
 def comment(request):
     return JsonResponse({'request': 'comment.html'})
+
+def search_troupe(request):
+    return JsonResponse({'request': 'search_troupe.html'})
