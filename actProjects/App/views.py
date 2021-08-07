@@ -147,8 +147,33 @@ def search_detail(request, type):
     })
 
 
+# 직책 필드는 연극에 종속적이라 극단에 구현하기 어려움에 있음
+# ex) 극단에서는 감독이지만 A공연에서는 배우일 경우
 def troupe(request, id):
-    return JsonResponse({'request': 'troupe.html'})
+    troupe = models.Troupe.objects.get(id=id)
+    troupe_like = models.TroupeLike.objects.filter(troupe=id).count()
+    team = models.Team.objects.filter(troupe=id)
+    team_list = []
+    for i in team:
+        team_list.append({
+            'name': i.person.name,
+            'photo': i.person.photo,
+            # "role": i.person.role,
+        })
+    return JsonResponse({
+        'data': {
+            # 유저의 찜하기 액션
+            # "context": { },
+            'troupe': {
+                'id': troupe.id,
+                'name': troupe.name,
+                'type': troupe.type,
+                'logo': troupe.logo,
+            },
+            'troupe_like': troupe_like,
+            'team': team_list,
+        },
+    })
 
 
 def play(request):
