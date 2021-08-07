@@ -18,4 +18,3 @@ urlpatterns = [
     path('api/troupes/:id/like', App.views.troupelike, name="troupelike"),  # 극단찜하기
     path('api/plays/:id/comment', App.views.comment, name="comment"),  # 커멘트달기
 ]
-
