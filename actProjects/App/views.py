@@ -1,7 +1,7 @@
 import json
 
 from django.http import JsonResponse
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from . import models
 from datetime import datetime
 
@@ -173,48 +173,37 @@ def troupelike(request):
 
 
 def star(request, id):
-    user = models.User.objects.get(id=id)
-
-    user_star = json.loads(request.body)
-    #print(user_star['star'])
-
-    return JsonResponse({
-        'id': id,
-        'email': user.email,
-        'nickname': user.nickname,
-        'name': user.name,
-    })
-    '''
-        if models.User.objects.get(id=id):
+    if models.User.objects.get(id=id):
         user = models.User.objects.get(id=id)
-        print('시작')
+        user_star = json.loads(request.body)
+        #print(user_star['star'])
+        plays = models.Play.objects.filter(title__icontains=user_star['play'])  # 검색어에 포함되는 play를 받아옴
+        user_play = models.Play()
+        for i in plays:
+            user_play.title = i.title,
+            user_play.poster = i.poster
 
-        # request의 body에 담겨오는 json 형식을 json Dic 형식으로 변경해서 user_star에 저장
-        user_star = request.POST['star']
-        body = json.loads['star']
-        print('star 값은 뭐내염ㄴ !!!!!', body)
-
-        if user_star.star < 1:
+        if user_star['star'] < 1:
             return JsonResponse({
                 'errorCode': 'ERR_',
-                'message': '최소 별점보다 별점이 작습니다',
+                'message': '최소 별점보다 별점이 낮습니다',
             })
         else:
-            user_star.save()
-
-        return JsonResponse({
-            'id': id,
-            'email': user.email,
-            'nickname': user.nickname,
-            'name': user.name,
-        })
+            new_star = models.Star()
+            new_star.star = user_star['star']
+            new_star.user = user
+            new_star.play = user_play
+            #new_star.save()
+            return JsonResponse({
+                'user': user.name,
+                'star': user_star['star'],
+                'play': user_play.title
+            })
     else:
         return JsonResponse({
-            'errorCode': 'ERR_',
-            'message': '로그인된 사용자가 아닙니다',
+                'errorCode': 'ERR_',
+                'message': '로그인된 사용자가 아닙니다',
         })
-    '''
-
 
 def comment(request):
     return JsonResponse({'request': 'comment.html'})
