@@ -171,15 +171,15 @@ def troupelike(request):
 
 
 def star(request, id):
-    user_id = request.GET.get(id=id)
+    user = models.User.objects.get(id=id)
 
     return JsonResponse({
-        'id': user_id,
-        #'email': string,
-        #'nickname': string,
-        #'name': string,
+        'id': id,
+        'email': user.email,
+        'nickname': user.nickname,
+        'name': user.name,
+        #'star': user.star,
     })
-
 
 def comment(request):
     return JsonResponse({'request': 'comment.html'})
