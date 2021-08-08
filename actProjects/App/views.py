@@ -5,6 +5,8 @@ from django.views.decorators.csrf import csrf_exempt
 from . import models
 import json
 import re
+from django.views.decorators.http import require_http_methods
+
 # from email_validator import validate_email, EmailNotValidError
 
 import base64
@@ -107,36 +109,42 @@ def signin(request):
 
 # 회원가입
 @csrf_exempt
+@require_http_methods(["POST"])
 def signup(request):
     input = json.loads(request.body)
 
     # 403_BAD_REQUEST
 
     # 아이디(이메일) 형식 오류
-    if re.match(r"^[a-z0-9\.\-_]+@([a-z0-9\-]+\.)+[a-z]{2,6}$", input['email']) is False:
+
+    if re.match(r"^[a-z0-9\.\-_]+@([a-z0-9\-]+\.)+[a-z]{2,6}$", input['email']) == False:
         return JsonResponse({
             "error": "올바른 이메일 형식이 아닙니다."
         }, status=400)
 
     # 비밀번호 형식 오류
+
     if len(input['password']) < 6:
         return JsonResponse({
             "error": "올바른 비밀번호 형식이 아닙니다. 비밀번호는 6글자 이상입니다."
         }, status=400)
 
     # 사용자 닉네임 형식 오류
+
     if len(input['nickname']) > 10:
         return JsonResponse({
             "error": "올바른 닉네임 형식이 아닙니다. 닉네임은 10글자 이하 입니다."
         }, status=400)
 
     # 사용자 이름 형식 오류
+
     if re.match(r"^ [가-힣]{2, 4}$", input['name']):
         return JsonResponse({
             "error": "올바른 이름 형식이 아닙니다."
         }, status=400)
 
     # 409_CONFLICT
+
     if models.User.objects.filter(email=input['email']):
         return JsonResponse({
             "data": "이미 존재하는 아이디입니다."
@@ -144,8 +152,6 @@ def signup(request):
 
      # 200_OK
     userdata = models.User.objects.create(email=input['email'], nickname=input['nickname'], name=input['name'])
-    # userdata.save()  # 테이블에 데이터 저장
-
     return JsonResponse({
         "data": {
             "id": userdata.id,  # 사용자의 id
