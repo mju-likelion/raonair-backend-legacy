@@ -109,33 +109,31 @@ def signin(request):
 @csrf_exempt
 def signup(request):
     input = json.loads(request.body)
-    print(input['email'])
-    print(type(input))
 
     # 403_BAD_REQUEST
 
     # 아이디(이메일) 형식 오류
-    if len(input['email']) > 20:
+    if re.match(r"^[a-z0-9\.\-_]+@([a-z0-9\-]+\.)+[a-z]{2,6}$", input['email']) is False:
         return JsonResponse({
-            "error": "아이디 형식 오류입니다 아이디는 ~."
+            "error": "올바른 이메일 형식이 아닙니다."
         }, status=400)
 
     # 비밀번호 형식 오류
     if len(input['password']) < 6:
         return JsonResponse({
-            "error": "비밀번호 형식 오류입니다. 비밀번호는 6글자 이상입니다."
+            "error": "올바른 비밀번호 형식이 아닙니다. 비밀번호는 6글자 이상입니다."
         }, status=400)
 
     # 사용자 닉네임 형식 오류
     if len(input['nickname']) > 10:
         return JsonResponse({
-            "error": "닉네임 형식 오류입니다. 닉네임은 10글자 이하 입니다."
+            "error": "올바른 닉네임 형식이 아닙니다. 닉네임은 10글자 이하 입니다."
         }, status=400)
 
     # 사용자 이름 형식 오류
     if re.match(r"^ [가-힣]{2, 4}$", input['name']):
         return JsonResponse({
-            "error": "이름 형식 오류입니다."
+            "error": "올바른 이름 형식이 아닙니다."
         }, status=400)
 
     # 409_CONFLICT
@@ -157,21 +155,6 @@ def signup(request):
         },
         "message": "회원가입이 완료되었습니다."
     }, status=200)
-
-
-# status = status.HTTP_400_BAD_REQUEST
-# status = 400
-# HTTP_409_CONFLICT
-
-# try:
-# # Validate.
-# valid = validate_email(email)
-
-# # Update with the normalized form.
-# email = valid.email
-# except EmailNotValidError as e:
-#     # email is not valid, exception message is human-readable
-# print(str(e))
 
 
 # 비밀번호 찾기
