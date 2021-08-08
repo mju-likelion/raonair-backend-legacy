@@ -172,13 +172,22 @@ def troupelike(request):
 
 def star(request, id):
     user = models.User.objects.get(id=id)
+    user_star = request.GET.get('star', '')
 
+    '''
+    if user is None:
+        return JsonResponse({
+            'errorCode': 'ERR_',
+            'message': '로그인된 사용자가 아닙니다'
+        })
+    else:
+    '''
     return JsonResponse({
         'id': id,
         'email': user.email,
         'nickname': user.nickname,
         'name': user.name,
-        #'star': user.star,
+        'star': user_star,
     })
 
 def comment(request):
