@@ -191,12 +191,34 @@ def troupe(request, id):
         else:
             print('날짜에러')
 
+    # 페이징 테스트
+    # for i in range(20):
+    #     closed_play.append({
+    #         'id': i,
+    #         'title': str(i) + "번째 테스트 공연",
+    #         'poster': str(i) + "번째 테스트 포스터",
+    #         'start_date': "2021-01-01",
+    #         'end_date': "2021-01-01",
+    #     })
+
+    # 페이징
+    if request.GET.get('start', ''):
+        start = int(request.GET.get('start', ''))
+        next = request.get_full_path().split(
+            '&start=')[0] + '&start=' + str(start+10)
+    else:
+        start = 0
+        next = request.get_full_path() + '&start=11'
+
     return JsonResponse({
         'data': {
             # 유저의 찜하기 액션
             # "context": {
             #     "like_check": boolean
             # },
+            'links': {
+                'next': next,
+            },
             'troupe': {
                 'id': troupe.id,
                 'name': troupe.name,
@@ -208,7 +230,8 @@ def troupe(request, id):
             'play': {
                 'ongoing_play': ongoing_play,
                 'tobe_play': tobe_play,
-                'closed_play': closed_play,
+                'closed_play': closed_play[start:start+10],
+                # 'closed_play': closed_play,
             },
         },
     })
