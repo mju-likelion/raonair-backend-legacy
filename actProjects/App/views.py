@@ -1,3 +1,5 @@
+import json
+
 from django.http import JsonResponse
 from django.shortcuts import render
 from . import models
@@ -172,23 +174,47 @@ def troupelike(request):
 
 def star(request, id):
     user = models.User.objects.get(id=id)
-    user_star = request.GET.get('star', '')
 
-    '''
-    if user is None:
-        return JsonResponse({
-            'errorCode': 'ERR_',
-            'message': '로그인된 사용자가 아닙니다'
-        })
-    else:
-    '''
+    user_star = json.loads(request.body)
+    #print(user_star['star'])
+
     return JsonResponse({
         'id': id,
         'email': user.email,
         'nickname': user.nickname,
         'name': user.name,
-        'star': user_star,
     })
+    '''
+        if models.User.objects.get(id=id):
+        user = models.User.objects.get(id=id)
+        print('시작')
+
+        # request의 body에 담겨오는 json 형식을 json Dic 형식으로 변경해서 user_star에 저장
+        user_star = request.POST['star']
+        body = json.loads['star']
+        print('star 값은 뭐내염ㄴ !!!!!', body)
+
+        if user_star.star < 1:
+            return JsonResponse({
+                'errorCode': 'ERR_',
+                'message': '최소 별점보다 별점이 작습니다',
+            })
+        else:
+            user_star.save()
+
+        return JsonResponse({
+            'id': id,
+            'email': user.email,
+            'nickname': user.nickname,
+            'name': user.name,
+        })
+    else:
+        return JsonResponse({
+            'errorCode': 'ERR_',
+            'message': '로그인된 사용자가 아닙니다',
+        })
+    '''
+
 
 def comment(request):
     return JsonResponse({'request': 'comment.html'})
