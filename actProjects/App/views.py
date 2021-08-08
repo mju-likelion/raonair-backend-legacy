@@ -147,23 +147,56 @@ def search_detail(request, type):
     })
 
 
-# 직책 필드는 연극에 종속적이라 극단에 구현하기 어려움에 있음
+# 직책 필드는 극단이 아닌 연극에 종속적이라 극단에서 구현하기 어려움에 있음
 # ex) 극단에서는 감독이지만 A공연에서는 배우일 경우
 def troupe(request, id):
     troupe = models.Troupe.objects.get(id=id)
     troupe_like = models.TroupeLike.objects.filter(troupe=id).count()
     team = models.Team.objects.filter(troupe=id)
-    team_list = []
+    team_list = []  # 극단 구성원
+    plays = models.Play.objects.filter(troupe=id)  # 극단에서 공연한 연극
+    ongoing_play = []
+    tobe_play = []
+    closed_play = []
+
+    # 구성원 구하기
     for i in team:
         team_list.append({
             'name': i.person.name,
             'photo': i.person.photo,
             # "role": i.person.role,
         })
+
+    # 연극 구하기
+    tody = datetime.strftime(datetime.now(), '%Y-%m-%d')
+    for i in plays:
+        start_date = datetime.strftime(i.start_date, '%Y-%m-%d')
+        end_date = datetime.strftime(
+            i.end_date, '%Y-%m-%d') if (i.end_date) else None
+
+        new_play = [{
+            'id': i.id,
+            'title': i.title,
+            'poster': i.poster,
+            'start_date': start_date,
+            'end_date': end_date,
+        }]
+
+        if tody >= start_date and (end_date == None or tody <= end_date):
+            ongoing_play.append(new_play)
+        elif tody < start_date:
+            tobe_play.append(new_play)
+        elif tody > end_date:
+            closed_play.append(new_play)
+        else:
+            print('날짜에러')
+
     return JsonResponse({
         'data': {
             # 유저의 찜하기 액션
-            # "context": { },
+            # "context": {
+            #     "like_check": boolean
+            # },
             'troupe': {
                 'id': troupe.id,
                 'name': troupe.name,
@@ -172,6 +205,11 @@ def troupe(request, id):
             },
             'troupe_like': troupe_like,
             'team': team_list,
+            'play': {
+                'ongoing_play': ongoing_play,
+                'tobe_play': tobe_play,
+                'closed_play': closed_play,
+            },
         },
     })
 

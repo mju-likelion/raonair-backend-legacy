@@ -161,11 +161,8 @@ class Person(models.Model):
 class Play(models.Model):
     title = models.CharField(max_length=255)
     poster = models.CharField(unique=True, max_length=255)
-    # Field name made lowercase.
-    start_date = models.DateField(db_column='start_DATE')
-    # Field name made lowercase.
-    end_date = models.DateField(db_column='end_DATE', blank=True, null=True)
-    running_time = models.IntegerField()
+    start_date = models.DateField()
+    end_date = models.DateField(blank=True, null=True)
     troupe = models.ForeignKey('Troupe', models.DO_NOTHING, db_column='troupe')
     theater = models.ForeignKey(
         'Theater', models.DO_NOTHING, db_column='theater')
