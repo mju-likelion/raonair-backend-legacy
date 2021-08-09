@@ -197,10 +197,12 @@ def star(request, id):
             #new_star.save()
 
             return JsonResponse({
-                'user': user.name,
-                'star': user_star['star'],
-                'play': user_play.title
-            })
+                'data':{
+                    'user': user.name,
+                    'star': user_star['star'],
+                    'play': user_play.title,
+                }
+            }, status=200)
     else:
         return JsonResponse({
                 'message': '로그인된 사용자가 아닙니다',
