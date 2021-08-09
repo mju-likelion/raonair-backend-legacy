@@ -176,39 +176,33 @@ def troupelike(request):
 
 @csrf_exempt
 def star(request, id):
-    if models.User.objects.get(id=id):
-        user = models.User.objects.get(id=id)
-        user_star = json.loads(request.body)
-        #print(user_star['star'])
-        plays = models.Play.objects.filter(title__icontains=user_star['play'])  # 검색어에 포함되는 play를 받아옴
-        user_play = models.Play()
+    user = models.User.objects.get(id=id)
 
-        for i in plays:
-            user_play.title = i.title,
-            user_play.poster = i.poster
-
-        if user_star['star'] < 1:
-            return JsonResponse({
-                'message': '최소 별점보다 별점이 낮습니다',
-            }, status=400)
-        else:
-            new_star = models.Star()
-            new_star.star = user_star['star']
-            new_star.user = user
-            new_star.play = user_play
-            #new_star.save()
-
-            return JsonResponse({
-                'data':{
-                    'user': user.name,
-                    'star': user_star['star'],
-                    'play': user_play.title,
-                }
-            }, status=200)
-    else:
+    if not user:
         return JsonResponse({
-                'message': '로그인된 사용자가 아닙니다',
+            'message': '로그인된 사용자가 아닙니다',
         }, status=401)
+
+    user_body = json.loads(request.body)
+    selected_play = models.Play.objects.get(id=user_body['play'])
+
+    if user_body['star'] < 1:
+        return JsonResponse({
+            'message': '최소 별점보다 별점이 낮습니다',
+        }, status=400)
+    else:
+        new_star = models.Star.objects.create(
+            user=user,
+            star=user_body['star'],
+            play=selected_play
+        )
+        return JsonResponse({
+            'data': {
+                'user': new_star.user.id,
+                'star': new_star.star,
+                'play': new_star.play.id,
+            }
+        }, status=200)
 
 def comment(request):
     return JsonResponse({'request': 'comment.html'})

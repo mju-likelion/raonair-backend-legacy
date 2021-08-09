@@ -188,11 +188,9 @@ class Staff(models.Model):
 
 
 class Star(models.Model):
-    play = models.ForeignKey(Play, models.DO_NOTHING, db_column='play')
+    play = models.ForeignKey('Play', models.DO_NOTHING, db_column='play')
     user = models.ForeignKey('User', models.DO_NOTHING, db_column='user')
     star = models.DecimalField(max_digits=2, decimal_places=0)
-    created_at = models.DateTimeField(blank=True, null=True)
-    updated_at = models.DateTimeField(blank=True, null=True)
 
     class Meta:
         managed = False
