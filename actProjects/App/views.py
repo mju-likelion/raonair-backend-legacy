@@ -152,6 +152,8 @@ def search_detail(request, type):
 def troupe(request, id):
     troupe = models.Troupe.objects.get(id=id)
     troupe_like = models.TroupeLike.objects.filter(troupe=id).count()
+    troupe_like_check = models.TroupeLike.objects.filter(
+        troupe=id, user=1)  # user 추후 수정 필요(더미데이터)
     team = models.Team.objects.filter(troupe=id)
     team_list = []  # 극단 구성원
     plays = models.Play.objects.filter(troupe=id)  # 극단에서 공연한 연극
@@ -213,9 +215,9 @@ def troupe(request, id):
     return JsonResponse({
         'data': {
             # 유저의 찜하기 액션
-            # "context": {
-            #     "like_check": boolean
-            # },
+            'context': {
+                'like_check': troupe_like_check.exists()
+            },
             'links': {
                 'next': next,
             },
@@ -231,7 +233,6 @@ def troupe(request, id):
                 'ongoing_play': ongoing_play,
                 'tobe_play': tobe_play,
                 'closed_play': closed_play[start:start+10],
-                # 'closed_play': closed_play,
             },
         },
     })
