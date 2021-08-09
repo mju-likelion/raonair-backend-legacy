@@ -1,6 +1,7 @@
 from django.http import JsonResponse
 from django.shortcuts import render
 from . import models
+from django.views.decorators.csrf import csrf_exempt
 import json
 from datetime import datetime
 from django.views.decorators.http import require_http_methods
@@ -157,18 +158,19 @@ def play(request):
     return JsonResponse({'request': 'play.html'})
 
 
+@csrf_exempt
 @require_http_methods(["POST"])
 def signin(request):
 
     requsestbody = json.loads(request.body)
 
     # 400_BAD_REQUEST
-    if re.match(r"^[a-zA-Z0-9+-_.]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$'", input['email']) == False:
-        return JsonResponse({
-            "error": {
-                "message": "아이디가 이메일 형식이 아닙니다."
-            }
-        }, status=400)
+    # if re.match(r"^[a-zA-Z0-9+-_.]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$'", input['email']) == False:
+    #     return JsonResponse({
+    #         "error": {
+    #             "message": "아이디가 이메일 형식이 아닙니다."
+    #         }
+    #     }, status=400)
 
     # 200_OK // 입력받은 아이디(사용자)가 DB에 있는 경우
 
@@ -183,10 +185,10 @@ def signin(request):
         # 200_OK // 로그인 완료
         # 사용자 닉네임 ****************
         else:
-            user =
+            signinuser = models.User.objects.filter(email=requsestbody['email'])
             return JsonResponse({
                 "message": {
-                    user.nickname,
+                    signinuser.nickname,
                     "님 안녕하세요!"
                 }
             }, status=200)
