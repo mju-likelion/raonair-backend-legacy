@@ -184,11 +184,10 @@ def star(request, id):
     # 별점평가 여부 판단
     check_star = models.Star.objects.filter(user=user, play=selected_play)
     if check_star.exists():
-        checked_star = check_star.star
         return JsonResponse({
             'data': {
                 'context': {
-                    'star_checked': checked_star
+                    'star_checked': check_star.exists()
                 }
             },
             'message': 'star already checked'
