@@ -178,16 +178,23 @@ def troupelike(request):
 #@require_http_methods(['POST'])
 def star(request, id):
     user = models.User.objects.get(id=id)
+
+    if not user:
+        return JsonResponse({
+            'message': '로그인된 사용자가 아닙니다',
+        }, status=401)
+
     user_body = json.loads(request.body)
     selected_play = models.Play.objects.get(id=user_body['play'])
 
     # 별점평가 여부 판단
     check_star = models.Star.objects.filter(user=user, play=selected_play)
     if check_star.exists():
+        checked_star = models.Star.objects.get(user=user, play=selected_play)
         return JsonResponse({
             'data': {
                 'context': {
-                    'star_checked': check_star.exists()
+                    'star_checked': checked_star.star
                 }
             },
             'message': 'star already checked'
@@ -214,11 +221,6 @@ def star(request, id):
                 },
                 'message': 'success'
             }, status=200)
-
-    if not user:
-        return JsonResponse({
-            'message': '로그인된 사용자가 아닙니다',
-        }, status=401)
 
 def comment(request):
     return JsonResponse({'request': 'comment.html'})
