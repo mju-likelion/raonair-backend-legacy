@@ -258,23 +258,36 @@ def playlike(request):
 
 
 # @login_required #  로그인 되어야만 클릭 가능
-
-
 @csrf_exempt  # csrf verification 에러 조치
-def troupelike(request):
+def troupelike(request, id):
     input = json.loads(request.body)  # body 데이터 받아옴
+    troupe_id = models.Troupe.objects.get(id=id)
+    user_id = models.User.objects.get(id=input['user'])  # 로그인 구현 후 바꿔줘야함
 
-    troupes = models.Troupe.objects.get(id=input['troupe'])
-    user = models.User.objects.get(id=input['user'])
+    # 찜 여부 판단
+    check_troupe = models.TroupeLike.objects.filter(troupe=id)
+    check_user = check_troupe.filter(user=input['user'])  # 로그인 구현 후 수정 필요
 
-    troupe_like = models.TroupeLike.objects.create(
-        troupe=troupes,
-        user=user
-    )
+    if check_user.exists():
+        return JsonResponse({
+            'error': {
+                'message': 'already liked'
+            }
+        })
+    else:
+        troupe_like = models.TroupeLike.objects.create(
+            troupe=troupe_id,
+            user=user_id
+        )
 
-    return JsonResponse({
-        'message': '찜 등록됨'
-    }, status=200)
+        return JsonResponse({
+            'data': {
+                'id': troupe_like.id,
+                'troupe': troupe_like.troupe.id,
+                'user': troupe_like.user.id,
+            },
+            'message': 'success'
+        }, status=200)
 
 
 def star(request):
