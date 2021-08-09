@@ -266,11 +266,11 @@ def troupelike(request, id):
     troupe_id = models.Troupe.objects.get(id=id)
     user_id = models.User.objects.get(id=input['user'])  # 로그인 구현 후 바꿔줘야함
 
-    # 찜 여부 판단
-    check_troupe = models.TroupeLike.objects.filter(troupe=id)
-    check_user = check_troupe.filter(user=input['user'])  # 로그인 구현 후 수정 필요
+    # 찜 여부 판단, 로그인 구현 후 수정 필요
+    check_troupe = models.TroupeLike.objects.filter(
+        troupe=id, user=input['user'])
 
-    if check_user.exists():
+    if check_troupe.exists():
         return JsonResponse({
             'error': {
                 'message': 'already liked'
@@ -285,8 +285,11 @@ def troupelike(request, id):
         return JsonResponse({
             'data': {
                 'id': troupe_like.id,
-                'troupe': troupe_like.troupe.id,
-                'user': troupe_like.user.id,
+                'troupe': troupe_like.troupe.name,
+                'user_email': troupe_like.user.email,
+                'context': {
+                    'like_checked': check_troupe.exists()
+                }
             },
             'message': 'success'
         }, status=200)
