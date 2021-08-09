@@ -1,11 +1,14 @@
+from django.views.decorators.csrf import csrf_exempt
+import json
 from django.http import JsonResponse
-from django.shortcuts import render
+from django.shortcuts import get_object_or_404, render
 from . import models
 from datetime import datetime
 
 import base64
 import os
-  
+
+
 def home(request):
     return JsonResponse({'request': 'home.html'})
 
@@ -80,11 +83,14 @@ def search_play(request):
     })
 
 # 검색 결과 페이지, 더보기 클릭 (GET /api/search/<str:type>)
-def search_detail(request, type):
-    keyword = request.GET.get("query", "")
-    loc = request.GET.get("location", "")
 
-    filter_keyword = models.Play.objects.filter(title__icontains=keyword)  # 검색어에 포함되는 play를 받아옴
+
+def search_detail(request, type):
+    keyword = request.GET.get('query', '')
+    loc = request.GET.get('location', '')
+
+    filter_keyword = models.Play.objects.filter(
+        title__icontains=keyword)  # 검색어에 포함되는 play를 받아옴
     plays = filter_keyword.filter(theater__location__icontains=loc)
 
     search_list = []  # 검색 결과들
@@ -92,22 +98,22 @@ def search_detail(request, type):
     # 검색 결과가 0 일 때
     if len(plays) == 0:
         return JsonResponse({
-            "error": {
-                "query": keyword,
-                "type": type,
-                "error_message": "검색 결과가 없습니다",
+            'error': {
+                'query': keyword,
+                'type': type,
+                'error_message': '검색 결과가 없습니다',
             }
         })
 
     # start 데이터가 있는 경우와 없는 경우
-    if request.GET.get("start", ""):
-        start = int(request.GET.get("start", ""))
-        next = request.get_full_path().split("&start=")[0] \
-                + "&start=" \
-                + str(start + 10)
+    if request.GET.get('start', ''):
+        start = int(request.GET.get('start', ''))
+        next = request.get_full_path().split('&start=')[0] \
+            + '&start=' \
+            + str(start + 10)
     else:
         start = 0
-        next = request.get_full_path() + "&start=11"
+        next = request.get_full_path() + '&start=11'
 
     for i in plays:
         stars = models.Star.objects.filter(play=i.id)
@@ -120,30 +126,115 @@ def search_detail(request, type):
         star_avg = star_sum / len(stars) / 2
 
         new_play = ({
-            "title": i.title,
-            "poster": i.poster,
-            "start_date": i.start_date,
-            "end_date": i.end_date,
+            'title': i.title,
+            'poster': i.poster,
+            'start_date': i.start_date,
+            'end_date': i.end_date,
             'star_avg': star_avg,
-            "likes": likes,
-            "location": i.theater.location,
+            'likes': likes,
+            'location': i.theater.location,
         })
         search_list.append(new_play)
 
     # 검색결과가 0이 아닐 때
     return JsonResponse({
-        "links": {
-            "next": next
+        'links': {
+            'next': next
         },
-        "data": {
-            "query": keyword,
-            "type": type,
-            "search_results": search_list[start:start+10],
+        'data': {
+            'query': keyword,
+            'type': type,
+            'search_results': search_list[start:start+10],
         },
     })
 
-def troupe(request):
-    return JsonResponse({'request': 'listpage.html'})
+
+def troupe(request, id):
+    troupe = models.Troupe.objects.get(id=id)
+    troupe_like = models.TroupeLike.objects.filter(troupe=id).count()
+    team = models.Team.objects.filter(troupe=id)
+    team_list = []  # 극단 구성원
+    plays = models.Play.objects.filter(troupe=id)  # 극단에서 공연한 연극
+    ongoing_play = []
+    tobe_play = []
+    closed_play = []
+
+    # 구성원 구하기
+    for i in team:
+        team_list.append({
+            'name': i.person.name,
+            'photo': i.person.photo,
+            # "role": i.person.role,
+        })
+
+    # 연극 구하기
+    tody = datetime.strftime(datetime.now(), '%Y-%m-%d')
+    for i in plays:
+        start_date = datetime.strftime(i.start_date, '%Y-%m-%d')
+        end_date = datetime.strftime(
+            i.end_date, '%Y-%m-%d') if (i.end_date) else None
+
+        new_play = [{
+            'id': i.id,
+            'title': i.title,
+            'poster': i.poster,
+            'start_date': start_date,
+            'end_date': end_date,
+        }]
+
+        if tody >= start_date and (end_date == None or tody <= end_date):
+            ongoing_play.append(new_play)
+        elif tody < start_date:
+            tobe_play.append(new_play)
+        elif tody > end_date:
+            closed_play.append(new_play)
+        else:
+            print('날짜에러')
+
+    # 페이징 테스트
+    # for i in range(20):
+    #     closed_play.append({
+    #         'id': i,
+    #         'title': str(i) + "번째 테스트 공연",
+    #         'poster': str(i) + "번째 테스트 포스터",
+    #         'start_date': "2021-01-01",
+    #         'end_date': "2021-01-01",
+    #     })
+
+    # 페이징
+    if request.GET.get('start', ''):
+        start = int(request.GET.get('start', ''))
+        next = request.get_full_path().split(
+            '&start=')[0] + '&start=' + str(start+10)
+    else:
+        start = 0
+        next = request.get_full_path() + '&start=11'
+
+    return JsonResponse({
+        'data': {
+            # 유저의 찜하기 액션
+            # "context": {
+            #     "like_check": boolean
+            # },
+            'links': {
+                'next': next,
+            },
+            'troupe': {
+                'id': troupe.id,
+                'name': troupe.name,
+                'type': troupe.type,
+                'logo': troupe.logo,
+            },
+            'troupe_like': troupe_like,
+            'team': team_list,
+            'play': {
+                'ongoing_play': ongoing_play,
+                'tobe_play': tobe_play,
+                'closed_play': closed_play[start:start+10],
+                # 'closed_play': closed_play,
+            },
+        },
+    })
 
 
 def play(request):
@@ -166,8 +257,24 @@ def playlike(request):
     return JsonResponse({'request': 'playlike.html'})
 
 
+# @login_required #  로그인 되어야만 클릭 가능
+
+
+@csrf_exempt  # csrf verification 에러 조치
 def troupelike(request):
-    return JsonResponse({'request': 'troupelike.html'})
+    input = json.loads(request.body)  # body 데이터 받아옴
+
+    troupes = models.Troupe.objects.get(id=input['troupe'])
+    user = models.User.objects.get(id=input['user'])
+
+    troupe_like = models.TroupeLike.objects.create(
+        troupe=troupes,
+        user=user
+    )
+
+    return JsonResponse({
+        'message': '찜 등록됨'
+    }, status=200)
 
 
 def star(request):
