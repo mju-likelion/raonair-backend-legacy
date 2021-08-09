@@ -117,7 +117,7 @@ def signup(request):
 
     # 아이디(이메일) 형식 오류
 
-    if re.match(r"^[a-z0-9\.\-_]+@([a-z0-9\-]+\.)+[a-z]{2,6}$", input['email']) == False:
+    if re.match(r"^[a-zA-Z0-9+-_.]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$'", input['email']) == False:
         return JsonResponse({
             "error": "올바른 이메일 형식이 아닙니다."
         }, status=400)
