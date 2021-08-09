@@ -4,6 +4,7 @@ from django.http import JsonResponse
 from django.shortcuts import get_object_or_404, render
 from . import models
 from datetime import datetime
+from django.views.decorators.http import require_http_methods
 
 import base64
 import os
@@ -259,6 +260,7 @@ def playlike(request):
 
 # @login_required #  로그인 되어야만 클릭 가능
 @csrf_exempt  # csrf verification 에러 조치
+@require_http_methods(['POST'])  # 포스트 방식 확인
 def troupelike(request, id):
     input = json.loads(request.body)  # body 데이터 받아옴
     troupe_id = models.Troupe.objects.get(id=id)
@@ -273,7 +275,7 @@ def troupelike(request, id):
             'error': {
                 'message': 'already liked'
             }
-        })
+        }, status=403)
     else:
         troupe_like = models.TroupeLike.objects.create(
             troupe=troupe_id,
