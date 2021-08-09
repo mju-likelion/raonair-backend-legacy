@@ -175,34 +175,51 @@ def troupelike(request):
     return JsonResponse({'request': 'troupelike.html'})
 
 @csrf_exempt
+#@require_http_methods(['POST'])
 def star(request, id):
     user = models.User.objects.get(id=id)
+    user_body = json.loads(request.body)
+    selected_play = models.Play.objects.get(id=user_body['play'])
+
+    # 별점평가 여부 판단
+    check_star = models.Star.objects.filter(user=user, play=selected_play)
+    if check_star.exists():
+        checked_star = check_star.star
+        return JsonResponse({
+            'data': {
+                'context': {
+                    'star_checked': checked_star
+                }
+            },
+            'message': 'star already checked'
+        }, status=200)
+    else:
+        if user_body['star'] < 1:
+            return JsonResponse({
+                'message': '최소 별점보다 별점이 낮습니다',
+            }, status=400)
+        else:
+            new_star = models.Star.objects.create(
+                user=user,
+                star=user_body['star'],
+                play=selected_play
+            )
+            return JsonResponse({
+                'data': {
+                    'user': new_star.user.id,
+                    'star': new_star.star,
+                    'play': new_star.play.id,
+                    'context': {
+                        'star_checked': new_star.star
+                    }
+                },
+                'message': 'success'
+            }, status=200)
 
     if not user:
         return JsonResponse({
             'message': '로그인된 사용자가 아닙니다',
         }, status=401)
-
-    user_body = json.loads(request.body)
-    selected_play = models.Play.objects.get(id=user_body['play'])
-
-    if user_body['star'] < 1:
-        return JsonResponse({
-            'message': '최소 별점보다 별점이 낮습니다',
-        }, status=400)
-    else:
-        new_star = models.Star.objects.create(
-            user=user,
-            star=user_body['star'],
-            play=selected_play
-        )
-        return JsonResponse({
-            'data': {
-                'user': new_star.user.id,
-                'star': new_star.star,
-                'play': new_star.play.id,
-            }
-        }, status=200)
 
 def comment(request):
     return JsonResponse({'request': 'comment.html'})
