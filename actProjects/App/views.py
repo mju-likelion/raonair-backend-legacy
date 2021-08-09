@@ -2,6 +2,8 @@ import json
 
 from django.http import JsonResponse
 from django.shortcuts import render, redirect
+from django.views.decorators.csrf import csrf_exempt
+
 from . import models
 from datetime import datetime
 
@@ -171,7 +173,7 @@ def playlike(request):
 def troupelike(request):
     return JsonResponse({'request': 'troupelike.html'})
 
-
+@csrf_exempt
 def star(request, id):
     if models.User.objects.get(id=id):
         user = models.User.objects.get(id=id)
@@ -185,15 +187,15 @@ def star(request, id):
 
         if user_star['star'] < 1:
             return JsonResponse({
-                'errorCode': 'ERR_',
                 'message': '최소 별점보다 별점이 낮습니다',
-            })
+            }, status=400)
         else:
             new_star = models.Star()
             new_star.star = user_star['star']
             new_star.user = user
             new_star.play = user_play
             #new_star.save()
+
             return JsonResponse({
                 'user': user.name,
                 'star': user_star['star'],
@@ -201,9 +203,8 @@ def star(request, id):
             })
     else:
         return JsonResponse({
-                'errorCode': 'ERR_',
                 'message': '로그인된 사용자가 아닙니다',
-        })
+        }, status=401)
 
 def comment(request):
     return JsonResponse({'request': 'comment.html'})
