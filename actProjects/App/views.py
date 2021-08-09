@@ -271,17 +271,20 @@ def troupelike(request, id):
         troupe=id, user=input['user'])
 
     if check_troupe.exists():
+        troupe_like = check_troupe.delete()  # check_troupe에 해당하는 튜플 삭제
         return JsonResponse({
-            'error': {
-                'message': 'already liked'
-            }
-        }, status=403)
+            'data': {
+                'context': {
+                    'like_checked': check_troupe.exists()
+                }
+            },
+            'message': 'deleted like'
+        }, status=200)
     else:
         troupe_like = models.TroupeLike.objects.create(
             troupe=troupe_id,
             user=user_id
         )
-
         return JsonResponse({
             'data': {
                 'id': troupe_like.id,
