@@ -3,6 +3,7 @@ import json
 from django.http import JsonResponse
 from django.shortcuts import render, redirect
 from django.views.decorators.csrf import csrf_exempt
+from django.views.decorators.http import require_http_methods
 
 from . import models
 from datetime import datetime
@@ -181,6 +182,7 @@ def star(request, id):
         #print(user_star['star'])
         plays = models.Play.objects.filter(title__icontains=user_star['play'])  # 검색어에 포함되는 play를 받아옴
         user_play = models.Play()
+
         for i in plays:
             user_play.title = i.title,
             user_play.poster = i.poster
