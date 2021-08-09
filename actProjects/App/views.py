@@ -1,11 +1,15 @@
 from django.http import JsonResponse
 from django.shortcuts import render
 from . import models
+import json
 from datetime import datetime
+from django.views.decorators.http import require_http_methods
+import re
 
 import base64
 import os
-  
+
+
 def home(request):
     return JsonResponse({'request': 'home.html'})
 
@@ -80,6 +84,8 @@ def search_play(request):
     })
 
 # 검색 결과 페이지, 더보기 클릭 (GET /api/search/<str:type>)
+
+
 def search_detail(request, type):
     keyword = request.GET.get("query", "")
     loc = request.GET.get("location", "")
@@ -103,8 +109,8 @@ def search_detail(request, type):
     if request.GET.get("start", ""):
         start = int(request.GET.get("start", ""))
         next = request.get_full_path().split("&start=")[0] \
-                + "&start=" \
-                + str(start + 10)
+            + "&start=" \
+            + str(start + 10)
     else:
         start = 0
         next = request.get_full_path() + "&start=11"
@@ -142,6 +148,7 @@ def search_detail(request, type):
         },
     })
 
+
 def troupe(request):
     return JsonResponse({'request': 'listpage.html'})
 
@@ -150,8 +157,45 @@ def play(request):
     return JsonResponse({'request': 'play.html'})
 
 
+@require_http_methods(["POST"])
 def signin(request):
-    return JsonResponse({'request': 'signin.html'})
+
+    requsestbody = json.loads(request.body)
+
+    # 400_BAD_REQUEST
+    if re.match(r"^[a-zA-Z0-9+-_.]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$'", input['email']) == False:
+        return JsonResponse({
+            "error": {
+                "message": "아이디가 이메일 형식이 아닙니다."
+            }
+        }, status=400)
+
+    # 200_OK // 입력받은 아이디(사용자)가 DB에 있는 경우
+
+    if models.User.objects.filter(email=requsestbody['email']):
+
+        # 아이디는 맞는데 비밀번호가 틀린 경우 :
+        if models.User.objects.filter(password=requsestbody['password']):
+            return JsonResponse({
+                "error": "비밀번호가 틀렸습니다."
+            }, status=400)
+
+        # 200_OK // 로그인 완료
+        # 사용자 닉네임 ****************
+        else:
+            user =
+            return JsonResponse({
+                "message": {
+                    user.nickname,
+                    "님 안녕하세요!"
+                }
+            }, status=200)
+
+     # 401_Unauthorized // # 입력받은 아이디(사용자)가 DB에 없는 경우 -> 회원가입 ??
+    else:
+        return JsonResponse({
+            "error": "존재하지않는 아이디입니다."
+        }, status=401)
 
 
 def signup(request):
