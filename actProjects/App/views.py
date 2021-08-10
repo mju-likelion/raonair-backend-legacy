@@ -182,13 +182,24 @@ def playlike(request, id):
     if check_play_like.exists():
         check_play_like.delete()
         return JsonResponse({
+            'data': {
+                'play': play.title,
+                'email': play.email,
+                'nickname': play.nickname,
+            },
             'message': 'deleted play like'
-        })
+        }, status=200)
     else:
         new_play_like = models.Like.objects.create(play=play, user=user)
         return JsonResponse({
+            'data': {
+                'id': new_play_like.id,
+                'play': new_play_like.play.title,
+                'email': new_play_like.user.email,
+                'nickname': new_play_like.user.nickname,
+            },
             'message': 'add play like'
-        })
+        }, status=200)
 
 
 def troupelike(request):
