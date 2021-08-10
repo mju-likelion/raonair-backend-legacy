@@ -80,8 +80,6 @@ class Comment(models.Model):
     comment = models.CharField(max_length=200)
     play = models.ForeignKey('Play', models.DO_NOTHING, db_column='play')
     user = models.ForeignKey('User', models.DO_NOTHING, db_column='user')
-    updated_at = models.DateTimeField()
-    created_at = models.DateTimeField()
 
     class Meta:
         managed = False
@@ -137,8 +135,6 @@ class DjangoSession(models.Model):
 class Like(models.Model):
     play = models.ForeignKey('Play', models.DO_NOTHING, db_column='play')
     user = models.ForeignKey('User', models.DO_NOTHING, db_column='user')
-    created_at = models.DateTimeField()
-    updated_at = models.DateTimeField()
 
     class Meta:
         managed = False
@@ -149,8 +145,6 @@ class Person(models.Model):
     name = models.CharField(max_length=255)
     photo = models.CharField(
         unique=True, max_length=255, blank=True, null=True)
-    created_at = models.DateTimeField()
-    updated_at = models.DateTimeField()
 
     class Meta:
         managed = False
@@ -160,11 +154,9 @@ class Person(models.Model):
 class Play(models.Model):
     title = models.CharField(max_length=255)
     poster = models.CharField(unique=True, max_length=255)
-    # Field name made lowercase.
-    start_date = models.DateField(db_column='start_DATE')
-    # Field name made lowercase.
-    end_date = models.DateField(db_column='end_DATE', blank=True, null=True)
-    running_time = models.IntegerField()
+    start_date = models.DateField()
+    end_date = models.DateField(blank=True, null=True)
+
     troupe = models.ForeignKey('Troupe', models.DO_NOTHING, db_column='troupe')
     theater = models.ForeignKey(
         'Theater', models.DO_NOTHING, db_column='theater')
@@ -178,8 +170,6 @@ class Play(models.Model):
     # Field name made lowercase.
     culturegov_external_link = models.CharField(
         db_column='cultureGov_external_link', unique=True, max_length=255, blank=True, null=True)
-    created_at = models.DateTimeField()
-    updated_at = models.DateTimeField()
 
     class Meta:
         managed = False
@@ -192,8 +182,6 @@ class Staff(models.Model):
     play = models.ForeignKey(Play, models.DO_NOTHING,
                              db_column='play', blank=True, null=True)
     role = models.CharField(max_length=8)
-    created_at = models.DateTimeField()
-    updated_at = models.DateTimeField()
 
     class Meta:
         managed = False
@@ -201,11 +189,9 @@ class Staff(models.Model):
 
 
 class Star(models.Model):
-    play = models.ForeignKey(Play, models.DO_NOTHING, db_column='play')
-    user = models.ForeignKey('User', models.DO_NOTHING, db_column='user')
     star = models.DecimalField(max_digits=2, decimal_places=0)
-    created_at = models.DateTimeField()
-    updated_at = models.DateTimeField()
+    user = models.ForeignKey('User', models.DO_NOTHING, db_column='user')
+    play = models.ForeignKey(Play, models.DO_NOTHING, db_column='play')
 
     class Meta:
         managed = False
@@ -217,8 +203,6 @@ class Team(models.Model):
         Person, models.DO_NOTHING, db_column='person', blank=True, null=True)
     troupe = models.ForeignKey(
         'Troupe', models.DO_NOTHING, db_column='troupe', blank=True, null=True)
-    created_at = models.DateTimeField()
-    updated_at = models.DateTimeField()
 
     class Meta:
         managed = False
@@ -227,14 +211,16 @@ class Team(models.Model):
 
 class Theater(models.Model):
     name = models.CharField(unique=True, max_length=255)
+    url = models.CharField(unique=True, max_length=255, blank=True, null=True)
     location = models.CharField(max_length=14, blank=True, null=True)
     address = models.CharField(max_length=255)
     longitude = models.DecimalField(
         max_digits=11, decimal_places=8, blank=True, null=True)
     latitude = models.DecimalField(
         max_digits=10, decimal_places=8, blank=True, null=True)
-    created_at = models.DateTimeField()
-    updated_at = models.DateTimeField()
+    seat_cnt = models.IntegerField(blank=True, null=True)
+    logo_url = models.CharField(max_length=255, blank=True, null=True)
+
 
     class Meta:
         managed = False
@@ -245,8 +231,6 @@ class Troupe(models.Model):
     name = models.CharField(unique=True, max_length=255)
     type = models.CharField(max_length=7)
     logo = models.CharField(unique=True, max_length=255, blank=True, null=True)
-    created_at = models.DateTimeField()
-    updated_at = models.DateTimeField()
 
     class Meta:
         managed = False
@@ -258,8 +242,6 @@ class TroupeLike(models.Model):
         Troupe, models.DO_NOTHING, db_column='troupe', blank=True, null=True)
     user = models.ForeignKey('User', models.DO_NOTHING,
                              db_column='user', blank=True, null=True)
-    created_at = models.DateTimeField()
-    updated_at = models.DateTimeField()
 
     class Meta:
         managed = False
@@ -270,10 +252,8 @@ class User(models.Model):
     email = models.CharField(unique=True, max_length=255)
     password = models.CharField(max_length=255)
     name = models.CharField(max_length=10)
-    nickname = models.CharField(unique=True, max_length=10)
-    email_confirmed = models.IntegerField()
-    created_at = models.DateTimeField()
-    updated_at = models.DateTimeField()
+    nickname = models.CharField(unique=True, max_length=11)
+    email_confirmed = models.IntegerField(blank=True, null=True)
 
     class Meta:
         managed = False
