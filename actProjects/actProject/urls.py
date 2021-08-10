@@ -16,7 +16,7 @@ urlpatterns = [
     path('api/auth/signup', App.views.signup, name='signup'),  # 회원가입
     path('api/auth/find-password', App.views.password, name='password'),  # 비밀번호찾기
     path('api/plays/:id/star', App.views.star, name='star'),  # 별점
-    path('api/plays/<int:id>/liked', App.views.playlike, name='playlike'),  # 연극찜하기
+    path('api/plays/<int:id>/like', App.views.playlike, name='playlike'),  # 연극찜하기
     path('api/troupes/:id/like', App.views.troupelike, name='troupelike'),  # 극단찜하기
     path('api/plays/:id/comment', App.views.comment, name='comment'),  # 커멘트달기
 ]

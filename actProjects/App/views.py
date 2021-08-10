@@ -176,16 +176,16 @@ def playlike(request, id):
     input = json.loads(request.body)
     play = models.Play.objects.get(id=id)
     user = models.User.objects.get(id=input['user'])
-
-    check_play_like = models.Like.objects.filter(play=play.id, user=user.id)
+    check_play_like = models.Like.objects.filter(
+        play=play.id, user=user.id)  # 찜 여부 판단
 
     if check_play_like.exists():
         check_play_like.delete()
         return JsonResponse({
             'data': {
                 'play': play.title,
-                'email': play.email,
-                'nickname': play.nickname,
+                'email': user.email,
+                'nickname': user.nickname,
             },
             'message': 'deleted play like'
         }, status=200)
