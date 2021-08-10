@@ -1,5 +1,10 @@
+import json
+
 from django.http import JsonResponse
-from django.shortcuts import render
+from django.shortcuts import render, redirect
+from django.views.decorators.csrf import csrf_exempt
+from django.views.decorators.http import require_http_methods
+
 from . import models
 from datetime import datetime
 import base64
@@ -270,10 +275,49 @@ def playlike(request):
 def troupelike(request):
     return JsonResponse({'request': 'troupelike.html'})
 
+@csrf_exempt
+@require_http_methods(['POST'])
+def star(request, id):
+    # 존재하지 않는 ID인 경우
+    if not models.User.objects.filter(id=id):
+        return JsonResponse({
+            'message': '로그인된 사용자가 아닙니다',
+        }, status=401)
 
-def star(request):
-    return JsonResponse({'request': 'star.html'})
+    user = models.User.objects.get(id=id)
+    user_body = json.loads(request.body)
+    selected_play = models.Play.objects.get(id=user_body['play'])
 
+    # 별점평가 여부 판단
+    check_star = models.Star.objects.filter(user=user, play=selected_play)
+    if check_star.exists():
+        checked_star = models.Star.objects.get(user=user, play=selected_play)
+        return JsonResponse({
+            'data': {
+                'context': {
+                    'star_checked': checked_star.star
+                }
+            },
+            'message': 'star already checked'
+        }, status=200)
+    else:
+        if user_body['star'] < 1:
+            return JsonResponse({
+                'message': '최소 별점보다 별점이 낮습니다',
+            }, status=400)
+        else:
+            new_star = models.Star.objects.create(
+                user=user,
+                star=user_body['star'],
+                play=selected_play
+            )
+            return JsonResponse({
+                'data': {
+                    'user': new_star.user.id,
+                    'star': new_star.star,
+                    'play': new_star.play.id
+                }
+            }, status=200)
 
 def comment(request):
     return JsonResponse({'request': 'comment.html'})
