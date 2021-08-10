@@ -1,7 +1,9 @@
 import json
 
 from django.http import JsonResponse
+
 from django.shortcuts import render, redirect
+
 from django.views.decorators.csrf import csrf_exempt
 from django.views.decorators.http import require_http_methods
 
@@ -319,5 +321,46 @@ def star(request, id):
                 }
             }, status=200)
 
-def comment(request):
-    return JsonResponse({'request': 'comment.html'})
+@csrf_exempt
+@require_http_methods(['POST'])
+def comment(request, id):
+    # 존재하지 않는 ID인 경우
+    if not models.User.objects.filter(id=id):
+        return JsonResponse({
+            'message': '로그인된 사용자가 아닙니다',
+        }, status=401)
+
+    body = json.loads(request.body)
+    comment_user = models.User.objects.get(id=id)
+    comment_play = models.Play.objects.get(id=body['play'])
+
+    # 커멘트 작성 여부 판단
+    check_comment = models.Comment.objects.filter(user=comment_user, play=comment_play)
+    if check_comment.exists():
+        checked_comment = models.Comment.objects.get(user=comment_user, play=comment_play)
+        return JsonResponse({
+            'data': {
+                'context': {
+                    'commented': checked_comment.comment
+                }
+            },
+            'message': 'already commented'
+        }, status=200)
+    else:
+        if len(body['comment']) > 200:
+            return JsonResponse({
+                'message': '글자 수는 200자를 넘을 수 없습니다',
+            }, status=400)
+        else:
+            new_comment = models.Comment.objects.create(
+                user=comment_user,
+                comment=body['comment'],
+                play=comment_play
+            )
+            return JsonResponse({
+                'data': {
+                    'user': new_comment.user.id,
+                    'comment': new_comment.comment,
+                    'play': new_comment.play.id
+                }
+            }, status=200)

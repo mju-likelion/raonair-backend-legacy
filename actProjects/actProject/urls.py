@@ -18,5 +18,5 @@ urlpatterns = [
     path('api/plays/<int:id>/star', App.views.star, name="star"),  # 별점평가
     path('api/plays/:id/liked', App.views.playlike, name="playlike"),  # 연극찜하기
     path('api/troupes/:id/like', App.views.troupelike, name="troupelike"),  # 극단찜하기
-    path('api/plays/:id/comment', App.views.comment, name="comment"),  # 커멘트달기
+    path('api/plays/<int:id>/comment', App.views.comment, name="comment"),  # 커멘트달기
 ]
