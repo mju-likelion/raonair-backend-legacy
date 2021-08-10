@@ -180,11 +180,14 @@ def playlike(request, id):
     check_play_like = models.Like.objects.filter(play=play.id, user=user.id)
 
     if check_play_like.exists():
-        return JsonResponse({'error': 'already liked'})
+        check_play_like.delete()
+        return JsonResponse({
+            'message': 'deleted play like'
+        })
     else:
         new_play_like = models.Like.objects.create(play=play, user=user)
         return JsonResponse({
-            'request': 'playlike.html'
+            'message': 'add play like'
         })
 
 
