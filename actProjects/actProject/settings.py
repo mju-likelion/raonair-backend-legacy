@@ -10,11 +10,10 @@ DEBUG = True
 ALLOWED_HOSTS = []
 
 
-
 # Application definition
 
 #######################################
-#개발용, cache를 dummy cache로 설정, dummy cache는 아무것도 하지 않는다
+# 개발용, cache를 dummy cache로 설정, dummy cache는 아무것도 하지 않는다
 CACHES = {
     'default': {
         'BACKEND': 'django.core.cache.backends.dummy.DummyCache',
@@ -123,3 +122,7 @@ CACHES = {
         'BACKEND': 'django.core.cache.backends.dummy.DummyCache',
     }
 }
+
+# CORS setting
+CORS_ORIGIN_WHITELIST = ['http://127.0.0.1:8000', ' http://localhost:3000']
+CORS_ALLOW_CREDENTIALS = True
