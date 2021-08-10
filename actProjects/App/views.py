@@ -1,4 +1,5 @@
 import json
+import re
 
 from django.http import JsonResponse
 
@@ -283,18 +284,21 @@ def signup(request):
 def password(request):
     body = json.loads(request.body)
     user_email = body['email']
-
-    if not models.User.objects.get(email=user_email):
+    if not re.match(r'\b[\w.-]+@[\w.-]+.\w{2,4}\b', user_email):
         return JsonResponse({
-            'message': '해당 이메일로 된 아이디가 존재하지 않습니다',
-        }, status=403)
+            "error": "올바른 이메일 형식이 아닙니다."
+        }, status=400)
     else:
-        return JsonResponse({
-            'data': {
-                'message': "비밀번호 초기화 메일이 발송되었습니다"
-            }
-        })
-
+        if not models.User.objects.filter(email=user_email):
+            return JsonResponse({
+                'error': '해당 이메일로 된 아이디가 존재하지 않습니다',
+            }, status=403)
+        else:
+            return JsonResponse({
+                'data': {
+                    'message': "비밀번호 초기화 메일이 발송되었습니다"
+                }
+            }, status=200)
 
 def playlike(request):
     return JsonResponse({'request': 'playlike.html'})
