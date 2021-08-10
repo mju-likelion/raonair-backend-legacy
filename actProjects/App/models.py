@@ -7,7 +7,6 @@
 # Feel free to rename the models, but don't rename db_table values or field names.
 from django.db import models
 
-
 class AuthGroup(models.Model):
     name = models.CharField(unique=True, max_length=150)
 
@@ -157,6 +156,7 @@ class Play(models.Model):
     poster = models.CharField(unique=True, max_length=255)
     start_date = models.DateField()
     end_date = models.DateField(blank=True, null=True)
+
     troupe = models.ForeignKey('Troupe', models.DO_NOTHING, db_column='troupe')
     theater = models.ForeignKey(
         'Theater', models.DO_NOTHING, db_column='theater')
@@ -220,6 +220,7 @@ class Theater(models.Model):
         max_digits=10, decimal_places=8, blank=True, null=True)
     seat_cnt = models.IntegerField(blank=True, null=True)
     logo_url = models.CharField(max_length=255, blank=True, null=True)
+
 
     class Meta:
         managed = False
