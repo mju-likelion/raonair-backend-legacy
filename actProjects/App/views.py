@@ -10,10 +10,13 @@ from datetime import datetime
 import base64
 import os
 
+
 def home(request):
     return JsonResponse({'request': 'home.html'})
 
 # Create your views here.
+
+
 def search_troupe_detail(request):
     query = request.GET.get('query', '')
     type = request.GET.get('type', '')
@@ -34,10 +37,11 @@ def search_troupe_detail(request):
 
     if request.GET.get('start', ''):
         start = int(request.GET.get('start', ''))
-        next = request.get_full_path().split('&start=')[0] + '&start=' + str(start+10)
+        next = request.get_full_path().split(
+            '&start=')[0] + '&start=' + str(start+10)
     else:
         start = 0
-        next = request.get_full_path() + "&start=11"
+        next = request.get_full_path() + '&start=11'
 
     for i in troupes:
         new_troupe = ({
@@ -58,6 +62,7 @@ def search_troupe_detail(request):
             'search_results': search_list[start:start+10]
         }
     })
+
 
 def search_play(request):
     keyword = request.GET.get('query', '')
@@ -246,6 +251,7 @@ def search_detail(request, type):
 def troupe(request):
     return JsonResponse({'request': 'listpage.html'})
 
+
 def play(request):
     return JsonResponse({'request': 'play.html'})
 
@@ -315,6 +321,3 @@ def star(request, id):
 
 def comment(request):
     return JsonResponse({'request': 'comment.html'})
-
-def search_troupe(request):
-    return JsonResponse({'request': 'search_troupe.html'})
