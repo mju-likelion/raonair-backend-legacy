@@ -82,21 +82,7 @@ def search_play(request):
 
 
 def troupe_options(request):
-    type_list = ['normal', 'student']
-    troupe_type = []
-
-    for i in type_list:
-        if i == 'normal':
-            key = 'normal'
-            value = '일반'
-        else:
-            key = 'studnet'
-            value = '학생'
-
-        troupe_type.append({
-            'key': key,
-            'value': value,
-        })
+    troupe_type = {'noraml': '일반', 'student': '학생'}
 
     return JsonResponse({
         'data': {
