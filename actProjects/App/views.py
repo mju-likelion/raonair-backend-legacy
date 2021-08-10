@@ -1,18 +1,69 @@
 import json
 
 from django.http import JsonResponse
-from django.shortcuts import render
+
+from django.shortcuts import render, redirect
+
 from django.views.decorators.csrf import csrf_exempt
 from django.views.decorators.http import require_http_methods
 
 from . import models
 from datetime import datetime
-
 import base64
 import os
-  
+
+
 def home(request):
     return JsonResponse({'request': 'home.html'})
+
+# Create your views here.
+
+
+def search_troupe_detail(request):
+    query = request.GET.get('query', '')
+    type = request.GET.get('type', '')
+
+    filter_query = models.Troupe.objects.filter(name__icontains=query)
+    troupes = filter_query.filter(type__icontains=type)
+
+    search_list = []
+
+    if len(troupes) == 0:
+        return JsonResponse({
+            'error': {
+                'query': query,
+                'type': type,
+                'error_message': '검색결과가 없습니다'
+            }
+        })
+
+    if request.GET.get('start', ''):
+        start = int(request.GET.get('start', ''))
+        next = request.get_full_path().split(
+            '&start=')[0] + '&start=' + str(start+10)
+    else:
+        start = 0
+        next = request.get_full_path() + '&start=11'
+
+    for i in troupes:
+        new_troupe = ({
+            'id': i.id,
+            'name': i.name,
+            'type': i.type,
+            'logo': i.logo,
+        })
+        search_list.append(new_troupe)
+
+    return JsonResponse({
+        'links': {
+            'next': next,
+        },
+        'data': {
+            'query': query,
+            'type': type,
+            'search_results': search_list[start:start+10]
+        }
+    })
 
 
 def search_play(request):
@@ -84,12 +135,63 @@ def search_play(request):
         }
     })
 
-# 검색 결과 페이지, 더보기 클릭 (GET /api/search/<str:type>)
-def search_detail(request, type):
-    keyword = request.GET.get("query", "")
-    loc = request.GET.get("location", "")
 
-    filter_keyword = models.Play.objects.filter(title__icontains=keyword)  # 검색어에 포함되는 play를 받아옴
+def search_troupe(request):
+    query = request.GET.get('query', '')
+    type = request.GET.get('type', '')
+
+    filter_query = models.Troupe.objects.filter(name__icontains=query)
+    troupes = filter_query.filter(type__icontains=type)
+
+    if len(troupes) == 0:
+        return JsonResponse({
+            'error': {
+                'query': query,
+                'type': type,
+                'error_message': '검색 결과가 없습니다'
+            }
+        })
+    troupe_all = []  # 타입 선택 안했을 때
+    troupe_normal = []  # 일반 극단
+    troupe_student = []  # 학생 극단
+    for i in troupes:
+        new_troupe = ({
+            'id': i.id,
+            'name': i.name,
+            'type': i.type,
+            'logo': i.logo,
+        })
+
+        # type을 선택 안하면 타입 구분 없이 출력
+        if type == '':
+            troupe_all.append(new_troupe)
+        else:
+            if i.type == 'normal':
+                troupe_normal.append(new_troupe)
+            elif i.type == 'student':
+                troupe_student.append(new_troupe)
+
+    return JsonResponse({
+        'data': {
+            'query': query,
+            'type': type,
+            'searched_results': {
+                'troupe_all': troupe_all[0:12],
+                'troupe_normal': troupe_normal[0:6],
+                'troupe_student': troupe_student[0:6],
+            }
+        }
+    })
+
+# 검색 결과 페이지, 더보기 클릭 (GET /api/search/<str:type>)
+
+
+def search_detail(request, type):
+    keyword = request.GET.get('query', '')
+    loc = request.GET.get('location', '')
+
+    filter_keyword = models.Play.objects.filter(
+        title__icontains=keyword)  # 검색어에 포함되는 play를 받아옴
     plays = filter_keyword.filter(theater__location__icontains=loc)
 
     search_list = []  # 검색 결과들
@@ -97,22 +199,22 @@ def search_detail(request, type):
     # 검색 결과가 0 일 때
     if len(plays) == 0:
         return JsonResponse({
-            "error": {
-                "query": keyword,
-                "type": type,
-                "error_message": "검색 결과가 없습니다",
+            'error': {
+                'query': keyword,
+                'type': type,
+                'error_message': '검색 결과가 없습니다',
             }
         })
 
     # start 데이터가 있는 경우와 없는 경우
-    if request.GET.get("start", ""):
-        start = int(request.GET.get("start", ""))
-        next = request.get_full_path().split("&start=")[0] \
-                + "&start=" \
-                + str(start + 10)
+    if request.GET.get('start', ''):
+        start = int(request.GET.get('start', ''))
+        next = request.get_full_path().split('&start=')[0] \
+            + '&start=' \
+            + str(start + 10)
     else:
         start = 0
-        next = request.get_full_path() + "&start=11"
+        next = request.get_full_path() + '&start=11'
 
     for i in plays:
         stars = models.Star.objects.filter(play=i.id)
@@ -125,27 +227,28 @@ def search_detail(request, type):
         star_avg = star_sum / len(stars) / 2
 
         new_play = ({
-            "title": i.title,
-            "poster": i.poster,
-            "start_date": i.start_date,
-            "end_date": i.end_date,
+            'title': i.title,
+            'poster': i.poster,
+            'start_date': i.start_date,
+            'end_date': i.end_date,
             'star_avg': star_avg,
-            "likes": likes,
-            "location": i.theater.location,
+            'likes': likes,
+            'location': i.theater.location,
         })
         search_list.append(new_play)
 
     # 검색결과가 0이 아닐 때
     return JsonResponse({
-        "links": {
-            "next": next
+        'links': {
+            'next': next
         },
-        "data": {
-            "query": keyword,
-            "type": type,
-            "search_results": search_list[start:start+10],
+        'data': {
+            'query': keyword,
+            'type': type,
+            'search_results': search_list[start:start+10],
         },
     })
+
 
 def troupe(request):
     return JsonResponse({'request': 'listpage.html'})
@@ -174,10 +277,49 @@ def playlike(request):
 def troupelike(request):
     return JsonResponse({'request': 'troupelike.html'})
 
+@csrf_exempt
+@require_http_methods(['POST'])
+def star(request, id):
+    # 존재하지 않는 ID인 경우
+    if not models.User.objects.filter(id=id):
+        return JsonResponse({
+            'message': '로그인된 사용자가 아닙니다',
+        }, status=401)
 
-def star(request):
-    return JsonResponse({'request': 'star.html'})
+    user = models.User.objects.get(id=id)
+    user_body = json.loads(request.body)
+    selected_play = models.Play.objects.get(id=user_body['play'])
 
+    # 별점평가 여부 판단
+    check_star = models.Star.objects.filter(user=user, play=selected_play)
+    if check_star.exists():
+        checked_star = models.Star.objects.get(user=user, play=selected_play)
+        return JsonResponse({
+            'data': {
+                'context': {
+                    'star_checked': checked_star.star
+                }
+            },
+            'message': 'star already checked'
+        }, status=200)
+    else:
+        if user_body['star'] < 1:
+            return JsonResponse({
+                'message': '최소 별점보다 별점이 낮습니다',
+            }, status=400)
+        else:
+            new_star = models.Star.objects.create(
+                user=user,
+                star=user_body['star'],
+                play=selected_play
+            )
+            return JsonResponse({
+                'data': {
+                    'user': new_star.user.id,
+                    'star': new_star.star,
+                    'play': new_star.play.id
+                }
+            }, status=200)
 
 @csrf_exempt
 @require_http_methods(['POST'])
