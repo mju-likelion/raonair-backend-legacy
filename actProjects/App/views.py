@@ -1,11 +1,15 @@
+import json
 from django.http import JsonResponse
 from django.shortcuts import render
 from . import models
 from datetime import datetime
+from django.views.decorators.csrf import csrf_exempt
+from django.views.decorators.http import require_http_methods
 
 import base64
 import os
-  
+
+
 def home(request):
     return JsonResponse({'request': 'home.html'})
 
@@ -80,11 +84,14 @@ def search_play(request):
     })
 
 # 검색 결과 페이지, 더보기 클릭 (GET /api/search/<str:type>)
-def search_detail(request, type):
-    keyword = request.GET.get("query", "")
-    loc = request.GET.get("location", "")
 
-    filter_keyword = models.Play.objects.filter(title__icontains=keyword)  # 검색어에 포함되는 play를 받아옴
+
+def search_detail(request, type):
+    keyword = request.GET.get('query', '')
+    loc = request.GET.get('location', '')
+
+    filter_keyword = models.Play.objects.filter(
+        title__icontains=keyword)  # 검색어에 포함되는 play를 받아옴
     plays = filter_keyword.filter(theater__location__icontains=loc)
 
     search_list = []  # 검색 결과들
@@ -92,22 +99,22 @@ def search_detail(request, type):
     # 검색 결과가 0 일 때
     if len(plays) == 0:
         return JsonResponse({
-            "error": {
-                "query": keyword,
-                "type": type,
-                "error_message": "검색 결과가 없습니다",
+            'error': {
+                'query': keyword,
+                'type': type,
+                'error_message': '검색 결과가 없습니다',
             }
         })
 
     # start 데이터가 있는 경우와 없는 경우
-    if request.GET.get("start", ""):
-        start = int(request.GET.get("start", ""))
-        next = request.get_full_path().split("&start=")[0] \
-                + "&start=" \
-                + str(start + 10)
+    if request.GET.get('start', ''):
+        start = int(request.GET.get('start', ''))
+        next = request.get_full_path().split('&start=')[0] \
+            + '&start=' \
+            + str(start + 10)
     else:
         start = 0
-        next = request.get_full_path() + "&start=11"
+        next = request.get_full_path() + '&start=11'
 
     for i in plays:
         stars = models.Star.objects.filter(play=i.id)
@@ -120,27 +127,28 @@ def search_detail(request, type):
         star_avg = star_sum / len(stars) / 2
 
         new_play = ({
-            "title": i.title,
-            "poster": i.poster,
-            "start_date": i.start_date,
-            "end_date": i.end_date,
+            'title': i.title,
+            'poster': i.poster,
+            'start_date': i.start_date,
+            'end_date': i.end_date,
             'star_avg': star_avg,
-            "likes": likes,
-            "location": i.theater.location,
+            'likes': likes,
+            'location': i.theater.location,
         })
         search_list.append(new_play)
 
     # 검색결과가 0이 아닐 때
     return JsonResponse({
-        "links": {
-            "next": next
+        'links': {
+            'next': next
         },
-        "data": {
-            "query": keyword,
-            "type": type,
-            "search_results": search_list[start:start+10],
+        'data': {
+            'query': keyword,
+            'type': type,
+            'search_results': search_list[start:start+10],
         },
     })
+
 
 def troupe(request):
     return JsonResponse({'request': 'listpage.html'})
@@ -162,8 +170,22 @@ def password(request):
     return JsonResponse({'request': 'find-password.html'})
 
 
-def playlike(request):
-    return JsonResponse({'request': 'playlike.html'})
+@csrf_exempt
+@require_http_methods(['POST'])
+def playlike(request, id):
+    input = json.loads(request.body)
+    play = models.Play.objects.get(id=id)
+    user = models.User.objects.get(id=input['user'])
+
+    check_play_like = models.Like.objects.filter(play=play.id, user=user.id)
+
+    if check_play_like.exists():
+        return JsonResponse({'error': 'already liked'})
+    else:
+        new_play_like = models.Like.objects.create(play=play, user=user)
+        return JsonResponse({
+            'request': 'playlike.html'
+        })
 
 
 def troupelike(request):
