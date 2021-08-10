@@ -1,7 +1,7 @@
 import os
 current_dir = os.path.dirname(__file__)
 
-models = open(current_dir + "/App/models.py", "r+")
+models = open(current_dir + '/App/models.py', 'r+')
 lines = models.readlines()
 tobe_delete_lines = []
 
