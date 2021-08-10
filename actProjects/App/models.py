@@ -155,11 +155,8 @@ class Person(models.Model):
 class Play(models.Model):
     title = models.CharField(max_length=255)
     poster = models.CharField(unique=True, max_length=255)
-    # Field name made lowercase.
-    start_date = models.DateField(db_column='start_DATE')
-    # Field name made lowercase.
-    end_date = models.DateField(db_column='end_DATE', blank=True, null=True)
-    running_time = models.IntegerField()
+    start_date = models.DateField()
+    end_date = models.DateField(blank=True, null=True)
     troupe = models.ForeignKey('Troupe', models.DO_NOTHING, db_column='troupe')
     theater = models.ForeignKey(
         'Theater', models.DO_NOTHING, db_column='theater')
@@ -192,9 +189,9 @@ class Staff(models.Model):
 
 
 class Star(models.Model):
-    play = models.ForeignKey(Play, models.DO_NOTHING, db_column='play')
-    user = models.ForeignKey('User', models.DO_NOTHING, db_column='user')
     star = models.DecimalField(max_digits=2, decimal_places=0)
+    user = models.ForeignKey('User', models.DO_NOTHING, db_column='user')
+    play = models.ForeignKey(Play, models.DO_NOTHING, db_column='play')
 
     class Meta:
         managed = False
@@ -214,12 +211,15 @@ class Team(models.Model):
 
 class Theater(models.Model):
     name = models.CharField(unique=True, max_length=255)
+    url = models.CharField(unique=True, max_length=255, blank=True, null=True)
     location = models.CharField(max_length=14, blank=True, null=True)
     address = models.CharField(max_length=255)
     longitude = models.DecimalField(
         max_digits=11, decimal_places=8, blank=True, null=True)
     latitude = models.DecimalField(
         max_digits=10, decimal_places=8, blank=True, null=True)
+    seat_cnt = models.IntegerField(blank=True, null=True)
+    logo_url = models.CharField(max_length=255, blank=True, null=True)
 
     class Meta:
         managed = False
@@ -251,8 +251,8 @@ class User(models.Model):
     email = models.CharField(unique=True, max_length=255)
     password = models.CharField(max_length=255)
     name = models.CharField(max_length=10)
-    nickname = models.CharField(unique=True, max_length=10)
-    email_confirmed = models.IntegerField()
+    nickname = models.CharField(unique=True, max_length=11)
+    email_confirmed = models.IntegerField(blank=True, null=True)
 
     class Meta:
         managed = False
