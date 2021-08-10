@@ -16,6 +16,7 @@ import os
 def home(request):
     return JsonResponse({'request': 'home.html'})
 
+
 # Create your views here.
 
 
@@ -40,7 +41,7 @@ def search_troupe_detail(request):
     if request.GET.get('start', ''):
         start = int(request.GET.get('start', ''))
         next = request.get_full_path().split(
-            '&start=')[0] + '&start=' + str(start+10)
+            '&start=')[0] + '&start=' + str(start + 10)
     else:
         start = 0
         next = request.get_full_path() + '&start=11'
@@ -61,7 +62,7 @@ def search_troupe_detail(request):
         'data': {
             'query': query,
             'type': type,
-            'search_results': search_list[start:start+10]
+            'search_results': search_list[start:start + 10]
         }
     })
 
@@ -183,6 +184,7 @@ def search_troupe(request):
         }
     })
 
+
 # 검색 결과 페이지, 더보기 클릭 (GET /api/search/<str:type>)
 
 
@@ -210,8 +212,8 @@ def search_detail(request, type):
     if request.GET.get('start', ''):
         start = int(request.GET.get('start', ''))
         next = request.get_full_path().split('&start=')[0] \
-            + '&start=' \
-            + str(start + 10)
+               + '&start=' \
+               + str(start + 10)
     else:
         start = 0
         next = request.get_full_path() + '&start=11'
@@ -245,7 +247,7 @@ def search_detail(request, type):
         'data': {
             'query': keyword,
             'type': type,
-            'search_results': search_list[start:start+10],
+            'search_results': search_list[start:start + 10],
         },
     })
 
@@ -266,15 +268,22 @@ def signup(request):
     return JsonResponse({'request': 'signup.html'})
 
 
+@csrf_exempt
+@require_http_methods(['POST'])
 def password(request):
     body = json.loads(request.body)
-    if not models.User.objects.filter(email=body['email']):
-        return JsonResponse({
-            'message': '아이디가 이메일 형식이 아닙니다.',
-        }, status=400)
+    user_email = body['email']
 
-    user = models.User.objects.get()
-    return JsonResponse({'request': 'find-password.html'})
+    if not models.User.objects.get(email=user_email):
+        return JsonResponse({
+            'message': '해당 이메일로 된 아이디가 존재하지 않습니다',
+        }, status=403)
+    else:
+        return JsonResponse({
+            'data': {
+                'message': "비밀번호 초기화 메일이 발송되었습니다"
+            }
+        })
 
 
 def playlike(request):
@@ -283,6 +292,7 @@ def playlike(request):
 
 def troupelike(request):
     return JsonResponse({'request': 'troupelike.html'})
+
 
 @csrf_exempt
 @require_http_methods(['POST'])
@@ -327,6 +337,7 @@ def star(request, id):
                     'play': new_star.play.id
                 }
             }, status=200)
+
 
 @csrf_exempt
 @require_http_methods(['POST'])
