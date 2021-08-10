@@ -180,7 +180,7 @@ def star(request):
 
 
 @csrf_exempt
-#@require_http_methods(['POST'])
+@require_http_methods(['POST'])
 def comment(request, id):
     # 존재하지 않는 ID인 경우
     if not models.User.objects.filter(id=id):
