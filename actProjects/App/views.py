@@ -267,6 +267,13 @@ def signup(request):
 
 
 def password(request):
+    body = json.loads(request.body)
+    if not models.User.objects.filter(email=body['email']):
+        return JsonResponse({
+            'message': '아이디가 이메일 형식이 아닙니다.',
+        }, status=400)
+
+    user = models.User.objects.get()
     return JsonResponse({'request': 'find-password.html'})
 
 
