@@ -219,10 +219,6 @@ def comment(request, id):
                 'data': {
                     'user': new_comment.user.id,
                     'comment': new_comment.comment,
-                    'play': new_comment.play.id,
-                    'context':{
-                        'commented': new_comment.comment
-                    }
-                },
-                'message': 'success'
+                    'play': new_comment.play.id
+                }
             }, status=200)
