@@ -214,12 +214,8 @@ def star(request, id):
                 'data': {
                     'user': new_star.user.id,
                     'star': new_star.star,
-                    'play': new_star.play.id,
-                    'context': {
-                        'star_checked': new_star.star
-                    }
-                },
-                'message': 'success'
+                    'play': new_star.play.id
+                }
             }, status=200)
 
 def comment(request):
