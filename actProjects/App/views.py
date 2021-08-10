@@ -263,8 +263,8 @@ def playlike(request):
 @require_http_methods(['POST'])  # 포스트 방식 확인
 def troupelike(request, id):
     input = json.loads(request.body)  # body 데이터 받아옴
-    troupe_id = models.Troupe.objects.get(id=id)
-    user_id = models.User.objects.get(id=input['user'])  # 로그인 구현 후 바꿔줘야함
+    troupe = models.Troupe.objects.get(id=id)
+    user = models.User.objects.get(id=input['user'])  # 로그인 구현 후 바꿔줘야함
 
     # 찜 여부 판단, 로그인 구현 후 수정 필요
     check_troupe = models.TroupeLike.objects.filter(
@@ -274,6 +274,9 @@ def troupelike(request, id):
         troupe_like = check_troupe.delete()  # check_troupe에 해당하는 튜플 삭제
         return JsonResponse({
             'data': {
+                'troupe': troupe.name,
+                'email': user.email,
+                'nickname': user.nickname,
                 'context': {
                     'like_checked': check_troupe.exists()
                 }
@@ -282,14 +285,15 @@ def troupelike(request, id):
         }, status=200)
     else:
         troupe_like = models.TroupeLike.objects.create(
-            troupe=troupe_id,
-            user=user_id
+            troupe=troupe,
+            user=user
         )
         return JsonResponse({
             'data': {
                 'id': troupe_like.id,
                 'troupe': troupe_like.troupe.name,
-                'user_email': troupe_like.user.email,
+                'email': troupe_like.user.email,
+                'nickname': troupe_like.user.nickname,
                 'context': {
                     'like_checked': check_troupe.exists()
                 }
