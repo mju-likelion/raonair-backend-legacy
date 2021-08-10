@@ -177,13 +177,13 @@ def troupelike(request):
 @csrf_exempt
 #@require_http_methods(['POST'])
 def star(request, id):
-    user = models.User.objects.get(id=id)
-
-    if not user:
+    # 존재하지 않는 ID인 경우
+    if not models.User.objects.filter(id=id):
         return JsonResponse({
             'message': '로그인된 사용자가 아닙니다',
         }, status=401)
 
+    user = models.User.objects.get(id=id)
     user_body = json.loads(request.body)
     selected_play = models.Play.objects.get(id=user_body['play'])
 
