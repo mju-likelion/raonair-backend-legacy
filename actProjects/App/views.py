@@ -252,6 +252,16 @@ def search_detail(request, type):
     })
 
 
+def troupe_options(request):
+    troupe_type = {'noraml': '일반', 'student': '학생'}
+
+    return JsonResponse({
+        'data': {
+            'troupe_option': troupe_type
+        }
+    })
+
+
 def troupe(request):
     return JsonResponse({'request': 'listpage.html'})
 
@@ -353,9 +363,11 @@ def comment(request, id):
     comment_play = models.Play.objects.get(id=body['play'])
 
     # 커멘트 작성 여부 판단
-    check_comment = models.Comment.objects.filter(user=comment_user, play=comment_play)
+    check_comment = models.Comment.objects.filter(
+        user=comment_user, play=comment_play)
     if check_comment.exists():
-        checked_comment = models.Comment.objects.get(user=comment_user, play=comment_play)
+        checked_comment = models.Comment.objects.get(
+            user=comment_user, play=comment_play)
         return JsonResponse({
             'data': {
                 'context': {
