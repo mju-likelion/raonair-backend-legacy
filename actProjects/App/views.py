@@ -293,40 +293,54 @@ def signin(request):
 
     requsestbody = json.loads(request.body)
 
-    # 400_BAD_REQUEST
-    # if re.match(r"^[a-zA-Z0-9+-_.]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$'", input['email']) == False:
-    #     return JsonResponse({
-    #         "error": {
-    #             "message": "아이디가 이메일 형식이 아닙니다."
-    #         }
-    #     }, status=400)
+    # 400_BAD_REQUEST // 아이디 형식이 틀린 경우
+    if not re.match(r'^([0-9a-zA-Z_\.-]+)@([0-9a-zA-Z_-]+)(\.[0-9a-zA-Z_-]+){1,2}$', requsestbody['email']):
+        return JsonResponse({
+            "error": {
+                "message": "올바른 이메일 형식이 아닙니다."
+            }
+        }, status=400)
 
     # 200_OK // 입력받은 아이디(사용자)가 DB에 있는 경우
 
-    if models.User.objects.filter(email=requsestbody['email']):
+    # if models.User.objects.filter(email=requsestbody['email']):
 
-        # 아이디는 맞는데 비밀번호가 틀린 경우 :
-        if models.User.objects.filter(password=requsestbody['password']):
-            return JsonResponse({
-                "error": "비밀번호가 틀렸습니다."
-            }, status=400)
+    #     # 아이디는 맞는데 비밀번호가 틀린 경우 :
+    #     if not models.User.objects.filter(password=requsestbody['password']):
+    #         return JsonResponse({
+    #             "error": "비밀번호가 틀렸습니다."
+    #         }, status=400)
 
-        # 200_OK // 로그인 완료
-        # 사용자 닉네임 ****************
-        else:
-            signinuser = models.User.objects.filter(email=requsestbody['email'])
-            return JsonResponse({
-                "message": {
-                    signinuser.nickname,
-                    "님 안녕하세요!"
-                }
-            }, status=200)
+    #     # 200_OK // 로그인 완료
+    #     # 사용자 닉네임 ** **************
+    #     else:
+    #         # signinuser = models.User.objects.filter(email=requsestbody['email'])
+    #         return JsonResponse({
+    #             "message": "님 안녕하세요!"
+    #         }, status=200)
 
-     # 401_Unauthorized // # 입력받은 아이디(사용자)가 DB에 없는 경우 -> 회원가입 ??
-    else:
+    #  # 401_Unauthorized // # 입력받은 아이디(사용자)가 DB에 없는 경우 -> 회원가입 ??
+    # else:
+    #     return JsonResponse({
+    #         "error": "존재하지않는 아이디입니다."
+    #     }, status=401)
+
+    if not models.User.objects.filter(email=requsestbody['email']):
         return JsonResponse({
             "error": "존재하지않는 아이디입니다."
+        }, status=403)
+
+    if not models.User.objects.filter(password=requsestbody['password']):
+        return JsonResponse({
+            "error": "비밀번호가 틀렸습니다."
         }, status=401)
+
+    signinuser = models.User.objects.get(email=requsestbody['email'])
+    return JsonResponse({
+        "message": {
+            "nickname": signinuser.nickname,
+            "messages": "님 안녕하세요!"}
+    }, status=200)
 
 
 def signup(request):
@@ -345,8 +359,8 @@ def troupelike(request):
     return JsonResponse({'request': 'troupelike.html'})
 
 
-@csrf_exempt
-@require_http_methods(['POST'])
+@ csrf_exempt
+@ require_http_methods(['POST'])
 def star(request, id):
     # 존재하지 않는 ID인 경우
     if not models.User.objects.filter(id=id):
@@ -390,8 +404,8 @@ def star(request, id):
             }, status=200)
 
 
-@csrf_exempt
-@require_http_methods(['POST'])
+@ csrf_exempt
+@ require_http_methods(['POST'])
 def comment(request, id):
     # 존재하지 않는 ID인 경우
     if not models.User.objects.filter(id=id):
