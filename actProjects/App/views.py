@@ -19,13 +19,25 @@ import os
 def home(request):
     tody = datetime.strftime(datetime.now(), '%Y-%m-%d')
     all_plays = models.Play.objects.all()
-    # 현재 진행, 소규모, 내가찜한(?)
     month_plays = []
+    ongoing_plays = []
+    small_plays = []
 
     for i in all_plays:
-        start_date = datetime.strftime(i.start_date, '%Y-%m-%d'),
+        start_date = datetime.strftime(i.start_date, '%Y-%m-%d')
         end_date = datetime.strftime(
             i.end_date, '%Y-%m-%d') if (i.end_date) else None
+
+        likes = models.Like.objects.filter(play=i.id).count()
+
+        ratings = models.Star.objects.filter(play=i.id)
+        rating_sum = 0
+        rating_count = ratings.count() if (
+            ratings.count()) else 1  # 별점이 없을 때 0으로 나누는 현상 방지
+        for j in ratings:
+            rating_sum += j.star
+        rating_avg = rating_sum / 2 / rating_count
+
         new_play = ({
             'id': i.id,
             'title': i.title,
@@ -33,14 +45,19 @@ def home(request):
             'start_date': start_date,
             'end_date': end_date,
             'troupe': i.troupe.name,
+            'like_count': likes,
+            'ratings_avg': rating_avg,
         })
-        if tody >= start_date and tody <= end_date:
-            month_plays.append(new_play)
-    # random_plays = random.sample(range(1,all_plays+1),all_plays)
+
+        # 현재 진행, 이달의 공연(랜덤), 소규모, 내가찜한(?)
+        if tody >= start_date and (end_date == None or tody <= end_date):
+            ongoing_plays.append(new_play)
+
+        random_plays = random.sample(range(1, all_plays+1), 5)
 
     return JsonResponse({
         'data': {
-            'month_plays': month_plays,
+            'ongoing_plays': ongoing_plays,
         }
     })
 
@@ -123,13 +140,14 @@ def search_play(request):
         end_date = datetime.strftime(
             i.end_date, '%Y-%m-%d') if (i.end_date) else None
         stars = models.Star.objects.filter(play=i.id)
-        likes = models.Like.objects.filter(play=i.id).count()  # 찜 데이터 아직 없음
+        star_count = stars.count() if (stars.count()) else 1
+        likes = models.Like.objects.filter(play=i.id).count()
 
         # 평균 별점 구하기
         star_sum = 0
         for j in stars:
             star_sum += j.star
-        star_avg = star_sum / len(stars) / 2
+        star_avg = star_sum / star_count / 2
 
         new_play = ({
             'id': i.id,
