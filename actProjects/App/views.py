@@ -6,6 +6,7 @@ from django.views.decorators.http import require_http_methods
 from . import models
 from datetime import datetime
 import re
+import jwt
 
 import base64
 import os
@@ -301,30 +302,6 @@ def signin(request):
             }
         }, status=400)
 
-    # 200_OK // 입력받은 아이디(사용자)가 DB에 있는 경우
-
-    # if models.User.objects.filter(email=requsestbody['email']):
-
-    #     # 아이디는 맞는데 비밀번호가 틀린 경우 :
-    #     if not models.User.objects.filter(password=requsestbody['password']):
-    #         return JsonResponse({
-    #             "error": "비밀번호가 틀렸습니다."
-    #         }, status=400)
-
-    #     # 200_OK // 로그인 완료
-    #     # 사용자 닉네임 ** **************
-    #     else:
-    #         # signinuser = models.User.objects.filter(email=requsestbody['email'])
-    #         return JsonResponse({
-    #             "message": "님 안녕하세요!"
-    #         }, status=200)
-
-    #  # 401_Unauthorized // # 입력받은 아이디(사용자)가 DB에 없는 경우 -> 회원가입 ??
-    # else:
-    #     return JsonResponse({
-    #         "error": "존재하지않는 아이디입니다."
-    #     }, status=401)
-
     if not models.User.objects.filter(email=requsestbody['email']):
         return JsonResponse({
             "error": "존재하지않는 아이디입니다."
@@ -335,12 +312,32 @@ def signin(request):
             "error": "비밀번호가 틀렸습니다."
         }, status=401)
 
+    # jwt encode
     signinuser = models.User.objects.get(email=requsestbody['email'])
+    secret = "raonair"
+    encoded_jwt = jwt.encode({'name': signinuser.name}, secret, algorithm='HS256')
+    print(encoded_jwt)
+
+    # decoded_jwt = jwt.decode(encoded_jwt, 'secret', algorithms=['HS256'])
+    # print(decoded_jwt)
+
+    res = JsonResponse({'success': True})
+    res.set_cookie('encoded_jwt', encoded_jwt)
+
     return JsonResponse({
         "message": {
             "nickname": signinuser.nickname,
             "messages": "님 안녕하세요!"}
     }, status=200)
+
+# 로그아웃
+# @login_decorator
+# def user_logout(request):
+#     # reset the token
+#     reset = ''
+#     res = JsonResponse({'success': True})
+#     res.set_cookie('access_token', reset)
+#     return res
 
 
 def signup(request):
