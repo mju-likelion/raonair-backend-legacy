@@ -19,9 +19,9 @@ import os
 def home(request):
     tody = datetime.strftime(datetime.now(), '%Y-%m-%d')
     all_plays = models.Play.objects.all()
-    month_plays = []
-    ongoing_plays = []
-    small_plays = []
+    month_plays = []  # 이달의 공연(추천)
+    ongoing_plays = []  # 진행 중인 공연
+    indie_plays = []  # 소규모 극단 공연
 
     for i in all_plays:
         start_date = datetime.strftime(i.start_date, '%Y-%m-%d')
@@ -34,6 +34,9 @@ def home(request):
         rating_sum = 0
         rating_count = ratings.count() if (
             ratings.count()) else 1  # 별점이 없을 때 0으로 나누는 현상 방지
+
+        staffs = models.Team.objects.filter(troupe=i.troupe.id).count()
+
         for j in ratings:
             rating_sum += j.star
         rating_avg = rating_sum / 2 / rating_count
@@ -52,16 +55,17 @@ def home(request):
         # 현재 진행, 이달의 공연(랜덤), 소규모, 내가찜한(?)
         if tody >= start_date and (end_date == None or tody <= end_date):
             ongoing_plays.append(new_play)
-
-        random_plays = random.sample(range(1, all_plays+1), 5)
+        # 소규모 극단(10명 이하)
+        if staffs <= 10:
+            indie_plays.append(new_play)
+    # random_plays = random.sample(range(1, all_plays+1), 5)
 
     return JsonResponse({
         'data': {
             'ongoing_plays': ongoing_plays,
+            'indie_plays': indie_plays,
         }
     })
-
-# Create your views here.
 
 
 def search_troupe_detail(request):
