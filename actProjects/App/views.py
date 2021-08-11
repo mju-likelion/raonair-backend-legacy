@@ -278,7 +278,6 @@ def signin(request):
 def signup(request):
     return JsonResponse({'request': 'signup.html'})
 
-
 @csrf_exempt
 @require_http_methods(['POST'])
 def password(request):
@@ -310,13 +309,20 @@ def password(request):
         }
     }, status=200)
 
+'''
+@csrf_exempt
+@require_http_methods(['POST'])
+def find_password(request):
+    return JsonResponse({
+        'request': 'find_password.html'
+    })
+'''
+
 def playlike(request):
     return JsonResponse({'request': 'playlike.html'})
 
-
 def troupelike(request):
     return JsonResponse({'request': 'troupelike.html'})
-
 
 @csrf_exempt
 @require_http_methods(['POST'])
