@@ -11,7 +11,7 @@ local_settings.py
 db.sqlite3
 db.sqlite3-journal
 media
-
+.DS_store
 raon_venv
 actVenv
 my_settings.py
@@ -158,3 +158,6 @@ cython_debug/
 
 # Jetbrains IDE
 .idea/
+
+# Docker
+docker.env.list

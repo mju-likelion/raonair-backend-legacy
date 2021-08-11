@@ -95,12 +95,20 @@ class DjangoAdminLog(models.Model):
     object_repr = models.CharField(max_length=200)
     action_flag = models.PositiveSmallIntegerField()
     change_message = models.TextField()
-    content_type = models.ForeignKey('DjangoContentType', models.DO_NOTHING, blank=True, null=True)
-    user = models.ForeignKey(AuthUser, models.DO_NOTHING)
 
-    class Meta:
-        managed = False
-        db_table = 'django_admin_log'
+
+<< << << < HEAD
+content_type = models.ForeignKey('DjangoContentType', models.DO_NOTHING, blank=True, null=True)
+== == == =
+content_type = models.ForeignKey(
+    'DjangoContentType', models.DO_NOTHING, blank=True, null=True)
+>>>>>> > develop
+user = models.ForeignKey(AuthUser, models.DO_NOTHING)
+
+
+class Meta:
+    managed = False
+    db_table = 'django_admin_log'
 
 
 class DjangoContentType(models.Model):
@@ -147,13 +155,21 @@ class Like(models.Model):
 
 class Person(models.Model):
     name = models.CharField(max_length=255)
-    photo = models.CharField(unique=True, max_length=255, blank=True, null=True)
-    created_at = models.DateTimeField()
-    updated_at = models.DateTimeField()
 
-    class Meta:
-        managed = False
-        db_table = 'person'
+
+<< << << < HEAD
+photo = models.CharField(unique=True, max_length=255, blank=True, null=True)
+created_at = models.DateTimeField()
+updated_at = models.DateTimeField()
+== == == =
+photo = models.CharField(
+    unique=True, max_length=255, blank=True, null=True)
+>>>>>> > develop
+
+
+class Meta:
+    managed = False
+    db_table = 'person'
 
 
 class Play(models.Model):
@@ -161,57 +177,104 @@ class Play(models.Model):
     poster = models.CharField(unique=True, max_length=255)
     start_date = models.DateField()
     end_date = models.DateField(blank=True, null=True)
-    troupe = models.ForeignKey('Troupe', models.DO_NOTHING, db_column='troupe')
-    theater = models.ForeignKey('Theater', models.DO_NOTHING, db_column='theater')
-    yes24_external_link = models.CharField(unique=True, max_length=255, blank=True, null=True)
-    interpark_external_link = models.CharField(unique=True, max_length=255, blank=True, null=True)
-    # Field name made lowercase.
-    playdb_external_link = models.CharField(db_column='playDB_external_link',
-                                            unique=True, max_length=255, blank=True, null=True)
-    # Field name made lowercase.
-    culturegov_external_link = models.CharField(
-        db_column='cultureGov_external_link', unique=True, max_length=255, blank=True, null=True)
-    created_at = models.DateTimeField()
-    updated_at = models.DateTimeField()
 
-    class Meta:
-        managed = False
-        db_table = 'play'
+
+<< << << < HEAD
+troupe = models.ForeignKey('Troupe', models.DO_NOTHING, db_column='troupe')
+theater = models.ForeignKey('Theater', models.DO_NOTHING, db_column='theater')
+yes24_external_link = models.CharField(unique=True, max_length=255, blank=True, null=True)
+interpark_external_link = models.CharField(unique=True, max_length=255, blank=True, null=True)
+# Field name made lowercase.
+playdb_external_link = models.CharField(db_column='playDB_external_link',
+                                        unique=True, max_length=255, blank=True, null=True)
+# Field name made lowercase.
+culturegov_external_link = models.CharField(
+    db_column='cultureGov_external_link', unique=True, max_length=255, blank=True, null=True)
+created_at = models.DateTimeField()
+updated_at = models.DateTimeField()
+== == == =
+
+troupe = models.ForeignKey('Troupe', models.DO_NOTHING, db_column='troupe')
+theater = models.ForeignKey(
+    'Theater', models.DO_NOTHING, db_column='theater')
+yes24_external_link = models.CharField(
+    unique=True, max_length=255, blank=True, null=True)
+interpark_external_link = models.CharField(
+    unique=True, max_length=255, blank=True, null=True)
+# Field name made lowercase.
+playdb_external_link = models.CharField(
+    db_column='playDB_external_link', unique=True, max_length=255, blank=True, null=True)
+# Field name made lowercase.
+culturegov_external_link = models.CharField(
+    db_column='cultureGov_external_link', unique=True, max_length=255, blank=True, null=True)
+>>>>>> > develop
+
+
+class Meta:
+    managed = False
+    db_table = 'play'
 
 
 class Staff(models.Model):
-    person = models.ForeignKey(Person, models.DO_NOTHING, db_column='person', blank=True, null=True)
-    play = models.ForeignKey(Play, models.DO_NOTHING, db_column='play', blank=True, null=True)
-    role = models.CharField(max_length=8)
-    created_at = models.DateTimeField()
-    updated_at = models.DateTimeField()
 
-    class Meta:
-        managed = False
-        db_table = 'staff'
+
+<< << << < HEAD
+person = models.ForeignKey(Person, models.DO_NOTHING, db_column='person', blank=True, null=True)
+play = models.ForeignKey(Play, models.DO_NOTHING, db_column='play', blank=True, null=True)
+role = models.CharField(max_length=8)
+created_at = models.DateTimeField()
+updated_at = models.DateTimeField()
+== == == =
+person = models.ForeignKey(
+    Person, models.DO_NOTHING, db_column='person', blank=True, null=True)
+play = models.ForeignKey(Play, models.DO_NOTHING,
+                         db_column='play', blank=True, null=True)
+role = models.CharField(max_length=8)
+>>>>>> > develop
+
+
+class Meta:
+    managed = False
+    db_table = 'staff'
 
 
 class Star(models.Model):
     star = models.DecimalField(max_digits=2, decimal_places=0)
     user = models.ForeignKey('User', models.DO_NOTHING, db_column='user')
     play = models.ForeignKey(Play, models.DO_NOTHING, db_column='play')
-    created_at = models.DateTimeField()
-    updated_at = models.DateTimeField()
 
-    class Meta:
-        managed = False
-        db_table = 'star'
+
+<< << << < HEAD
+created_at = models.DateTimeField()
+updated_at = models.DateTimeField()
+== == == =
+>>>>>> > develop
+
+
+class Meta:
+    managed = False
+    db_table = 'star'
 
 
 class Team(models.Model):
-    person = models.ForeignKey(Person, models.DO_NOTHING, db_column='person', blank=True, null=True)
-    troupe = models.ForeignKey('Troupe', models.DO_NOTHING, db_column='troupe', blank=True, null=True)
-    created_at = models.DateTimeField()
-    updated_at = models.DateTimeField()
 
-    class Meta:
-        managed = False
-        db_table = 'team'
+
+<< << << < HEAD
+person = models.ForeignKey(Person, models.DO_NOTHING, db_column='person', blank=True, null=True)
+troupe = models.ForeignKey('Troupe', models.DO_NOTHING, db_column='troupe', blank=True, null=True)
+created_at = models.DateTimeField()
+updated_at = models.DateTimeField()
+== == == =
+person = models.ForeignKey(
+    Person, models.DO_NOTHING, db_column='person', blank=True, null=True)
+troupe = models.ForeignKey(
+    'Troupe', models.DO_NOTHING, db_column='troupe', blank=True, null=True)
+>>>>>> > develop
+
+
+class Meta:
+    managed = False
+    db_table = 'team'
 
 
 class Theater(models.Model):
@@ -219,16 +282,28 @@ class Theater(models.Model):
     url = models.CharField(unique=True, max_length=255, blank=True, null=True)
     location = models.CharField(max_length=14, blank=True, null=True)
     address = models.CharField(max_length=255)
-    longitude = models.DecimalField(max_digits=11, decimal_places=8, blank=True, null=True)
-    latitude = models.DecimalField(max_digits=10, decimal_places=8, blank=True, null=True)
-    seat_cnt = models.IntegerField(blank=True, null=True)
-    logo_url = models.CharField(max_length=255, blank=True, null=True)
-    created_at = models.DateTimeField()
-    updated_at = models.DateTimeField()
 
-    class Meta:
-        managed = False
-        db_table = 'theater'
+
+<< << << < HEAD
+longitude = models.DecimalField(max_digits=11, decimal_places=8, blank=True, null=True)
+latitude = models.DecimalField(max_digits=10, decimal_places=8, blank=True, null=True)
+seat_cnt = models.IntegerField(blank=True, null=True)
+logo_url = models.CharField(max_length=255, blank=True, null=True)
+created_at = models.DateTimeField()
+updated_at = models.DateTimeField()
+== == == =
+longitude = models.DecimalField(
+    max_digits=11, decimal_places=8, blank=True, null=True)
+latitude = models.DecimalField(
+    max_digits=10, decimal_places=8, blank=True, null=True)
+seat_cnt = models.IntegerField(blank=True, null=True)
+logo_url = models.CharField(max_length=255, blank=True, null=True)
+>>>>>> > develop
+
+
+class Meta:
+    managed = False
+    db_table = 'theater'
 
 
 class Troupe(models.Model):
@@ -244,14 +319,24 @@ class Troupe(models.Model):
 
 
 class TroupeLike(models.Model):
-    troupe = models.ForeignKey(Troupe, models.DO_NOTHING, db_column='troupe', blank=True, null=True)
-    user = models.ForeignKey('User', models.DO_NOTHING, db_column='user', blank=True, null=True)
-    created_at = models.DateTimeField()
-    updated_at = models.DateTimeField()
 
-    class Meta:
-        managed = False
-        db_table = 'troupe_like'
+
+<< << << < HEAD
+troupe = models.ForeignKey(Troupe, models.DO_NOTHING, db_column='troupe', blank=True, null=True)
+user = models.ForeignKey('User', models.DO_NOTHING, db_column='user', blank=True, null=True)
+created_at = models.DateTimeField()
+updated_at = models.DateTimeField()
+== == == =
+troupe = models.ForeignKey(
+    Troupe, models.DO_NOTHING, db_column='troupe', blank=True, null=True)
+user = models.ForeignKey('User', models.DO_NOTHING,
+                         db_column='user', blank=True, null=True)
+>>>>>> > develop
+
+
+class Meta:
+    managed = False
+    db_table = 'troupe_like'
 
 
 class User(models.Model):
@@ -260,9 +345,15 @@ class User(models.Model):
     name = models.CharField(max_length=10)
     nickname = models.CharField(unique=True, max_length=11)
     email_confirmed = models.IntegerField(blank=True, null=True)
-    created_at = models.DateTimeField()
-    updated_at = models.DateTimeField()
 
-    class Meta:
-        managed = False
-        db_table = 'user'
+
+<< << << < HEAD
+created_at = models.DateTimeField()
+updated_at = models.DateTimeField()
+== == == =
+>>>>>> > develop
+
+
+class Meta:
+    managed = False
+    db_table = 'user'
