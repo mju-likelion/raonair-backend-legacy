@@ -356,15 +356,15 @@ def star(request, id):
 @csrf_exempt
 @require_http_methods(['POST'])
 def comment(request, id):
-    # 존재하지 않는 ID인 경우
-    if not models.User.objects.filter(id=id):
+    body = json.loads(request.body)
+
+    if not models.User.objects.filter(id=body['user']):
         return JsonResponse({
             'message': '로그인된 사용자가 아닙니다',
         }, status=401)
 
-    body = json.loads(request.body)
-    comment_user = models.User.objects.get(id=id)
-    comment_play = models.Play.objects.get(id=body['play'])
+    comment_user = models.User.objects.get(id=body['user'])
+    comment_play = models.Play.objects.get(id=id)
 
     # 커멘트 작성 여부 판단
     check_comment = models.Comment.objects.filter(
