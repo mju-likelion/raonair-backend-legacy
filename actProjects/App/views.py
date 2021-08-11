@@ -9,12 +9,40 @@ from django.views.decorators.http import require_http_methods
 
 from . import models
 from datetime import datetime
+
+import random
+
 import base64
 import os
 
 
 def home(request):
-    return JsonResponse({'request': 'home.html'})
+    tody = datetime.strftime(datetime.now(), '%Y-%m-%d')
+    all_plays = models.Play.objects.all()
+    # 현재 진행, 소규모, 내가찜한(?)
+    month_plays = []
+
+    for i in all_plays:
+        start_date = datetime.strftime(i.start_date, '%Y-%m-%d'),
+        end_date = datetime.strftime(
+            i.end_date, '%Y-%m-%d') if (i.end_date) else None
+        new_play = ({
+            'id': i.id,
+            'title': i.title,
+            'poster': i.poster,
+            'start_date': start_date,
+            'end_date': end_date,
+            'troupe': i.troupe.name,
+        })
+        if tody >= start_date and tody <= end_date:
+            month_plays.append(new_play)
+    # random_plays = random.sample(range(1,all_plays+1),all_plays)
+
+    return JsonResponse({
+        'data': {
+            'month_plays': month_plays,
+        }
+    })
 
 # Create your views here.
 
