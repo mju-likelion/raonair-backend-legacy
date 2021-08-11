@@ -164,62 +164,6 @@ def signin(request):
     return JsonResponse({"request": "listpage.html"})
 
 
-# 회원가입
-@ csrf_exempt
-@ require_http_methods(["POST"])
-def signup(request):
-    input = json.loads(request.body)
-
-    # 403_BAD_REQUEST
-
-    # 아이디(이메일) 형식 오류
-
-    if re.match(r"^[a-zA-Z0-9+-_.]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$'", input['email']) == False:
-        return JsonResponse({
-            "error": "올바른 이메일 형식이 아닙니다."
-        }, status=400)
-
-    # 비밀번호 형식 오류
-
-    if len(input['password']) < 6:
-        return JsonResponse({
-            "error": "올바른 비밀번호 형식이 아닙니다. 비밀번호는 6글자 이상입니다."
-        }, status=400)
-
-    # 사용자 닉네임 형식 오류
-
-    if len(input['nickname']) > 10:
-        return JsonResponse({
-            "error": "올바른 닉네임 형식이 아닙니다. 닉네임은 10글자 이하 입니다."
-        }, status=400)
-
-    # 사용자 이름 형식 오류
-
-    if re.match(r"^ [가-힣]{2, 4}$", input['name']):
-        return JsonResponse({
-            "error": "올바른 이름 형식이 아닙니다."
-        }, status=400)
-
-    # 409_CONFLICT
-
-    if models.User.objects.filter(email=input['email']):
-        return JsonResponse({
-            "data": "이미 존재하는 아이디입니다."
-        }, status=409)
-
-     # 200_OK
-    userdata = models.User.objects.create(email=input['email'], nickname=input['nickname'], name=input['name'])
-    return JsonResponse({
-        "data": {
-            "id": userdata.id,  # 사용자의 id
-            "email": userdata.email,  # 사용자의 email
-            "nickname": userdata.nickname,  # 사용자의 nickname
-            "name": userdata.name,  # 사용자의 이름
-        },
-        "message": "회원가입이 완료되었습니다."
-    }, status=200)
-
-
 # 비밀번호 찾기
 def password(request):
     return JsonResponse({"request": "listpage.html"})
@@ -471,10 +415,6 @@ def signin(request):
     return JsonResponse({'request': 'signin.html'})
 
 
-def signup(request):
-    return JsonResponse({'request': 'signup.html'})
-
-
 def password(request):
     return JsonResponse({'request': 'find-password.html'})
 
@@ -577,3 +517,60 @@ def comment(request, id):
                     'play': new_comment.play.id
                 }
             }, status=200)
+
+
+# 회원가입
+@ csrf_exempt
+@ require_http_methods(["POST"])
+def signup(request):
+    input = json.loads(request.body)
+
+    # 403_BAD_REQUEST
+
+    # 아이디(이메일) 형식 오류
+
+    if re.match(r"^[a-zA-Z0-9+-_.]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$'", input['email']) == False:
+        return JsonResponse({
+            "error": "올바른 이메일 형식이 아닙니다."
+        }, status=400)
+
+    # 비밀번호 형식 오류
+
+    if len(input['password']) < 6:
+        return JsonResponse({
+            "error": "올바른 비밀번호 형식이 아닙니다. 비밀번호는 6글자 이상입니다."
+        }, status=400)
+
+    # 사용자 닉네임 형식 오류
+
+    if len(input['nickname']) > 10:
+        return JsonResponse({
+            "error": "올바른 닉네임 형식이 아닙니다. 닉네임은 10글자 이하 입니다."
+        }, status=400)
+
+    # 사용자 이름 형식 오류
+
+    if re.match(r"^ [가-힣]{2, 4}$", input['name']):
+        return JsonResponse({
+            "error": "올바른 이름 형식이 아닙니다."
+        }, status=400)
+
+    # 409_CONFLICT
+
+    if models.User.objects.filter(email=input['email']):
+        return JsonResponse({
+            "data": "이미 존재하는 아이디입니다."
+        }, status=409)
+
+     # 200_OK
+    userdata = models.User.objects.create(
+        email=input['email'], password=input['password'], nickname=input['nickname'], name=input['name'])
+    return JsonResponse({
+        "data": {
+            "id": userdata.id,  # 사용자의 id
+            "email": userdata.email,  # 사용자의 email
+            "nickname": userdata.nickname,  # 사용자의 nickname
+            "name": userdata.name,  # 사용자의 이름
+        },
+        "message": "회원가입이 완료되었습니다."
+    }, status=200)
