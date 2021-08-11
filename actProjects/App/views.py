@@ -7,7 +7,7 @@ from django.shortcuts import render, redirect
 
 from django.views.decorators.csrf import csrf_exempt
 from django.views.decorators.http import require_http_methods
-
+from django.core.mail import send_mail
 from . import models
 from datetime import datetime
 import base64
@@ -284,6 +284,7 @@ def signup(request):
 def password(request):
     body = json.loads(request.body)
     user_email = body['email']
+
     if not re.match(r'\b[\w.-]+@[\w.-]+.\w{2,4}\b', user_email):
         return JsonResponse({
             "error": "올바른 이메일 형식이 아닙니다."
@@ -294,6 +295,13 @@ def password(request):
                 'error': '해당 이메일로 된 아이디가 존재하지 않습니다',
             }, status=403)
         else:
+            send_mail(
+                '비밀번호 찾기 링크입니다',
+                'link 주소',
+                'raonair_js@gmail.com',
+                [user_email],
+                fail_silently=False,
+            )
             return JsonResponse({
                 'data': {
                     'message': "비밀번호 초기화 메일이 발송되었습니다"
