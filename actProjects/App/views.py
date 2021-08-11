@@ -52,18 +52,23 @@ def home(request):
             'ratings_avg': rating_avg,
         })
 
-        # 현재 진행, 이달의 공연(랜덤), 소규모, 내가찜한(?)
         if tody >= start_date and (end_date == None or tody <= end_date):
-            ongoing_plays.append(new_play)
-        # 소규모 극단(10명 이하)
-        if staffs <= 10:
-            indie_plays.append(new_play)
-    # random_plays = random.sample(range(1, all_plays+1), 5)
+            ongoing_plays.append(new_play)  # 현재 진행 공연
+
+            # 소규모 극단(10명 이하)
+            if staffs <= 10:
+                indie_plays.append(new_play)
+
+            # 이달의 공연
+            random_plays = random.randrange(2)
+            if random_plays == 0:
+                month_plays.append(new_play)
 
     return JsonResponse({
         'data': {
-            'ongoing_plays': ongoing_plays,
-            'indie_plays': indie_plays,
+            'ongoing_plays': ongoing_plays[:5],
+            'indie_plays': indie_plays[:5],
+            'month_plays': month_plays[:5],
         }
     })
 
