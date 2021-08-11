@@ -56,6 +56,10 @@ def play(request, id):
     # for i in range(len(like)):
     #     like_cnt += like[i].like #찜 갯수 컬럼 없음
 
+    # 공연장소
+    theater = []
+    theater.append({"name": play.theater.name, "location": play.theater.location, "address": play.theater.address})
+
     # 리뷰
     review = []
     for i in range(len(comment)):
@@ -86,13 +90,13 @@ def play(request, id):
                 # "like_cnt": like_cnt,  # 찜수
                 "star_avg": avg,  # 평균 별점
                 "star_cnt": star_count,  # 별점수
-                "time": play.running_time,  # 공연시간
+                # "time": play.running_time,  # 공연시간
                 "start_date": play.start_date,  # 공연시작일
                 "end_date": play.end_date,  # 공연시작일
                 "external_links": link,  # 관련정보더보기 링크
                 "staff": staffs,  # 배우 및 극단 프로필
                 "review": review,  # 리뷰 및 커멘트
-                "location": play.location,  # 위치 theater로 바뀔 수 있음
+                "theater": theater  # 공연장소
                 # "context": {
                 # "like_check": boolean,
                 # "rating": number | | null,
