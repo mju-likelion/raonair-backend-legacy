@@ -9,7 +9,6 @@ from django.views.decorators.csrf import csrf_exempt
 from django.shortcuts import redirect, render
 from django.http import JsonResponse
 from django.db.models.fields import EmailField
-<< << << < HEAD
 
 # from email_validator import validate_email, EmailNotValidError
 
@@ -20,7 +19,6 @@ def home(request):
 # Create your views here.
 
 
-<< << << < HEAD
 # 홈페이지 공연 추천
 
 
@@ -110,15 +108,18 @@ def play(request, id):
                 # "rating": number | | null,
                 # }
             }
+        }
+    })
+
 
 def search_troupe_detail(request):
-    query=request.GET.get('query', '')
-    type=request.GET.get('type', '')
+    query = request.GET.get('query', '')
+    type = request.GET.get('type', '')
 
-    filter_query=models.Troupe.objects.filter(name__icontains=query)
-    troupes=filter_query.filter(type__icontains=type)
+    filter_query = models.Troupe.objects.filter(name__icontains=query)
+    troupes = filter_query.filter(type__icontains=type)
 
-    search_list=[]
+    search_list = []
 
     if len(troupes) == 0:
         return JsonResponse({
@@ -130,15 +131,15 @@ def search_troupe_detail(request):
         })
 
     if request.GET.get('start', ''):
-        start=int(request.GET.get('start', ''))
-        next=request.get_full_path().split(
+        start = int(request.GET.get('start', ''))
+        next = request.get_full_path().split(
             '&start=')[0] + '&start=' + str(start+10)
     else:
-        start=0
-        next=request.get_full_path() + '&start=11'
+        start = 0
+        next = request.get_full_path() + '&start=11'
 
     for i in troupes:
-        new_troupe=({
+        new_troupe = ({
             'id': i.id,
             'name': i.name,
             'type': i.type,
@@ -167,7 +168,7 @@ def signin(request):
 @ csrf_exempt
 @ require_http_methods(["POST"])
 def signup(request):
-    input=json.loads(request.body)
+    input = json.loads(request.body)
 
     # 403_BAD_REQUEST
 
@@ -207,7 +208,7 @@ def signup(request):
         }, status=409)
 
      # 200_OK
-    userdata=models.User.objects.create(email=input['email'], nickname=input['nickname'], name=input['name'])
+    userdata = models.User.objects.create(email=input['email'], nickname=input['nickname'], name=input['name'])
     return JsonResponse({
         "data": {
             "id": userdata.id,  # 사용자의 id
@@ -242,14 +243,15 @@ def star(request):
 # 커멘트 달기
 def comment(request):
     return JsonResponse({"request": "listpage.html"})
-== == == =
-def search_play(request):
-    keyword=request.GET.get('query', '')
-    loc=request.GET.get('location', '')
 
-    filter_keyword=models.Play.objects.filter(
+
+def search_play(request):
+    keyword = request.GET.get('query', '')
+    loc = request.GET.get('location', '')
+
+    filter_keyword = models.Play.objects.filter(
         title__icontains=keyword)  # 검색어에 포함되는 play를 받아옴
-    plays=filter_keyword.filter(theater__location__icontains=loc)
+    plays = filter_keyword.filter(theater__location__icontains=loc)
 
     # 검색결과가 0개일 때 return
     if len(plays) == 0:
@@ -261,26 +263,26 @@ def search_play(request):
         })
 
     # 공연 진행 상태
-    ongoing_list=[]
-    tobe_list=[]
-    closed_list=[]
+    ongoing_list = []
+    tobe_list = []
+    closed_list = []
 
-    tody=datetime.strftime(datetime.now(), '%Y-%m-%d')
+    tody = datetime.strftime(datetime.now(), '%Y-%m-%d')
 
     for i in plays:
-        start_date=datetime.strftime(i.start_date, '%Y-%m-%d')
-        end_date=datetime.strftime(
+        start_date = datetime.strftime(i.start_date, '%Y-%m-%d')
+        end_date = datetime.strftime(
             i.end_date, '%Y-%m-%d') if (i.end_date) else None
-        stars=models.Star.objects.filter(play=i.id)
-        likes=models.Like.objects.filter(play=i.id).count()  # 찜 데이터 아직 없음
+        stars = models.Star.objects.filter(play=i.id)
+        likes = models.Like.objects.filter(play=i.id).count()  # 찜 데이터 아직 없음
 
         # 평균 별점 구하기
-        star_sum=0
+        star_sum = 0
         for j in stars:
             star_sum += j.star
-        star_avg=star_sum / len(stars) / 2
+        star_avg = star_sum / len(stars) / 2
 
-        new_play=({
+        new_play = ({
             'id': i.id,
             'title': i.title,
             'poster': i.poster,
@@ -314,7 +316,7 @@ def search_play(request):
 
 
 def play_options(request):
-    play_location=[
+    play_location = [
         {'key': 'seoul', 'value': '서울'}, {'key': 'gyeonggi', 'value': '경기'},
         {'key': 'gangwon', 'value': '강원'}, {'key': 'gyeongbuk', 'value': '경북'},
         {'key': 'gyeongnam', 'value': '경남'}, {'key': 'gwangju', 'value': '광주'},
@@ -334,11 +336,11 @@ def play_options(request):
 
 
 def search_troupe(request):
-    query=request.GET.get('query', '')
-    type=request.GET.get('type', '')
+    query = request.GET.get('query', '')
+    type = request.GET.get('type', '')
 
-    filter_query=models.Troupe.objects.filter(name__icontains=query)
-    troupes=filter_query.filter(type__icontains=type)
+    filter_query = models.Troupe.objects.filter(name__icontains=query)
+    troupes = filter_query.filter(type__icontains=type)
 
     if len(troupes) == 0:
         return JsonResponse({
@@ -348,11 +350,11 @@ def search_troupe(request):
                 'error_message': '검색 결과가 없습니다'
             }
         })
-    troupe_all=[]  # 타입 선택 안했을 때
-    troupe_normal=[]  # 일반 극단
-    troupe_student=[]  # 학생 극단
+    troupe_all = []  # 타입 선택 안했을 때
+    troupe_normal = []  # 일반 극단
+    troupe_student = []  # 학생 극단
     for i in troupes:
-        new_troupe=({
+        new_troupe = ({
             'id': i.id,
             'name': i.name,
             'type': i.type,
@@ -384,14 +386,14 @@ def search_troupe(request):
 
 
 def search_detail(request, type):
-    keyword=request.GET.get('query', '')
-    loc=request.GET.get('location', '')
+    keyword = request.GET.get('query', '')
+    loc = request.GET.get('location', '')
 
-    filter_keyword=models.Play.objects.filter(
+    filter_keyword = models.Play.objects.filter(
         title__icontains=keyword)  # 검색어에 포함되는 play를 받아옴
-    plays=filter_keyword.filter(theater__location__icontains=loc)
+    plays = filter_keyword.filter(theater__location__icontains=loc)
 
-    search_list=[]  # 검색 결과들
+    search_list = []  # 검색 결과들
 
     # 검색 결과가 0 일 때
     if len(plays) == 0:
@@ -405,25 +407,25 @@ def search_detail(request, type):
 
     # start 데이터가 있는 경우와 없는 경우
     if request.GET.get('start', ''):
-        start=int(request.GET.get('start', ''))
-        next=request.get_full_path().split('&start=')[0] \
+        start = int(request.GET.get('start', ''))
+        next = request.get_full_path().split('&start=')[0] \
             + '&start=' \
             + str(start + 10)
     else:
-        start=0
-        next=request.get_full_path() + '&start=11'
+        start = 0
+        next = request.get_full_path() + '&start=11'
 
     for i in plays:
-        stars=models.Star.objects.filter(play=i.id)
-        likes=models.Like.objects.filter(play=i.id).count()
+        stars = models.Star.objects.filter(play=i.id)
+        likes = models.Like.objects.filter(play=i.id).count()
 
         # 평균 별점 구하기
-        star_sum=0
+        star_sum = 0
         for each_star in stars:
             star_sum += each_star.star
-        star_avg=star_sum / len(stars) / 2
+        star_avg = star_sum / len(stars) / 2
 
-        new_play=({
+        new_play = ({
             'title': i.title,
             'poster': i.poster,
             'start_date': i.start_date,
@@ -448,7 +450,7 @@ def search_detail(request, type):
 
 
 def troupe_options(request):
-    troupe_type={'noraml': '일반', 'student': '학생'}
+    troupe_type = {'noraml': '일반', 'student': '학생'}
 
     return JsonResponse({
         'data': {
@@ -494,14 +496,14 @@ def star(request, id):
             'message': '로그인된 사용자가 아닙니다',
         }, status=401)
 
-    user=models.User.objects.get(id=id)
-    user_body=json.loads(request.body)
-    selected_play=models.Play.objects.get(id=user_body['play'])
+    user = models.User.objects.get(id=id)
+    user_body = json.loads(request.body)
+    selected_play = models.Play.objects.get(id=user_body['play'])
 
     # 별점평가 여부 판단
-    check_star=models.Star.objects.filter(user=user, play=selected_play)
+    check_star = models.Star.objects.filter(user=user, play=selected_play)
     if check_star.exists():
-        checked_star=models.Star.objects.get(user=user, play=selected_play)
+        checked_star = models.Star.objects.get(user=user, play=selected_play)
         return JsonResponse({
             'data': {
                 'context': {
@@ -516,7 +518,7 @@ def star(request, id):
                 'message': '최소 별점보다 별점이 낮습니다',
             }, status=400)
         else:
-            new_star=models.Star.objects.create(
+            new_star = models.Star.objects.create(
                 user=user,
                 star=user_body['star'],
                 play=selected_play
@@ -539,15 +541,15 @@ def comment(request, id):
             'message': '로그인된 사용자가 아닙니다',
         }, status=401)
 
-    body=json.loads(request.body)
-    comment_user=models.User.objects.get(id=id)
-    comment_play=models.Play.objects.get(id=body['play'])
+    body = json.loads(request.body)
+    comment_user = models.User.objects.get(id=id)
+    comment_play = models.Play.objects.get(id=body['play'])
 
     # 커멘트 작성 여부 판단
-    check_comment=models.Comment.objects.filter(
+    check_comment = models.Comment.objects.filter(
         user=comment_user, play=comment_play)
     if check_comment.exists():
-        checked_comment=models.Comment.objects.get(
+        checked_comment = models.Comment.objects.get(
             user=comment_user, play=comment_play)
         return JsonResponse({
             'data': {
@@ -563,7 +565,7 @@ def comment(request, id):
                 'message': '글자 수는 200자를 넘을 수 없습니다',
             }, status=400)
         else:
-            new_comment=models.Comment.objects.create(
+            new_comment = models.Comment.objects.create(
                 user=comment_user,
                 comment=body['comment'],
                 play=comment_play
