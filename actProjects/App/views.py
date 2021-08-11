@@ -19,7 +19,6 @@ import os
 def home(request):
     tody = datetime.strftime(datetime.now(), '%Y-%m-%d')
     all_plays = models.Play.objects.all()
-    month_plays = []  # 이달의 공연(추천)
     ongoing_plays = []  # 진행 중인 공연
     indie_plays = []  # 소규모 극단 공연
 
@@ -59,16 +58,15 @@ def home(request):
             if staffs <= 10:
                 indie_plays.append(new_play)
 
-            # 이달의 공연
-            random_plays = random.randrange(2)
-            if random_plays == 0:
-                month_plays.append(new_play)
+    # 이달의 공연(추천)
+    # 현재 진행중인 공연 중에서 랜덤으로 n개를 뽑는다.
+    month_plays = random.sample(ongoing_plays, 1)
 
     return JsonResponse({
         'data': {
             'ongoing_plays': ongoing_plays[:5],
             'indie_plays': indie_plays[:5],
-            'month_plays': month_plays[:5],
+            'month_plays': month_plays[:1],
         }
     })
 
@@ -323,7 +321,6 @@ def search_detail(request, type):
             'search_results': search_list[start:start+10],
         },
     })
-
 
 def troupe_options(request):
     troupe_type = {'noraml': '일반', 'student': '학생'}
