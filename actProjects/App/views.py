@@ -136,6 +136,26 @@ def search_play(request):
     })
 
 
+def play_options(request):
+    play_location = [
+        {'key': 'seoul', 'value': '서울'}, {'key': 'gyeonggi', 'value': '경기'},
+        {'key': 'gangwon', 'value': '강원'}, {'key': 'gyeongbuk', 'value': '경북'},
+        {'key': 'gyeongnam', 'value': '경남'}, {'key': 'gwangju', 'value': '광주'},
+        {'key': 'daegu', 'value': '대구'}, {'key': 'daejeon', 'value': '대전'},
+        {'key': 'busan', 'value': '부산'}, {'key': 'sejong', 'value': '세종'},
+        {'key': 'ulsan', 'value': '울산'}, {'key': 'incheon', 'value': '인천'},
+        {'key': 'jeonnam', 'value': '전남'}, {'key': 'jeonbuk', 'value': '전북'},
+        {'key': 'jeju', 'value': '제주'}, {'key': 'chungnam.', 'value': '충남'},
+        {'key': 'chungbuk', 'value': '충북'},
+    ]
+
+    return JsonResponse({
+        'data': {
+            'play_options': play_location
+        }
+    })
+
+
 def search_troupe(request):
     query = request.GET.get('query', '')
     type = request.GET.get('type', '')

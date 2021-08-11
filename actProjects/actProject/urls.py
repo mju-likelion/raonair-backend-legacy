@@ -16,6 +16,8 @@ urlpatterns = [
          name='search_troupe_detail'),  # 극단 검색결과페이지, 더보기 클릭
     path('api/search/troupe-options', App.views.troupe_options,
          name='troupe_options'),  # 극단 타입 선택 옵션
+    path('api/search/play-options', App.views.play_options,
+         name='play_options'),
     path('api/search/:category', App.views.search_detail,
          name='search_detail'),  # 검색결과페이지, 더보기 클릭
     path('api/troupe/<int:id>', App.views.troupe, name='troupe'),  # 극단개별페이지
