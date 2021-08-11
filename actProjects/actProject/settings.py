@@ -2,13 +2,27 @@ from pathlib import Path
 from . import my_settings
 import os
 
+# get envs from os
+ENVS = {
+    'ENV': os.getenv('ENV', 'DEV'),
+    'SECRET_KEY': os.getenv('SECRET_KEY', ''),
+    'DB_HOST': os.getenv('DB_HOST', ''),
+    'DB_NAME': os.getenv('DB_NAME', ''),
+    'DB_USER': os.getenv('DB_USER', ''),
+    'DB_PASSWD': os.getenv('DB_PASSWD', ''),
+    'DB_PORT': os.getenv('DB_PORT', ''),
+}
+
 BASE_DIR = Path(__file__).resolve().parent.parent
-SECRET_KEY = my_settings.SECRET_KEY
+SECRET_KEY = ''
+if ENVS['ENV'] == 'PROD':
+    SECRET_KEY = ENVS['SECRET_KEY']
+else:
+    SECRET_KEY = my_settings.SECRET_KEY
 
 DEBUG = True
 
 ALLOWED_HOSTS = []
-
 
 # Application definition
 
@@ -61,11 +75,23 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'actProject.wsgi.application'
 
-
 # Database
 # https://docs.djangoproject.com/en/3.2/ref/settings/#databases
 
-DATABASES = my_settings.DATABASES
+DATABASES = {}
+if ENVS['ENV'] == 'PROD':
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.mysql',
+            'HOST': ENVS['DB_HOST'],
+            'NAME': ENVS['DB_NAME'],
+            'USER': ENVS['DB_USER'],
+            'PASSWORD': ENVS['DB_PASSWD'],
+            'PORT': ENVS['DB_PORT'],
+        }
+    }
+else:
+    DATABASES = my_settings.DATABASES
 
 # Password validation
 # https://docs.djangoproject.com/en/3.2/ref/settings/#auth-password-validators
@@ -84,7 +110,6 @@ AUTH_PASSWORD_VALIDATORS = [
         'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
     },
 ]
-
 
 # Internationalization
 # https://docs.djangoproject.com/en/3.2/topics/i18n/
