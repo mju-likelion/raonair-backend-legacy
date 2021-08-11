@@ -289,24 +289,26 @@ def password(request):
         return JsonResponse({
             "error": "올바른 이메일 형식이 아닙니다."
         }, status=400)
-    else:
-        if not models.User.objects.filter(email=user_email):
-            return JsonResponse({
-                'error': '해당 이메일로 된 아이디가 존재하지 않습니다',
-            }, status=403)
-        else:
-            send_mail(
-                '비밀번호 찾기 링크입니다',
-                'link 주소',
-                'raonair_js@gmail.com',
-                [user_email],
-                fail_silently=False,
-            )
-            return JsonResponse({
-                'data': {
-                    'message': "비밀번호 초기화 메일이 발송되었습니다"
-                }
-            }, status=200)
+    if not models.User.objects.filter(email=user_email):
+        return JsonResponse({
+            'error': '해당 이메일로 된 아이디가 존재하지 않습니다',
+        }, status=403)
+    if not models.User.objects.get(email=user_email).email_confirmed:
+        return JsonResponse({
+            'error': '인증되지 않은 이메일입니다',
+        }, status=403)
+    send_mail(
+        '비밀번호 찾기 링크입니다',
+        'link 주소',
+        'raonairjs@gmail.com',
+        [user_email],
+        fail_silently=False,
+    )
+    return JsonResponse({
+        'data': {
+            'message': "비밀번호 초기화 메일이 발송되었습니다"
+        }
+    }, status=200)
 
 def playlike(request):
     return JsonResponse({'request': 'playlike.html'})
