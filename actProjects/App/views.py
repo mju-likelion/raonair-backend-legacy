@@ -8,6 +8,7 @@ from . import models
 from datetime import datetime
 import re
 import jwt
+import bcrypt
 
 import base64
 import os
@@ -305,21 +306,28 @@ def signin(request):
             }
         }, status=400)
 
-    user = models.User.objects.filter(email=requsest_body['email'])
-    if not user.exitsts():
+    if not models.User.objects.filter(email=requsest_body['email']):
         return JsonResponse({
             "error": "존재하지않는 아이디입니다."
         }, status=403)
 
-    if user.password != requsest_body['password']:
+    password = requsest_body['password']
+    # bytes(password, 'utf-8')
+    # password.encode('utf-8')
+    # hashed_password = bcrypt.hashpw(password.encode('utf-8'), bcrypt.gensalt())
+    # decode_password = hashed_password.decode('utf-8')
+
+    signinuser = models.User.objects.get(email=requsest_body['email'])
+    print(password.encode('utf-8'), signinuser.password)
+    if not bcrypt.checkpw(bytes(password, 'utf-8'), signinuser.password):
         return JsonResponse({
             "error": "비밀번호가 틀렸습니다."
         }, status=401)
 
-    # signinuser = models.User.objects.get(email=requsest_body['email'])
+    print(signinuser.nickname, signinuser.name, signinuser.email)
     return JsonResponse({
         "message": {
-            "nickname": user.nickname,
+            "nickname": signinuser.nickname,
             "messages": "님 안녕하세요!"}
     }, status=200)
 
