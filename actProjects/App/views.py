@@ -85,7 +85,7 @@ def search_play(request):
     tobe_list = []
     closed_list = []
 
-    tody = datetime.strftime(datetime.now(), '%Y-%m-%d')
+    today = datetime.strftime(datetime.now(), '%Y-%m-%d')
 
     for i in plays:
         start_date = datetime.strftime(i.start_date, '%Y-%m-%d')
@@ -112,11 +112,11 @@ def search_play(request):
         })
 
         # 날짜 비교
-        if tody >= start_date and (end_date == None or tody <= end_date):
+        if today >= start_date and (end_date == None or today <= end_date):
             ongoing_list.append(new_play)
-        elif tody < start_date:
+        elif today < start_date:
             tobe_list.append(new_play)
-        elif tody > end_date:
+        elif today > end_date:
             closed_list.append(new_play)
         else:
             print('날짜설정에러')
@@ -285,7 +285,7 @@ def troupe(request, id):
         })
 
     # 연극 구하기
-    tody = datetime.strftime(datetime.now(), '%Y-%m-%d')
+    today = datetime.strftime(datetime.now(), '%Y-%m-%d')
     for i in plays:
         start_date = datetime.strftime(i.start_date, '%Y-%m-%d')
         end_date = datetime.strftime(
@@ -299,11 +299,11 @@ def troupe(request, id):
             'end_date': end_date,
         }]
 
-        if tody >= start_date and (end_date == None or tody <= end_date):
+        if today >= start_date and (end_date == None or today <= end_date):
             ongoing_play.append(new_play)
-        elif tody < start_date:
+        elif today < start_date:
             tobe_play.append(new_play)
-        elif tody > end_date:
+        elif today > end_date:
             closed_play.append(new_play)
         else:
             print('날짜에러')
@@ -349,6 +349,110 @@ def troupe(request, id):
                 'tobe_play': tobe_play,
                 'closed_play': closed_play[start:start+10],
                 # 'closed_play': closed_play,
+            },
+        },
+    })
+
+# 직책 필드는 극단이 아닌 연극에 종속적이라 극단에서 구현하기 어려움에 있음
+# ex) 극단에서는 감독이지만 A 공연에서는 배우일 경우
+@csrf_exempt
+def troupe(request, id):
+    troupe = models.Troupe.objects.get(id=id)
+    troupe_like = models.TroupeLike.objects.filter(troupe=id).count()
+    '''
+    # JWT Token 활용 user의 정보를 가져온다.
+    encoded_jwt = request.headers.get('Authorization', None)
+    token = encoded_jwt.split('Bearer ')[1]
+    payload = jwt.decode(token, 'raonair', algorithms=['HS256'])
+    user_id = models.User.objects.get(id=payload['id'])
+    '''
+    body = json.loads(request.body)
+    if not models.User.objects.filter(id=body['user']):
+        return JsonResponse({
+            'message': '로그인된 사용자가 아닙니다',
+        }, status=401)
+    user_id = models.User.objects.get(id=body['user'])
+
+    troupe_like_check = models.TroupeLike.objects.filter(troupe=id, user=user_id)  # user 추후 수정 필요(더미데이터)
+    team = models.Team.objects.filter(troupe=id)
+    team_list = []  # 극단 구성원
+    plays = models.Play.objects.filter(troupe=id)  # 극단에서 공연한 연극
+    ongoing_play = []
+    tobe_play = []
+    closed_play = []
+
+    # 구성원 구하기
+    for i in team:
+        team_list.append({
+            'name': i.person.name,
+            'photo': i.person.photo,
+            # "role": i.person.role,
+        })
+
+    # 연극 구하기
+    today = datetime.strftime(datetime.now(), '%Y-%m-%d')
+    for i in plays:
+        start_date = datetime.strftime(i.start_date, '%Y-%m-%d')
+        end_date = datetime.strftime(
+            i.end_date, '%Y-%m-%d') if (i.end_date) else None
+
+        new_play = [{
+            'id': i.id,
+            'title': i.title,
+            'poster': i.poster,
+            'start_date': start_date,
+            'end_date': end_date,
+        }]
+
+        if today >= start_date and (end_date == None or today <= end_date):
+            ongoing_play.append(new_play)
+        elif today < start_date:
+            tobe_play.append(new_play)
+        elif today > end_date:
+            closed_play.append(new_play)
+        else:
+            print('날짜에러')
+
+    # 페이징 테스트
+    # for i in range(20):
+    #     closed_play.append({
+    #         'id': i,
+    #         'title': str(i) + "번째 테스트 공연",
+    #         'poster': str(i) + "번째 테스트 포스터",
+    #         'start_date': "2021-01-01",
+    #         'end_date': "2021-01-01",
+    #     })
+
+    # 페이징
+    if request.GET.get('start', ''):
+        start = int(request.GET.get('start', ''))
+        next = request.get_full_path().split(
+            '&start=')[0] + '&start=' + str(start+10)
+    else:
+        start = 0
+        next = request.get_full_path() + '&start=11'
+
+    return JsonResponse({
+        'data': {
+            # 유저의 찜하기 액션
+            'context': {
+                'like_check': troupe_like_check.exists()
+            },
+            'links': {
+                'next': next,
+            },
+            'troupe': {
+                'id': troupe.id,
+                'name': troupe.name,
+                'type': troupe.type,
+                'logo': troupe.logo,
+            },
+            'troupe_like': troupe_like,
+            'team': team_list,
+            'play': {
+                'ongoing_play': ongoing_play,
+                'tobe_play': tobe_play,
+                'closed_play': closed_play[start:start+10],
             },
         },
     })
