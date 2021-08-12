@@ -24,8 +24,8 @@ urlpatterns = [
     path('api/auth/signin', App.views.signin),  # 로그인
     path('api/auth/signup', App.views.signup, name='signup'),  # 회원가입
     path('api/auth/find-password', App.views.password, name='password'),  # 비밀번호찾기
+    path('api/plays/<int:id>/like', App.views.playlike, name='playlike'),  # 연극찜하기
     path('api/plays/<int:id>/star', App.views.star, name='star'),  # 별점평가
-    path('api/plays/:id/liked', App.views.playlike, name='playlike'),  # 연극찜하기
     path('api/troupes/<int:id>/like',
          App.views.troupelike, name='troupelike'),  # 극단찜하기
     path('api/plays/<int:id>/comment',

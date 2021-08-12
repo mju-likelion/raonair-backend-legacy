@@ -1,9 +1,10 @@
-from django.views.decorators.csrf import csrf_exempt
+
 import json
 from django.http import JsonResponse
 from django.shortcuts import get_object_or_404, render
 from . import models
 from datetime import datetime
+from django.views.decorators.csrf import csrf_exempt
 from django.views.decorators.http import require_http_methods
 
 import base64
@@ -266,93 +267,6 @@ def search_detail(request, type):
         },
     })
 
-def troupe(request, id):
-    troupe = models.Troupe.objects.get(id=id)
-    troupe_like = models.TroupeLike.objects.filter(troupe=id).count()
-    team = models.Team.objects.filter(troupe=id)
-    team_list = []  # 극단 구성원
-    plays = models.Play.objects.filter(troupe=id)  # 극단에서 공연한 연극
-    ongoing_play = []
-    tobe_play = []
-    closed_play = []
-
-    # 구성원 구하기
-    for i in team:
-        team_list.append({
-            'name': i.person.name,
-            'photo': i.person.photo,
-            # "role": i.person.role,
-        })
-
-    # 연극 구하기
-    today = datetime.strftime(datetime.now(), '%Y-%m-%d')
-    for i in plays:
-        start_date = datetime.strftime(i.start_date, '%Y-%m-%d')
-        end_date = datetime.strftime(
-            i.end_date, '%Y-%m-%d') if (i.end_date) else None
-
-        new_play = [{
-            'id': i.id,
-            'title': i.title,
-            'poster': i.poster,
-            'start_date': start_date,
-            'end_date': end_date,
-        }]
-
-        if today >= start_date and (end_date == None or today <= end_date):
-            ongoing_play.append(new_play)
-        elif today < start_date:
-            tobe_play.append(new_play)
-        elif today > end_date:
-            closed_play.append(new_play)
-        else:
-            print('날짜에러')
-
-    # 페이징 테스트
-    # for i in range(20):
-    #     closed_play.append({
-    #         'id': i,
-    #         'title': str(i) + "번째 테스트 공연",
-    #         'poster': str(i) + "번째 테스트 포스터",
-    #         'start_date': "2021-01-01",
-    #         'end_date': "2021-01-01",
-    #     })
-
-    # 페이징
-    if request.GET.get('start', ''):
-        start = int(request.GET.get('start', ''))
-        next = request.get_full_path().split(
-            '&start=')[0] + '&start=' + str(start+10)
-    else:
-        start = 0
-        next = request.get_full_path() + '&start=11'
-
-    return JsonResponse({
-        'data': {
-            # 유저의 찜하기 액션
-            # "context": {
-            #     "like_check": boolean
-            # },
-            'links': {
-                'next': next,
-            },
-            'troupe': {
-                'id': troupe.id,
-                'name': troupe.name,
-                'type': troupe.type,
-                'logo': troupe.logo,
-            },
-            'troupe_like': troupe_like,
-            'team': team_list,
-            'play': {
-                'ongoing_play': ongoing_play,
-                'tobe_play': tobe_play,
-                'closed_play': closed_play[start:start+10],
-                # 'closed_play': closed_play,
-            },
-        },
-    })
-
 # 직책 필드는 극단이 아닌 연극에 종속적이라 극단에서 구현하기 어려움에 있음
 # ex) 극단에서는 감독이지만 A 공연에서는 배우일 경우
 @csrf_exempt
@@ -483,8 +397,36 @@ def password(request):
     return JsonResponse({'request': 'find-password.html'})
 
 
-def playlike(request):
-    return JsonResponse({'request': 'playlike.html'})
+@csrf_exempt
+@require_http_methods(['POST'])
+def playlike(request, id):
+    input = json.loads(request.body)
+    play = models.Play.objects.get(id=id)
+    user = models.User.objects.get(id=input['user'])
+    check_play_like = models.Like.objects.filter(
+        play=play.id, user=user.id)  # 찜 여부 판단
+
+    if check_play_like.exists():
+        check_play_like.delete()
+        return JsonResponse({
+            'data': {
+                'play': play.title,
+                'email': user.email,
+                'nickname': user.nickname,
+            },
+            'message': 'deleted play like'
+        }, status=200)
+    else:
+        new_play_like = models.Like.objects.create(play=play, user=user)
+        return JsonResponse({
+            'data': {
+                'id': new_play_like.id,
+                'play': new_play_like.play.title,
+                'email': new_play_like.user.email,
+                'nickname': new_play_like.user.nickname,
+            },
+            'message': 'add play like'
+        }, status=200)
 
 
 # @login_required #  로그인 되어야만 클릭 가능
