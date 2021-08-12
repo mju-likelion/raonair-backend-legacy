@@ -315,14 +315,19 @@ def signin(request):
     # jwt encode
     signinuser = models.User.objects.get(email=requsestbody['email'])
     secret = "raonair"
-    encoded_jwt = jwt.encode({'name': signinuser.name}, secret, algorithm='HS256')
+    encoded_jwt = jwt.encode({'name': signinuser.name, 'nickname': signinuser.nickname,
+                             'id': signinuser.email}, secret, algorithm='HS256')
     print(encoded_jwt)
 
-    # decoded_jwt = jwt.decode(encoded_jwt, 'secret', algorithms=['HS256'])
-    # print(decoded_jwt)
+    secret = "raonair"
+    decoded_jwt = jwt.decode(encoded_jwt, secret, algorithms=['HS256'])
+    print(decoded_jwt)
 
     res = JsonResponse({'success': True})
-    res.set_cookie('encoded_jwt', encoded_jwt)
+    res.set_cookie('encoded_jwt', encoded_jwt, max_age=, httponly=True)
+
+    HttpResponse.set_cookie(key, value='', max_age=None, expires=None, path='/',
+                            domain=None, secure=False, httponly=False, samesite=None)
 
     return JsonResponse({
         "message": {
@@ -330,14 +335,13 @@ def signin(request):
             "messages": "님 안녕하세요!"}
     }, status=200)
 
-# 로그아웃
-# @login_decorator
-# def user_logout(request):
-#     # reset the token
-#     reset = ''
-#     res = JsonResponse({'success': True})
-#     res.set_cookie('access_token', reset)
-#     return res
+    # 로그아웃시 토큰 삭제
+    @login_decorator
+    def logout(request):
+        # reset the token
+    res = JsonResponse({'success': True})
+    res.set_cookie('access_token', reset)
+    return res
 
 
 def signup(request):
