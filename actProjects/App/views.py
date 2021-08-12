@@ -9,6 +9,7 @@ from django.views.decorators.csrf import csrf_exempt
 from django.shortcuts import redirect, render
 from django.http import JsonResponse
 from django.db.models.fields import EmailField
+import bcrypt
 
 # from email_validator import validate_email, EmailNotValidError
 
@@ -529,7 +530,7 @@ def signup(request):
 
     # 아이디(이메일) 형식 오류
 
-    if not re.match(r"^[a-zA-Z0-9+-_.]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$'", input['email']):
+    if not re.match(r'^([0-9a-zA-Z_\.-]+)@([0-9a-zA-Z_-]+)(\.[0-9a-zA-Z_-]+){1,2}$', input['email']):
         return JsonResponse({
             "error": "올바른 이메일 형식이 아닙니다."
         }, status=400)
@@ -562,9 +563,16 @@ def signup(request):
             "data": "이미 존재하는 아이디입니다."
         }, status=409)
 
-     # 200_OK
+    # 200_OK
+    password = input['password']
+    bytes(password, 'utf-8')
+    password.encode('utf-8')
+    hashed_password = bcrypt.hashpw(password.encode('utf-8'), bcrypt.gensalt())
+    decode_password = hashed_password
+
     userdata = models.User.objects.create(
-        email=input['email'], password=input['password'], nickname=input['nickname'], name=input['name'])
+        email=input['email'], password=decode_password, nickname=input['nickname'], name=input['name'])
+
     return JsonResponse({
         "data": {
             "id": userdata.id,  # 사용자의 id
