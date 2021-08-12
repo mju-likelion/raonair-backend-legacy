@@ -1,9 +1,10 @@
-from django.views.decorators.csrf import csrf_exempt
+
 import json
 from django.http import JsonResponse
 from django.shortcuts import get_object_or_404, render
 from . import models
 from datetime import datetime
+from django.views.decorators.csrf import csrf_exempt
 from django.views.decorators.http import require_http_methods
 
 import base64
@@ -396,8 +397,36 @@ def password(request):
     return JsonResponse({'request': 'find-password.html'})
 
 
-def playlike(request):
-    return JsonResponse({'request': 'playlike.html'})
+@csrf_exempt
+@require_http_methods(['POST'])
+def playlike(request, id):
+    input = json.loads(request.body)
+    play = models.Play.objects.get(id=id)
+    user = models.User.objects.get(id=input['user'])
+    check_play_like = models.Like.objects.filter(
+        play=play.id, user=user.id)  # 찜 여부 판단
+
+    if check_play_like.exists():
+        check_play_like.delete()
+        return JsonResponse({
+            'data': {
+                'play': play.title,
+                'email': user.email,
+                'nickname': user.nickname,
+            },
+            'message': 'deleted play like'
+        }, status=200)
+    else:
+        new_play_like = models.Like.objects.create(play=play, user=user)
+        return JsonResponse({
+            'data': {
+                'id': new_play_like.id,
+                'play': new_play_like.play.title,
+                'email': new_play_like.user.email,
+                'nickname': new_play_like.user.nickname,
+            },
+            'message': 'add play like'
+        }, status=200)
 
 
 # @login_required #  로그인 되어야만 클릭 가능
