@@ -17,7 +17,7 @@ import os
 
 
 def home(request):
-    tody = datetime.strftime(datetime.now(), '%Y-%m-%d')
+    today = datetime.strftime(datetime.now(), '%Y-%m-%d')
     all_plays = models.Play.objects.all()
     ongoing_plays = []  # 진행 중인 공연
     indie_plays = []  # 소규모 극단 공연
@@ -51,7 +51,7 @@ def home(request):
             'ratings_avg': rating_avg,
         })
 
-        if tody >= start_date and (end_date == None or tody <= end_date):
+        if today >= start_date and (not end_date or today <= end_date):
             ongoing_plays.append(new_play)  # 현재 진행 공연
 
             # 소규모 극단(10명 이하)
@@ -140,7 +140,7 @@ def search_play(request):
     tobe_list = []
     closed_list = []
 
-    tody = datetime.strftime(datetime.now(), '%Y-%m-%d')
+    today = datetime.strftime(datetime.now(), '%Y-%m-%d')
 
     for i in plays:
         start_date = datetime.strftime(i.start_date, '%Y-%m-%d')
@@ -168,11 +168,11 @@ def search_play(request):
         })
 
         # 날짜 비교
-        if tody >= start_date and (end_date == None or tody <= end_date):
+        if today >= start_date and (end_date == None or today <= end_date):
             ongoing_list.append(new_play)
-        elif tody < start_date:
+        elif today < start_date:
             tobe_list.append(new_play)
-        elif tody > end_date:
+        elif today > end_date:
             closed_list.append(new_play)
         else:
             print('날짜설정에러')
