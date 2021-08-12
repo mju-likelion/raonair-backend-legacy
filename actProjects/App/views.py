@@ -1,3 +1,4 @@
+# from test01.settings import SECRET_KEY
 import json
 from django.http import JsonResponse
 from django.shortcuts import render, redirect
@@ -10,6 +11,8 @@ import jwt
 
 import base64
 import os
+
+# secret = "raonair"
 
 
 def home(request):
@@ -292,56 +295,92 @@ def play(request):
 @require_http_methods(["POST"])
 def signin(request):
 
-    requsestbody = json.loads(request.body)
+    requsest_body = json.loads(request.body)
 
     # 400_BAD_REQUEST // 아이디 형식이 틀린 경우
-    if not re.match(r'^([0-9a-zA-Z_\.-]+)@([0-9a-zA-Z_-]+)(\.[0-9a-zA-Z_-]+){1,2}$', requsestbody['email']):
+    if not re.match(r'^([0-9a-zA-Z_\.-]+)@([0-9a-zA-Z_-]+)(\.[0-9a-zA-Z_-]+){1,2}$', requsest_body['email']):
         return JsonResponse({
             "error": {
                 "message": "올바른 이메일 형식이 아닙니다."
             }
         }, status=400)
 
-    if not models.User.objects.filter(email=requsestbody['email']):
+    user = models.User.objects.filter(email=requsest_body['email'])
+    if not user.exitsts():
         return JsonResponse({
             "error": "존재하지않는 아이디입니다."
         }, status=403)
 
-    if not models.User.objects.filter(password=requsestbody['password']):
+    if user.password != requsest_body['password']:
         return JsonResponse({
             "error": "비밀번호가 틀렸습니다."
         }, status=401)
 
-    # jwt encode
-    signinuser = models.User.objects.get(email=requsestbody['email'])
-    secret = "raonair"
-    encoded_jwt = jwt.encode({'name': signinuser.name, 'nickname': signinuser.nickname,
-                             'id': signinuser.email}, secret, algorithm='HS256')
-    print(encoded_jwt)
-
-    secret = "raonair"
-    decoded_jwt = jwt.decode(encoded_jwt, secret, algorithms=['HS256'])
-    print(decoded_jwt)
-
-    res = JsonResponse({'success': True})
-    res.set_cookie('encoded_jwt', encoded_jwt, max_age=, httponly=True)
-
-    HttpResponse.set_cookie(key, value='', max_age=None, expires=None, path='/',
-                            domain=None, secure=False, httponly=False, samesite=None)
-
+    # signinuser = models.User.objects.get(email=requsest_body['email'])
     return JsonResponse({
         "message": {
-            "nickname": signinuser.nickname,
+            "nickname": user.nickname,
             "messages": "님 안녕하세요!"}
     }, status=200)
 
-    # 로그아웃시 토큰 삭제
-    @login_decorator
-    def logout(request):
-        # reset the token
-    res = JsonResponse({'success': True})
-    res.set_cookie('access_token', reset)
-    return res
+    # jwt encode
+    # signinuser = models.User.objects.get(email=requsest_body['email'])
+    # encoded = jwt.encode({'email': signinuser.email}, secret, algorithm='HS256')
+    # print(encoded)
+
+    # decoded_jwt = jwt.decode(encoded, secret, algorithms=['HS256'])
+    # print(decoded_jwt)
+
+    # res = JsonResponse({
+    #     "message": {
+    #         "nickname": signinuser.nickname,
+    #         "messages": "님 안녕하세요!"}
+    # }, status=200)
+    # res.set_cookie('encoded', encoded, max_age=100, httponly=True)
+    # return res
+
+    # HttpResponse.set_cookie(key, value='', max_age=None, expires=None, path='/',
+    #                         domain=None, secure=False, httponly=False, samesite=None)
+
+    # 로그아웃시 토큰 삭제 // ?
+
+
+# 로그인 쿠키
+# def login_decorator(func):
+
+#     def wrapper(self, request, *args, **kwargs):  # self > 받아온 함수를 다시 넘긴다 access token이 헤더에 들어있음> json.load가 아님(헤더에 있는 값만 할 것임) > 키 벨류로 돼있는 양식 >
+
+#         if "Authorization" not in request.headers:  # 1)번
+#             return JsonResponse({"error_code": "INVALID_LOGIN"}, status=401)
+
+#         encoded = request.headers["Authorization"]
+
+#         try:
+#             data = jwt.decode(encoded, secret, algorithm='HS256')
+#             # 2번)decode를 하게 될 경우 프론트엔드에 전달했던 페이로드값만 나옴(즉 로그인뷰에 바디)
+
+#             user = models.User.objects.get(id=data["id"])  # 3번
+#             request.user = user  # 4번
+#         except jwt.DecodeError:  # 2-1번 error
+#             return JsonResponse({
+#                 "error_code": "INVALID_TOKEN"
+#             }, status=401)  # 401에러 : 권한이 없을때 발생
+#         except Accounts.DoesNotExist:  # 1-1번 error
+#             return JsonResponse({
+#                 "error_code": "UNKNOWN_USER"
+#             }, status=401)  # 401에러 : 권한이 없을때 발생
+
+#         return func(self, request, *args, **kwargs)  # 5번
+
+#     return wrapper
+
+
+# @login_decorator
+# def logout(request):
+#     res = JsonResponse({
+#         "message": "로그아웃 되었습니다."}, status=200)
+#     res.set_cookie('encoded', '')
+#     return res
 
 
 def signup(request):
