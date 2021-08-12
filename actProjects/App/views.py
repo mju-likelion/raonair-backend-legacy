@@ -296,33 +296,41 @@ def play(request):
 @require_http_methods(["POST"])
 def signin(request):
 
-    requsest_body = json.loads(request.body)
+    request_body = json.loads(request.body)
 
     # 400_BAD_REQUEST // 아이디 형식이 틀린 경우
-    if not re.match(r'^([0-9a-zA-Z_\.-]+)@([0-9a-zA-Z_-]+)(\.[0-9a-zA-Z_-]+){1,2}$', requsest_body['email']):
+    if not re.match(r'^([0-9a-zA-Z_\.-]+)@([0-9a-zA-Z_-]+)(\.[0-9a-zA-Z_-]+){1,2}$', request_body['email']):
         return JsonResponse({
             "error": {
                 "message": "올바른 이메일 형식이 아닙니다."
             }
         }, status=400)
 
-    if not models.User.objects.filter(email=requsest_body['email']):
+    if not models.User.objects.filter(email=request_body['email']):
         return JsonResponse({
             "error": "존재하지않는 아이디입니다."
         }, status=403)
 
-    password = requsest_body['password']
+    password = request_body['password']
     # bytes(password, 'utf-8')
     # password.encode('utf-8')
     # hashed_password = bcrypt.hashpw(password.encode('utf-8'), bcrypt.gensalt())
-    # decode_password = hashed_password.decode('utf-8')
+    # password.encode('utf-8')
+    # decode_password = password.encode('utf-8')
 
-    signinuser = models.User.objects.get(email=requsest_body['email'])
+    signinuser = models.User.objects.get(email=request_body['email'])
     print(password.encode('utf-8'), signinuser.password)
-    if not bcrypt.checkpw(password.encode('utf-8'), signinuser.password):
+
+    de = signinuser.password
+    if not bcrypt.checkpw(password.encode('utf-8'), de.decode('utf-8')):
         return JsonResponse({
             "error": "비밀번호가 틀렸습니다."
         }, status=401)
+
+    # if not  bcrypt.checkpw(password.encode('utf-8'), signinuser.password):
+    # return JsonResponse({
+    #     "error": "비밀번호가 틀렸습니다."
+    # }, status=401)
 
     print(signinuser.nickname, signinuser.name, signinuser.email)
     return JsonResponse({
