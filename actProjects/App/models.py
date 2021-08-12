@@ -157,7 +157,6 @@ class Play(models.Model):
     poster = models.CharField(unique=True, max_length=255)
     start_date = models.DateField()
     end_date = models.DateField(blank=True, null=True)
-
     troupe = models.ForeignKey('Troupe', models.DO_NOTHING, db_column='troupe')
     theater = models.ForeignKey(
         'Theater', models.DO_NOTHING, db_column='theater')
@@ -193,6 +192,7 @@ class Star(models.Model):
     star = models.DecimalField(max_digits=2, decimal_places=0)
     user = models.ForeignKey('User', models.DO_NOTHING, db_column='user')
     play = models.ForeignKey(Play, models.DO_NOTHING, db_column='play')
+
 
     class Meta:
         managed = False

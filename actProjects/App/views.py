@@ -1,17 +1,14 @@
+
 import json
-
 from django.http import JsonResponse
-
-from django.shortcuts import render, redirect
-
-from django.views.decorators.csrf import csrf_exempt
-from django.views.decorators.http import require_http_methods
-
+from django.shortcuts import get_object_or_404, render
 from . import models
 from datetime import datetime
-
+from django.views.decorators.csrf import csrf_exempt
+from django.views.decorators.http import require_http_methods
+from . import models
+from datetime import datetime
 import random
-
 import base64
 import os
 
@@ -322,6 +319,110 @@ def search_detail(request, type):
         },
     })
 
+# 직책 필드는 극단이 아닌 연극에 종속적이라 극단에서 구현하기 어려움에 있음
+# ex) 극단에서는 감독이지만 A 공연에서는 배우일 경우
+@csrf_exempt
+def troupe(request, id):
+    troupe = models.Troupe.objects.get(id=id)
+    troupe_like = models.TroupeLike.objects.filter(troupe=id).count()
+    '''
+    # JWT Token 활용 user의 정보를 가져온다.
+    encoded_jwt = request.headers.get('Authorization', None)
+    token = encoded_jwt.split('Bearer ')[1]
+    payload = jwt.decode(token, 'raonair', algorithms=['HS256'])
+    user_id = models.User.objects.get(id=payload['id'])
+    '''
+    body = json.loads(request.body)
+    if not models.User.objects.filter(id=body['user']):
+        return JsonResponse({
+            'message': '로그인된 사용자가 아닙니다',
+        }, status=401)
+    user_id = models.User.objects.get(id=body['user'])
+
+    troupe_like_check = models.TroupeLike.objects.filter(troupe=id, user=user_id)  # user 추후 수정 필요(더미데이터)
+    team = models.Team.objects.filter(troupe=id)
+    team_list = []  # 극단 구성원
+    plays = models.Play.objects.filter(troupe=id)  # 극단에서 공연한 연극
+    ongoing_play = []
+    tobe_play = []
+    closed_play = []
+
+    # 구성원 구하기
+    for i in team:
+        team_list.append({
+            'name': i.person.name,
+            'photo': i.person.photo,
+            # "role": i.person.role,
+        })
+
+    # 연극 구하기
+    today = datetime.strftime(datetime.now(), '%Y-%m-%d')
+    for i in plays:
+        start_date = datetime.strftime(i.start_date, '%Y-%m-%d')
+        end_date = datetime.strftime(
+            i.end_date, '%Y-%m-%d') if (i.end_date) else None
+
+        new_play = [{
+            'id': i.id,
+            'title': i.title,
+            'poster': i.poster,
+            'start_date': start_date,
+            'end_date': end_date,
+        }]
+
+        if today >= start_date and (end_date == None or today <= end_date):
+            ongoing_play.append(new_play)
+        elif today < start_date:
+            tobe_play.append(new_play)
+        elif today > end_date:
+            closed_play.append(new_play)
+        else:
+            print('날짜에러')
+
+    # 페이징 테스트
+    # for i in range(20):
+    #     closed_play.append({
+    #         'id': i,
+    #         'title': str(i) + "번째 테스트 공연",
+    #         'poster': str(i) + "번째 테스트 포스터",
+    #         'start_date': "2021-01-01",
+    #         'end_date': "2021-01-01",
+    #     })
+
+    # 페이징
+    if request.GET.get('start', ''):
+        start = int(request.GET.get('start', ''))
+        next = request.get_full_path().split(
+            '&start=')[0] + '&start=' + str(start+10)
+    else:
+        start = 0
+        next = request.get_full_path() + '&start=11'
+
+    return JsonResponse({
+        'data': {
+            # 유저의 찜하기 액션
+            'context': {
+                'like_check': troupe_like_check.exists()
+            },
+            'links': {
+                'next': next,
+            },
+            'troupe': {
+                'id': troupe.id,
+                'name': troupe.name,
+                'type': troupe.type,
+                'logo': troupe.logo,
+            },
+            'troupe_like': troupe_like,
+            'team': team_list,
+            'play': {
+                'ongoing_play': ongoing_play,
+                'tobe_play': tobe_play,
+                'closed_play': closed_play[start:start+10],
+            },
+        },
+    })
+
 def troupe_options(request):
     troupe_type = {'noraml': '일반', 'student': '학생'}
 
@@ -330,10 +431,6 @@ def troupe_options(request):
             'troupe_option': troupe_type
         }
     })
-
-
-def troupe(request):
-    return JsonResponse({'request': 'listpage.html'})
 
 
 def play(request):
@@ -352,12 +449,80 @@ def password(request):
     return JsonResponse({'request': 'find-password.html'})
 
 
-def playlike(request):
-    return JsonResponse({'request': 'playlike.html'})
+@csrf_exempt
+@require_http_methods(['POST'])
+def playlike(request, id):
+    input = json.loads(request.body)
+    play = models.Play.objects.get(id=id)
+    user = models.User.objects.get(id=input['user'])
+    check_play_like = models.Like.objects.filter(
+        play=play.id, user=user.id)  # 찜 여부 판단
+
+    if check_play_like.exists():
+        check_play_like.delete()
+        return JsonResponse({
+            'data': {
+                'play': play.title,
+                'email': user.email,
+                'nickname': user.nickname,
+            },
+            'message': 'deleted play like'
+        }, status=200)
+    else:
+        new_play_like = models.Like.objects.create(play=play, user=user)
+        return JsonResponse({
+            'data': {
+                'id': new_play_like.id,
+                'play': new_play_like.play.title,
+                'email': new_play_like.user.email,
+                'nickname': new_play_like.user.nickname,
+            },
+            'message': 'add play like'
+        }, status=200)
 
 
-def troupelike(request):
-    return JsonResponse({'request': 'troupelike.html'})
+# @login_required #  로그인 되어야만 클릭 가능
+@csrf_exempt  # csrf verification 에러 조치
+@require_http_methods(['POST'])  # 포스트 방식 확인
+def troupelike(request, id):
+    input = json.loads(request.body)  # body 데이터 받아옴
+    troupe = models.Troupe.objects.get(id=id)
+    user = models.User.objects.get(id=input['user'])  # 로그인 구현 후 바꿔줘야함
+
+    # 찜 여부 판단, 로그인 구현 후 수정 필요
+    check_troupe = models.TroupeLike.objects.filter(
+        troupe=id, user=input['user'])
+
+    if check_troupe.exists():
+        troupe_like = check_troupe.delete()  # check_troupe에 해당하는 튜플 삭제
+        return JsonResponse({
+            'data': {
+                'troupe': troupe.name,
+                'email': user.email,
+                'nickname': user.nickname,
+                'context': {
+                    'like_checked': check_troupe.exists()
+                }
+            },
+            'message': 'deleted like'
+        }, status=200)
+    else:
+        troupe_like = models.TroupeLike.objects.create(
+            troupe=troupe,
+            user=user
+        )
+        return JsonResponse({
+            'data': {
+                'id': troupe_like.id,
+                'troupe': troupe_like.troupe.name,
+                'email': troupe_like.user.email,
+                'nickname': troupe_like.user.nickname,
+                'context': {
+                    'like_checked': check_troupe.exists()
+                }
+            },
+            'message': 'success'
+        }, status=200)
 
 
 @csrf_exempt
@@ -408,15 +573,15 @@ def star(request, id):
 @csrf_exempt
 @require_http_methods(['POST'])
 def comment(request, id):
-    # 존재하지 않는 ID인 경우
-    if not models.User.objects.filter(id=id):
+    body = json.loads(request.body)
+
+    if not models.User.objects.filter(id=body['user']):
         return JsonResponse({
             'message': '로그인된 사용자가 아닙니다',
         }, status=401)
 
-    body = json.loads(request.body)
-    comment_user = models.User.objects.get(id=id)
-    comment_play = models.Play.objects.get(id=body['play'])
+    comment_user = models.User.objects.get(id=body['user'])
+    comment_play = models.Play.objects.get(id=id)
 
     # 커멘트 작성 여부 판단
     check_comment = models.Comment.objects.filter(
