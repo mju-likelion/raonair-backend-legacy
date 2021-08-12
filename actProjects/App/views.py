@@ -1,4 +1,5 @@
 import json
+import re
 
 from django.http import JsonResponse
 
@@ -6,7 +7,7 @@ from django.shortcuts import render, redirect
 
 from django.views.decorators.csrf import csrf_exempt
 from django.views.decorators.http import require_http_methods
-
+from django.core.mail import send_mail
 from . import models
 from datetime import datetime
 import base64
@@ -15,6 +16,7 @@ import os
 
 def home(request):
     return JsonResponse({'request': 'home.html'})
+
 
 # Create your views here.
 
@@ -40,7 +42,7 @@ def search_troupe_detail(request):
     if request.GET.get('start', ''):
         start = int(request.GET.get('start', ''))
         next = request.get_full_path().split(
-            '&start=')[0] + '&start=' + str(start+10)
+            '&start=')[0] + '&start=' + str(start + 10)
     else:
         start = 0
         next = request.get_full_path() + '&start=11'
@@ -61,7 +63,7 @@ def search_troupe_detail(request):
         'data': {
             'query': query,
             'type': type,
-            'search_results': search_list[start:start+10]
+            'search_results': search_list[start:start + 10]
         }
     })
 
@@ -203,6 +205,7 @@ def search_troupe(request):
         }
     })
 
+
 # 검색 결과 페이지, 더보기 클릭 (GET /api/search/<str:type>)
 
 
@@ -230,8 +233,8 @@ def search_detail(request, type):
     if request.GET.get('start', ''):
         start = int(request.GET.get('start', ''))
         next = request.get_full_path().split('&start=')[0] \
-            + '&start=' \
-            + str(start + 10)
+               + '&start=' \
+               + str(start + 10)
     else:
         start = 0
         next = request.get_full_path() + '&start=11'
@@ -265,7 +268,7 @@ def search_detail(request, type):
         'data': {
             'query': keyword,
             'type': type,
-            'search_results': search_list[start:start+10],
+            'search_results': search_list[start:start + 10],
         },
     })
 
@@ -296,9 +299,36 @@ def signup(request):
     return JsonResponse({'request': 'signup.html'})
 
 
+@csrf_exempt
+@require_http_methods(['POST'])
 def password(request):
-    return JsonResponse({'request': 'find-password.html'})
+    body = json.loads(request.body)
+    user_email = body['email']
 
+    if not re.match(r'\b[\w.-]+@[\w.-]+.\w{2,4}\b', user_email):
+        return JsonResponse({
+            "error": "올바른 이메일 형식이 아닙니다."
+        }, status=400)
+    if not models.User.objects.filter(email=user_email):
+        return JsonResponse({
+            'error': '해당 이메일로 된 아이디가 존재하지 않습니다',
+        }, status=403)
+    if not models.User.objects.get(email=user_email).email_confirmed:
+        return JsonResponse({
+            'error': '인증되지 않은 이메일입니다',
+        }, status=403)
+    send_mail(
+        '비밀번호 찾기 링크입니다',
+        'link 주소',
+        'raonairjs@gmail.com',
+        [user_email],
+        fail_silently=False,
+    )
+    return JsonResponse({
+        'data': {
+            'message': "비밀번호 초기화 메일이 발송되었습니다"
+        }
+    }, status=200)
 
 def playlike(request):
     return JsonResponse({'request': 'playlike.html'})

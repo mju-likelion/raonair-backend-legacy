@@ -164,3 +164,12 @@ CORS_ORIGIN_WHITELIST = [
     'http://raonair.art', 'https://raonair.art',
     'http://raonair.netlify.app', 'https://raonair.netlify.app', ]
 CORS_ALLOW_CREDENTIALS = True
+
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_USE_TLS = True
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_PORT = 587
+EMAIL_HOST_USER = 'raonairjs@gmail.com' # ex) bum752@gmail.com
+EMAIL_HOST_PASSWORD = my_settings.EMAIL_HOST_PASSWORD # ex) P@ssw0rd
+SERVER_EMAIL = 'raonairjs@gmail.com' # ex) bum752@gmail.com
+DEFAULT_FROM_MAIL = 'raonair_js' # ex) bum752
