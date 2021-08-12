@@ -85,7 +85,7 @@ def search_play(request):
     tobe_list = []
     closed_list = []
 
-    tody = datetime.strftime(datetime.now(), '%Y-%m-%d')
+    today = datetime.strftime(datetime.now(), '%Y-%m-%d')
 
     for i in plays:
         start_date = datetime.strftime(i.start_date, '%Y-%m-%d')
@@ -112,11 +112,11 @@ def search_play(request):
         })
 
         # 날짜 비교
-        if tody >= start_date and (end_date == None or tody <= end_date):
+        if today >= start_date and (end_date == None or today <= end_date):
             ongoing_list.append(new_play)
-        elif tody < start_date:
+        elif today < start_date:
             tobe_list.append(new_play)
-        elif tody > end_date:
+        elif today > end_date:
             closed_list.append(new_play)
         else:
             print('날짜설정에러')
@@ -285,7 +285,7 @@ def troupe(request, id):
         })
 
     # 연극 구하기
-    tody = datetime.strftime(datetime.now(), '%Y-%m-%d')
+    today = datetime.strftime(datetime.now(), '%Y-%m-%d')
     for i in plays:
         start_date = datetime.strftime(i.start_date, '%Y-%m-%d')
         end_date = datetime.strftime(
@@ -299,11 +299,11 @@ def troupe(request, id):
             'end_date': end_date,
         }]
 
-        if tody >= start_date and (end_date == None or tody <= end_date):
+        if today >= start_date and (end_date == None or today <= end_date):
             ongoing_play.append(new_play)
-        elif tody < start_date:
+        elif today < start_date:
             tobe_play.append(new_play)
-        elif tody > end_date:
+        elif today > end_date:
             closed_play.append(new_play)
         else:
             print('날짜에러')
@@ -390,7 +390,7 @@ def troupe(request, id):
         })
 
     # 연극 구하기
-    tody = datetime.strftime(datetime.now(), '%Y-%m-%d')
+    today = datetime.strftime(datetime.now(), '%Y-%m-%d')
     for i in plays:
         start_date = datetime.strftime(i.start_date, '%Y-%m-%d')
         end_date = datetime.strftime(
@@ -404,11 +404,11 @@ def troupe(request, id):
             'end_date': end_date,
         }]
 
-        if tody >= start_date and (end_date == None or tody <= end_date):
+        if today >= start_date and (end_date == None or today <= end_date):
             ongoing_play.append(new_play)
-        elif tody < start_date:
+        elif today < start_date:
             tobe_play.append(new_play)
-        elif tody > end_date:
+        elif today > end_date:
             closed_play.append(new_play)
         else:
             print('날짜에러')
