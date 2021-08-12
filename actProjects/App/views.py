@@ -6,15 +6,66 @@ from . import models
 from datetime import datetime
 from django.views.decorators.csrf import csrf_exempt
 from django.views.decorators.http import require_http_methods
-
+from . import models
+from datetime import datetime
+import random
 import base64
 import os
 
 
 def home(request):
-    return JsonResponse({'request': 'home.html'})
+    today = datetime.strftime(datetime.now(), '%Y-%m-%d')
+    all_plays = models.Play.objects.all()
+    ongoing_plays = []  # 진행 중인 공연
+    indie_plays = []  # 소규모 극단 공연
 
-# Create your views here.
+    for i in all_plays:
+        start_date = datetime.strftime(i.start_date, '%Y-%m-%d')
+        end_date = datetime.strftime(
+            i.end_date, '%Y-%m-%d') if (i.end_date) else None
+
+        likes = models.Like.objects.filter(play=i.id).count()
+
+        ratings = models.Star.objects.filter(play=i.id)
+        rating_sum = 0
+        rating_count = ratings.count() if (
+            ratings.count()) else 1  # 별점이 없을 때 0으로 나누는 현상 방지
+
+        staffs = models.Team.objects.filter(troupe=i.troupe.id).count()
+
+        for j in ratings:
+            rating_sum += j.star
+        rating_avg = rating_sum / 2 / rating_count
+
+        new_play = ({
+            'id': i.id,
+            'title': i.title,
+            'poster': i.poster,
+            'start_date': start_date,
+            'end_date': end_date,
+            'troupe': i.troupe.name,
+            'like_count': likes,
+            'ratings_avg': rating_avg,
+        })
+
+        if today >= start_date and (not end_date or today <= end_date):
+            ongoing_plays.append(new_play)  # 현재 진행 공연
+
+            # 소규모 극단(10명 이하)
+            if staffs <= 10:
+                indie_plays.append(new_play)
+
+    # 이달의 공연(추천)
+    # 현재 진행중인 공연 중에서 랜덤으로 n개를 뽑는다.
+    month_plays = random.sample(ongoing_plays, 1)
+
+    return JsonResponse({
+        'data': {
+            'ongoing_plays': ongoing_plays[:5],
+            'indie_plays': indie_plays[:5],
+            'month_plays': month_plays[:1],
+        }
+    })
 
 
 def search_troupe_detail(request):
@@ -93,13 +144,14 @@ def search_play(request):
         end_date = datetime.strftime(
             i.end_date, '%Y-%m-%d') if (i.end_date) else None
         stars = models.Star.objects.filter(play=i.id)
-        likes = models.Like.objects.filter(play=i.id).count()  # 찜 데이터 아직 없음
+        star_count = stars.count() if (stars.count()) else 1
+        likes = models.Like.objects.filter(play=i.id).count()
 
         # 평균 별점 구하기
         star_sum = 0
         for j in stars:
             star_sum += j.star
-        star_avg = star_sum / len(stars) / 2
+        star_avg = star_sum / star_count / 2
 
         new_play = ({
             'id': i.id,
