@@ -1,15 +1,11 @@
-import json
-
-import jwt
-from django.http import JsonResponse
-
-from django.shortcuts import render, redirect
-
 from django.views.decorators.csrf import csrf_exempt
-from django.views.decorators.http import require_http_methods
-
+import json
+from django.http import JsonResponse
+from django.shortcuts import get_object_or_404, render
 from . import models
 from datetime import datetime
+from django.views.decorators.http import require_http_methods
+
 import base64
 import os
 
@@ -270,6 +266,92 @@ def search_detail(request, type):
         },
     })
 
+def troupe(request, id):
+    troupe = models.Troupe.objects.get(id=id)
+    troupe_like = models.TroupeLike.objects.filter(troupe=id).count()
+    team = models.Team.objects.filter(troupe=id)
+    team_list = []  # 극단 구성원
+    plays = models.Play.objects.filter(troupe=id)  # 극단에서 공연한 연극
+    ongoing_play = []
+    tobe_play = []
+    closed_play = []
+
+    # 구성원 구하기
+    for i in team:
+        team_list.append({
+            'name': i.person.name,
+            'photo': i.person.photo,
+            # "role": i.person.role,
+        })
+
+    # 연극 구하기
+    tody = datetime.strftime(datetime.now(), '%Y-%m-%d')
+    for i in plays:
+        start_date = datetime.strftime(i.start_date, '%Y-%m-%d')
+        end_date = datetime.strftime(
+            i.end_date, '%Y-%m-%d') if (i.end_date) else None
+
+        new_play = [{
+            'id': i.id,
+            'title': i.title,
+            'poster': i.poster,
+            'start_date': start_date,
+            'end_date': end_date,
+        }]
+
+        if tody >= start_date and (end_date == None or tody <= end_date):
+            ongoing_play.append(new_play)
+        elif tody < start_date:
+            tobe_play.append(new_play)
+        elif tody > end_date:
+            closed_play.append(new_play)
+        else:
+            print('날짜에러')
+
+    # 페이징 테스트
+    # for i in range(20):
+    #     closed_play.append({
+    #         'id': i,
+    #         'title': str(i) + "번째 테스트 공연",
+    #         'poster': str(i) + "번째 테스트 포스터",
+    #         'start_date': "2021-01-01",
+    #         'end_date': "2021-01-01",
+    #     })
+
+    # 페이징
+    if request.GET.get('start', ''):
+        start = int(request.GET.get('start', ''))
+        next = request.get_full_path().split(
+            '&start=')[0] + '&start=' + str(start+10)
+    else:
+        start = 0
+        next = request.get_full_path() + '&start=11'
+
+    return JsonResponse({
+        'data': {
+            # 유저의 찜하기 액션
+            # "context": {
+            #     "like_check": boolean
+            # },
+            'links': {
+                'next': next,
+            },
+            'troupe': {
+                'id': troupe.id,
+                'name': troupe.name,
+                'type': troupe.type,
+                'logo': troupe.logo,
+            },
+            'troupe_like': troupe_like,
+            'team': team_list,
+            'play': {
+                'ongoing_play': ongoing_play,
+                'tobe_play': tobe_play,
+                'closed_play': closed_play[start:start+10],
+                # 'closed_play': closed_play,
+            },
+        },
+    })
 
 # 직책 필드는 극단이 아닌 연극에 종속적이라 극단에서 구현하기 어려움에 있음
 # ex) 극단에서는 감독이지만 A 공연에서는 배우일 경우
@@ -405,8 +487,48 @@ def playlike(request):
     return JsonResponse({'request': 'playlike.html'})
 
 
-def troupelike(request):
-    return JsonResponse({'request': 'troupelike.html'})
+# @login_required #  로그인 되어야만 클릭 가능
+@csrf_exempt  # csrf verification 에러 조치
+@require_http_methods(['POST'])  # 포스트 방식 확인
+def troupelike(request, id):
+    input = json.loads(request.body)  # body 데이터 받아옴
+    troupe = models.Troupe.objects.get(id=id)
+    user = models.User.objects.get(id=input['user'])  # 로그인 구현 후 바꿔줘야함
+
+    # 찜 여부 판단, 로그인 구현 후 수정 필요
+    check_troupe = models.TroupeLike.objects.filter(
+        troupe=id, user=input['user'])
+
+    if check_troupe.exists():
+        troupe_like = check_troupe.delete()  # check_troupe에 해당하는 튜플 삭제
+        return JsonResponse({
+            'data': {
+                'troupe': troupe.name,
+                'email': user.email,
+                'nickname': user.nickname,
+                'context': {
+                    'like_checked': check_troupe.exists()
+                }
+            },
+            'message': 'deleted like'
+        }, status=200)
+    else:
+        troupe_like = models.TroupeLike.objects.create(
+            troupe=troupe,
+            user=user
+        )
+        return JsonResponse({
+            'data': {
+                'id': troupe_like.id,
+                'troupe': troupe_like.troupe.name,
+                'email': troupe_like.user.email,
+                'nickname': troupe_like.user.nickname,
+                'context': {
+                    'like_checked': check_troupe.exists()
+                }
+            },
+            'message': 'success'
+        }, status=200)
 
 
 @csrf_exempt
