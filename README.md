@@ -36,8 +36,16 @@ cd actProjects
 
 - 서버 실행
 
-```
+```shell
 python manage.py runserver
 
 python actProjects/manage.py runserver
+```
+
+## After inspectdb command (important!)
+
+- Django의 inpectdb 명령어가 default 속성을 제대로 가져오지 못하는 문제가 있어, inspectdb 명령어 이후에는 아래의 커맨드를 반드시 실행해야 한다.
+
+```shell
+python after-inspectdb.py
 ```
