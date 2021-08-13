@@ -20,6 +20,8 @@ def home(request):
 def search_troupe_detail(request):
     query = request.GET.get('query', '')
     type = request.GET.get('type', '')
+    limit = request.GET.get('typr', '')
+    limit = int(limit)
 
     filter_query = models.Troupe.objects.filter(name__icontains=query)
     troupes = filter_query.filter(type__icontains=type)
@@ -38,10 +40,10 @@ def search_troupe_detail(request):
     if request.GET.get('start', ''):
         start = int(request.GET.get('start', ''))
         next = request.get_full_path().split(
-            '&start=')[0] + '&start=' + str(start+10)
+            '&start=')[0] + '&start=' + str(start+(limit+1))
     else:
         start = 0
-        next = request.get_full_path() + '&start=11'
+        next = request.get_full_path() + '&start=' + str(limit+1)
 
     for i in troupes:
         new_troupe = ({
@@ -52,6 +54,20 @@ def search_troupe_detail(request):
         })
         search_list.append(new_troupe)
 
+    # 더 로딩할 데이터가 없는 경우
+    if len(search_list) < limit+(start+1):
+        return JsonResponse({
+            'links': {
+                'next': ''
+            },
+            'data': {
+                'query': query,
+                'type': type,
+                'search_results': search_list[start:start + limit]
+            }
+        })
+
+    # 더 로딩할 데이터가 있는 경우
     return JsonResponse({
         'links': {
             'next': next,
@@ -59,7 +75,7 @@ def search_troupe_detail(request):
         'data': {
             'query': query,
             'type': type,
-            'search_results': search_list[start:start+10]
+            'search_results': search_list[start:start+limit]
         }
     })
 
@@ -231,10 +247,10 @@ def search_detail(request, type):
         start = int(request.GET.get('start', ''))
         next = request.get_full_path().split('&start=')[0] \
             + '&start=' \
-            + str(start + 10)
+            + str(start + limit)
     else:
         start = 0
-        next = request.get_full_path() + '&start=' + str(limit+1)
+        next = request.get_full_path() + '&start=' + str(limit)
 
     for i in plays:
         stars = models.Star.objects.filter(play=i.id)
@@ -258,7 +274,7 @@ def search_detail(request, type):
         search_list.append(new_play)
 
     # 더 로딩할 데이터가 없는 경우
-    if len(search_list) < limit:
+    if len(search_list[start:start+limit]) < limit:
         return JsonResponse({
             'links': {
                 'next': ''
