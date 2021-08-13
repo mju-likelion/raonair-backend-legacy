@@ -551,7 +551,7 @@ def signup(request):
 
     # 사용자 이름 형식 오류
 
-    if re.match(r"^ [가-힣]{2, 4}$", input['name']):
+    if re.match(r"^[가-힣]{2, 4}$", input['name']):
         return JsonResponse({
             "error": "올바른 이름 형식이 아닙니다."
         }, status=400)
@@ -565,10 +565,10 @@ def signup(request):
 
     # 200_OK
     password = input['password']
-    bytes(password, 'utf-8')
-    password.encode('utf-8')
+    # bytes(password, 'utf-8')
+    # password.encode('utf-8')
     hashed_password = bcrypt.hashpw(password.encode('utf-8'), bcrypt.gensalt())
-    decode_password = hashed_password
+    decode_password = hashed_password.decode('utf-8')
 
     userdata = models.User.objects.create(
         email=input['email'], password=decode_password, nickname=input['nickname'], name=input['name'])
