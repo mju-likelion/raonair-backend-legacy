@@ -205,6 +205,7 @@ class Star(models.Model):
     user = models.ForeignKey('User', models.DO_NOTHING, db_column='user')
     play = models.ForeignKey(Play, models.DO_NOTHING, db_column='play')
 
+
     class Meta:
         managed = False
         db_table = 'star'

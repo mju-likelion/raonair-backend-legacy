@@ -20,9 +20,17 @@ if ENVS['ENV'] == 'PROD':
 else:
     SECRET_KEY = my_settings.SECRET_KEY
 
-DEBUG = True
+# SECRET_KEY = os.environ.get('SECRET_KEY', my_settings.SECRET_KEY)
+DEBUG = (os.environ.get('DEBUG', 'True') != 'False')
 
-ALLOWED_HOSTS = []
+# AWS_ACCESS_KEY_ID = os.environ.get('AWS_ACCESS_KEY_ID')
+# cdAWS_STORAGE_BUCKET_NAME = 'raonair-django'
+# AWS_S3_SIGNATURE_VERSION = 's3v4'
+# AWS_S3_REGION_NAME = 'ap-northeast-2'
+# AWS_S3_CUSTOM_DOMAIN = 'd36nnc6k71ix1t.cloudfront.net'
+
+
+ALLOWED_HOSTS = ['*']
 
 # Application definition
 
