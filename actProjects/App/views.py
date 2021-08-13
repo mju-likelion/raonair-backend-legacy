@@ -335,30 +335,24 @@ def signin(request):
     login.set_cookie(
         '_h_udin',
         encoded,
-        # max_age=60*60*24*7,
-        # httponly=True,
-        # path='/',
-        # domain=None,
-        # secure=True,
-        # samesite=None
+        max_age=60*60*24*7,  # 7일동안
+        httponly=True,  # http요청일때만
+        path='/',
+        domain=None,
+        secure=False,
+        samesite=None  # CSRF 보호 방법 제공
     )
     return login
 
-    # jwt 토큰 쿠키 코드
-    # signinuser = models.User.objects.get(email=requsest_body['email'])
-    # encoded = jwt.encode({'email': signinuser.email}, secret, algorithm='HS256')
-    # print(encoded)
 
-    # decoded_jwt = jwt.decode(encoded, secret, algorithms=['HS256'])
-    # print(decoded_jwt)
+# 로그아웃시
+# @login_decorator
+# def logout(request):
+#     logout = JsonResponse({
+#         "message": "로그아웃 되었습니다."})
+#     logout.set_cookie('encoded', '')
 
-    # res = JsonResponse({
-    #     "message": {
-    #         "nickname": signinuser.nickname,
-    #         "messages": "님 안녕하세요!"}
-    # }, status=200)
-    # res.set_cookie('encoded', encoded, max_age=100, httponly=True)
-    # return res
+#     return logout
 
 
 # 로그인 쿠키
@@ -389,14 +383,6 @@ def signin(request):
 #         return func(self, request, *args, **kwargs)  # 5번
 
 #     return wrapper
-
-# 로그아웃시
-# @login_decorator
-# def logout(request):
-#     res = JsonResponse({
-#         "message": "로그아웃 되었습니다."}, status=200)
-#     res.set_cookie('encoded', '')
-#     return res
 
 
 def signup(request):
