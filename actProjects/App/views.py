@@ -312,17 +312,11 @@ def signin(request):
         }, status=403)
 
     password = request_body['password']
-    # bytes(password, 'utf-8')
-    # password.encode('utf-8')
-    # hashed_password = bcrypt.hashpw(password.encode('utf-8'), bcrypt.gensalt())
-    # password.encode('utf-8')
-    # decode_password = password.encode('utf-8')
 
     signinuser = models.User.objects.get(email=request_body['email'])
-    print(password.encode('utf-8'), signinuser.password)
 
     de = signinuser.password
-    if not bcrypt.checkpw(password.encode('utf-8'), de.decode('utf-8')):
+    if not bcrypt.checkpw(password.encode('utf-8'), de.encode('utf-8')):
         return JsonResponse({
             "error": "비밀번호가 틀렸습니다."
         }, status=401)
