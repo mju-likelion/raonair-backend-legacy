@@ -306,34 +306,31 @@ def signin(request):
             }
         }, status=400)
 
+    # 403 // 아이디가 디비에 존재하지 않는 경우
     if not models.User.objects.filter(email=request_body['email']):
         return JsonResponse({
             "error": "존재하지않는 아이디입니다."
         }, status=403)
 
-    password = request_body['password']
-
     signinuser = models.User.objects.get(email=request_body['email'])
 
-    de = signinuser.password
-    if not bcrypt.checkpw(password.encode('utf-8'), de.encode('utf-8')):
+    password = request_body['password']  # 로그인 시 입력받은 패스워드
+    db_password = signinuser.password  # 디비에 저장되어있는 패스워드
+
+    # 401 // 아이디는 맞는데, 비밀번호 오류
+    if not bcrypt.checkpw(password.encode('utf-8'), db_password.encode('utf-8')):
         return JsonResponse({
             "error": "비밀번호가 틀렸습니다."
         }, status=401)
 
-    # if not  bcrypt.checkpw(password.encode('utf-8'), signinuser.password):
-    # return JsonResponse({
-    #     "error": "비밀번호가 틀렸습니다."
-    # }, status=401)
-
-    print(signinuser.nickname, signinuser.name, signinuser.email)
+    # 200 // 로그인 완료
     return JsonResponse({
         "message": {
             "nickname": signinuser.nickname,
             "messages": "님 안녕하세요!"}
     }, status=200)
 
-    # jwt encode
+    # jwt 토큰 쿠키 코드
     # signinuser = models.User.objects.get(email=requsest_body['email'])
     # encoded = jwt.encode({'email': signinuser.email}, secret, algorithm='HS256')
     # print(encoded)
