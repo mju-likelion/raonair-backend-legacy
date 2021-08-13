@@ -257,7 +257,20 @@ def search_detail(request, type):
         })
         search_list.append(new_play)
 
-    # 검색결과가 0이 아닐 때
+    # 더 로딩할 데이터가 없는 경우
+    if len(search_list) < limit:
+        return JsonResponse({
+            'links': {
+                'next': ''
+            },
+            'data': {
+                'query': keyword,
+                'type': type,
+                'search_results': search_list[start:start+limit],
+            },
+        })
+
+    # 더 로딩할 데이터가 있는 경우
     return JsonResponse({
         'links': {
             'next': next
@@ -265,7 +278,7 @@ def search_detail(request, type):
         'data': {
             'query': keyword,
             'type': type,
-            'search_results': search_list[start:start+10],
+            'search_results': search_list[start:start+limit],
         },
     })
 
