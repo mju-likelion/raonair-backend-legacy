@@ -1,3 +1,4 @@
+import jwt
 import os
 import base64
 from datetime import datetime
@@ -7,20 +8,16 @@ import json
 from . import models
 from django.shortcuts import get_object_or_404, render, redirect
 from django.views.decorators.csrf import csrf_exempt
-from django.http import JsonResponse
+from django.http import JsonResponse, HttpResponse
 from django.db.models.fields import EmailField
 import bcrypt
+# from test01.settings import SECRET_KEY
 
 
-def home(request):
-    return JsonResponse({'request': 'home.html'})
-
-# Create your views here.
+secret = "raonair"
 
 
 # 홈페이지 공연 추천
-
-
 def home(request):
     return JsonResponse({"request": 'searchPage.html'})
 
@@ -379,6 +376,7 @@ def search_detail(request, type):
         })
 
     # start 데이터가 있는 경우와 없는 경우
+
     if request.GET.get('start', ''):
         start = int(request.GET.get('start', ''))
         next = request.get_full_path().split('&start=')[0] \
@@ -561,8 +559,97 @@ def play(request):
     return JsonResponse({'request': 'play.html'})
 
 
+@csrf_exempt
+@require_http_methods(["POST"])
 def signin(request):
-    return JsonResponse({'request': 'signin.html'})
+
+    request_body = json.loads(request.body)
+
+    # 400_BAD_REQUEST // 아이디 형식이 틀린 경우
+    if not re.match(r'^([0-9a-zA-Z_\.-]+)@([0-9a-zA-Z_-]+)(\.[0-9a-zA-Z_-]+){1,2}$', request_body['email']):
+        return JsonResponse({
+            "error": {
+                "message": "올바른 이메일 형식이 아닙니다."
+            }
+        }, status=400)
+
+    # 403 // 아이디가 디비에 존재하지 않는 경우
+    if not models.User.objects.filter(email=request_body['email']):
+        return JsonResponse({
+            "error": "존재하지않는 아이디입니다."
+        }, status=403)
+
+    signinuser = models.User.objects.get(email=request_body['email'])
+
+    password = request_body['password']  # 로그인 시 입력받은 패스워드
+    db_password = signinuser.password  # 디비에 저장되어있는 패스워드
+
+    # 401 // 아이디는 맞는데, 비밀번호 오류
+    if not bcrypt.checkpw(password.encode('utf-8'), db_password.encode('utf-8')):
+        return JsonResponse({
+            "error": "비밀번호가 틀렸습니다."
+        }, status=401)
+
+    # 200 // 로그인 완료
+    login = HttpResponse(json.dumps({
+        "message": {
+            "nickname": signinuser.nickname,
+            "id": signinuser.id}  # 바디에 저장한 id
+    }))
+
+    # 쿠키
+    encoded = jwt.encode({'email': signinuser.email}, secret, algorithm='HS256')
+    login.set_cookie(
+        '_h_udin',
+        encoded,
+        max_age=60*60*24*7,  # 7일동안
+        httponly=True,  # http요청일때만
+        path='/',
+        domain=None,
+        secure=False,
+        samesite=None  # CSRF 보호 방법 제공
+    )
+    return login
+
+
+# 로그아웃시
+# @login_decorator
+# def logout(request):
+#     logout = JsonResponse({
+#         "message": "로그아웃 되었습니다."})
+#     logout.set_cookie('encoded', '')
+
+#     return logout
+
+
+# 로그인 쿠키
+# def login_decorator(func):
+
+#     def wrapper(self, request, *args, **kwargs):  # self > 받아온 함수를 다시 넘긴다 access token이 헤더에 들어있음> json.load가 아님(헤더에 있는 값만 할 것임) > 키 벨류로 돼있는 양식 >
+
+#         if "Authorization" not in request.headers:  # 1)번
+#             return JsonResponse({"error_code": "INVALID_LOGIN"}, status=401)
+
+#         encoded = request.headers["Authorization"]
+
+#         try:
+#             data = jwt.decode(encoded, secret, algorithm='HS256')
+#             # 2번)decode를 하게 될 경우 프론트엔드에 전달했던 페이로드값만 나옴(즉 로그인뷰에 바디)
+
+#             user = models.User.objects.get(id=data["id"])  # 3번
+#             request.user = user  # 4번
+#         except jwt.DecodeError:  # 2-1번 error
+#             return JsonResponse({
+#                 "error_code": "INVALID_TOKEN"
+#             }, status=401)  # 401에러 : 권한이 없을때 발생
+#         except Accounts.DoesNotExist:  # 1-1번 error
+#             return JsonResponse({
+#                 "error_code": "UNKNOWN_USER"
+#             }, status=401)  # 401에러 : 권한이 없을때 발생
+
+#         return func(self, request, *args, **kwargs)  # 5번
+
+#     return wrapper
 
 
 def password(request):
@@ -613,6 +700,7 @@ def troupelike(request, id):
     check_troupe = models.TroupeLike.objects.filter(
         troupe=id, user=input['user'])
 
+
     if check_troupe.exists():
         troupe_like = check_troupe.delete()  # check_troupe에 해당하는 튜플 삭제
         return JsonResponse({
@@ -643,7 +731,6 @@ def troupelike(request, id):
             },
             'message': 'success'
         }, status=200)
-
 
 @ csrf_exempt
 @ require_http_methods(['POST'])
@@ -690,8 +777,8 @@ def star(request, id):
             }, status=200)
 
 
-@ csrf_exempt
-@ require_http_methods(['POST'])
+@csrf_exempt
+@require_http_methods(['POST'])
 def comment(request, id):
     body = json.loads(request.body)
 
