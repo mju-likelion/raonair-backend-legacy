@@ -126,7 +126,8 @@ def search_play(request):
         star_sum = 0
         for j in stars:
             star_sum += j.star
-        star_avg = star_sum / len(stars) / 2
+        star_count = stars.count() if (stars.count()) else 1
+        star_avg = star_sum / star_count / 2
 
         new_play = ({
             'id': i.id,
@@ -269,11 +270,13 @@ def search_detail(request, type):
 
         # 평균 별점 구하기
         star_sum = 0
-        for each_star in stars:
-            star_sum += each_star.star
-        star_avg = star_sum / len(stars) / 2
+        for j in stars:
+            star_sum += j.star
+        star_count = stars.count() if (stars.count()) else 1
+        star_avg = star_sum / star_count / 2
 
         new_play = ({
+            'id': i.id,
             'title': i.title,
             'poster': i.poster,
             'start_date': i.start_date,
