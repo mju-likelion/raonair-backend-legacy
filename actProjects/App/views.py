@@ -207,6 +207,8 @@ def search_troupe(request):
 def search_detail(request, type):
     keyword = request.GET.get('query', '')
     loc = request.GET.get('location', '')
+    limit = request.GET.get('limit', '')
+    limit = int(limit)
 
     filter_keyword = models.Play.objects.filter(
         title__icontains=keyword)  # 검색어에 포함되는 play를 받아옴
@@ -232,7 +234,7 @@ def search_detail(request, type):
             + str(start + 10)
     else:
         start = 0
-        next = request.get_full_path() + '&start=11'
+        next = request.get_full_path() + '&start=' + str(limit+1)
 
     for i in plays:
         stars = models.Star.objects.filter(play=i.id)
