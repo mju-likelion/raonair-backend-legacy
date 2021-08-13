@@ -1,6 +1,6 @@
 # from test01.settings import SECRET_KEY
 import json
-from django.http import JsonResponse
+from django.http import JsonResponse, HttpResponse
 from django.shortcuts import render, redirect
 from django.views.decorators.csrf import csrf_exempt
 from django.views.decorators.http import require_http_methods
@@ -13,7 +13,7 @@ import bcrypt
 import base64
 import os
 
-# secret = "raonair"
+secret = "raonair"
 
 
 def home(request):
@@ -324,11 +324,25 @@ def signin(request):
         }, status=401)
 
     # 200 // 로그인 완료
-    return JsonResponse({
+    login = HttpResponse(json.dumps({
         "message": {
             "nickname": signinuser.nickname,
-            "messages": "님 안녕하세요!"}
-    }, status=200)
+            "id": signinuser.id}  # 바디에 저장한 id
+    }))
+
+    # 쿠키
+    encoded = jwt.encode({'email': signinuser.email}, secret, algorithm='HS256')
+    login.set_cookie(
+        '_h_udin',
+        encoded,
+        # max_age=60*60*24*7,
+        # httponly=True,
+        # path='/',
+        # domain=None,
+        # secure=True,
+        # samesite=None
+    )
+    return login
 
     # jwt 토큰 쿠키 코드
     # signinuser = models.User.objects.get(email=requsest_body['email'])
@@ -345,11 +359,6 @@ def signin(request):
     # }, status=200)
     # res.set_cookie('encoded', encoded, max_age=100, httponly=True)
     # return res
-
-    # HttpResponse.set_cookie(key, value='', max_age=None, expires=None, path='/',
-    #                         domain=None, secure=False, httponly=False, samesite=None)
-
-    # 로그아웃시 토큰 삭제 // ?
 
 
 # 로그인 쿠키
@@ -381,7 +390,7 @@ def signin(request):
 
 #     return wrapper
 
-
+# 로그아웃시
 # @login_decorator
 # def logout(request):
 #     res = JsonResponse({
