@@ -81,6 +81,8 @@ class Comment(models.Model):
     comment = models.CharField(max_length=200)
     play = models.ForeignKey('Play', models.DO_NOTHING, db_column='play')
     user = models.ForeignKey('User', models.DO_NOTHING, db_column='user')
+    updated_at = models.DateTimeField()
+    created_at = models.DateTimeField()
 
     class Meta:
         managed = False
@@ -93,13 +95,16 @@ class DjangoAdminLog(models.Model):
     object_repr = models.CharField(max_length=200)
     action_flag = models.PositiveSmallIntegerField()
     change_message = models.TextField()
-    content_type = models.ForeignKey(
-        'DjangoContentType', models.DO_NOTHING, blank=True, null=True)
-    user = models.ForeignKey(AuthUser, models.DO_NOTHING)
 
-    class Meta:
-        managed = False
-        db_table = 'django_admin_log'
+
+content_type = models.ForeignKey(
+    'DjangoContentType', models.DO_NOTHING, blank=True, null=True)
+user = models.ForeignKey(AuthUser, models.DO_NOTHING)
+
+
+class Meta:
+    managed = False
+    db_table = 'django_admin_log'
 
 
 class DjangoContentType(models.Model):
@@ -136,6 +141,8 @@ class DjangoSession(models.Model):
 class Like(models.Model):
     play = models.ForeignKey('Play', models.DO_NOTHING, db_column='play')
     user = models.ForeignKey('User', models.DO_NOTHING, db_column='user')
+    created_at = models.DateTimeField()
+    updated_at = models.DateTimeField()
 
     class Meta:
         managed = False
@@ -144,12 +151,17 @@ class Like(models.Model):
 
 class Person(models.Model):
     name = models.CharField(max_length=255)
-    photo = models.CharField(
-        unique=True, max_length=255, blank=True, null=True)
 
-    class Meta:
-        managed = False
-        db_table = 'person'
+
+created_at = models.DateTimeField()
+updated_at = models.DateTimeField()
+photo = models.CharField(
+    unique=True, max_length=255, blank=True, null=True)
+
+
+class Meta:
+    managed = False
+    db_table = 'person'
 
 
 class Play(models.Model):
@@ -193,6 +205,7 @@ class Star(models.Model):
     user = models.ForeignKey('User', models.DO_NOTHING, db_column='user')
     play = models.ForeignKey(Play, models.DO_NOTHING, db_column='play')
 
+
     class Meta:
         managed = False
         db_table = 'star'
@@ -230,6 +243,8 @@ class Troupe(models.Model):
     name = models.CharField(unique=True, max_length=255)
     type = models.CharField(max_length=7)
     logo = models.CharField(unique=True, max_length=255, blank=True, null=True)
+    created_at = models.DateTimeField()
+    updated_at = models.DateTimeField()
 
     class Meta:
         managed = False
